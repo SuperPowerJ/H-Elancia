@@ -6,6 +6,16 @@
 ;-----------------------------------------------------
 Global ThisWindowTitle := "H-Elancia Alpha - V1.0.2"
 
+;AAI - 알파포남입구
+;AAD - 알파포남동쪽
+;AAS - 알파포남서쪽
+;BAI - 베타포남입구
+;BAD - 베타포남동쪽
+;BAS - 베타포남서쪽
+;GAI - 감마포남입구
+;GAD - 감마포남동쪽
+;GAS - 감마포남서쪽
+Global AAI, AAD, AAS, BAI, BAD, BAS, GAI, GAD, GAS
 if not A_IsAdmin {
 	MsgBox, 관리자 권한으로 실행해주세요
 	ExitApp
@@ -49,6 +59,103 @@ gosub, ShowGui
 
 SetStaticColor(hTest1, 0xFF0000)
 return
+
+Set_ponam_data:
+;get NPCID from file
+;log.txt format should be like this
+;알파입구 = 0x00000000
+;알파동파 = 0x00000000
+;알파서파 = 0x00000000
+
+;베타입구 = 0x00005E7A
+;베타동파 = 0x00005E83
+;베타서파 = 0x00005E80
+
+;감마입구 = 0x000067ED
+;감마동파 = 0x000067EF
+;감마서파 = 0x000067EE
+Loop,Read, c:\npcid_local.txt
+{
+ifinstring, A_LoopReadLine, 알파입구
+{
+AAI = %A_LoopReadLine% 
+break
+}
+}
+Loop,Read, c:\npcid_local.txt
+{
+ifinstring, A_LoopReadLine, 알파동파
+{
+AAD = %A_LoopReadLine%
+break
+}
+}
+Loop,Read, c:\npcid_local.txt
+{
+ifinstring, A_LoopReadLine, 알파서파
+{
+AAS = %A_LoopReadLine%
+break
+}
+}
+Loop,Read, c:\npcid_local.txt
+{
+ifinstring, A_LoopReadLine, 베타입구
+{
+BAI = %A_LoopReadLine%
+break
+}
+}
+Loop,Read, c:\npcid_local.txt
+{
+ifinstring, A_LoopReadLine, 베타동파
+{
+BAD = %A_LoopReadLine%
+break
+}
+}
+Loop,Read, c:\npcid_local.txt
+{
+ifinstring, A_LoopReadLine,베타서파
+{
+BAS = %A_LoopReadLine%
+break
+}
+}
+Loop,Read, c:\npcid_local.txt
+{
+ifinstring, A_LoopReadLine, 감마입구
+{
+GAI = %A_LoopReadLine%
+break
+}
+}
+Loop,Read, c:\npcid_local.txt
+{
+ifinstring, A_LoopReadLine, 감마동파
+{
+GAD = %A_LoopReadLine%
+break
+}
+}
+Loop,Read, c:\npcid_local.txt
+{
+ifinstring, A_LoopReadLine, 감마서파
+{
+GAS = %A_LoopReadLine%
+break
+}
+}
+StringMid, AAI, AAI, 7, 11
+StringMid, AAD, AAD, 7, 11
+StringMid, AAS, AAS, 7, 11
+StringMid, BAI, BAI, 7, 11
+StringMid, BAD, BAD, 7, 11
+StringMid, BAS, BAS, 7, 11
+StringMid, GAI, GAI, 7, 11
+StringMid, GAD, GAD, 7, 11
+StringMid, GAS, GAS, 7, 11
+Return
 
 Setting_Values:
 	Global Category := ["Basic_Setting","Char_Setting","Tab1_Setting","wanteditems","Mines","InTab_Check_Menu", "AutoBuyItem","AutoBuyInk","AutoBuyPant","AutoBuyNeckla"]
@@ -1012,6 +1119,88 @@ if(LatestNPCID != npcid)
 	Guicontrol,, LatestNPCID, %npcid%
 SetFormat,integer, d
 return
+
+;value that indicates which npc shoule be called
+;0 - 동쪽
+;1 - 서쪽
+Global currentNpcCall := 0
+
+run_npcid:
+SetTimer, 원격NPC호출자동, 1700
+return
+
+stop_npcid:
+SetTimer, 원격NPC호출자동, Off
+return
+
+원격NPC호출자동:
+_num := Readmemory(Readmemory(0x0058EB1C) + 0x10E)
+_Dimension := Readmemory(Readmemory(0x0058EB1C) + 0x10A)
+		if(_Dimension>20000)
+			_CharDimen:="감마"
+		else if(_Dimension>10000)
+			_CharDimen:="베타"
+		else if(_Dimension<10000)
+			_CharDimen:="알파"
+
+if(_num != 4005) ; check if user is in 포남
+{
+		return
+}
+
+IfInString, _CharDimen, 알파
+{
+	if(currentNpcCall = 0 ){
+	call_npcid(AAD)	
+	currentNpcCall := 1
+	return
+	}else{
+	call_npcid(AAS)
+	currentNpcCall := 0
+	return
+	}
+	return
+}
+IfInString, _CharDimen, 베타
+{
+	if(currentNpcCall = 0 ){
+	currentNpcCall := 1
+	call_npcid(BAD)	
+	return
+	}else{
+	currentNpcCall := 0
+	call_npcid(BAS)
+	return
+	}
+	return
+}
+IfInString, _CharDime, 감마
+{
+	if(currentNpcCall = 0 ){
+	currentNpcCall := 1
+	call_npcid(GAD)	
+	return
+	}else{
+	currentNpcCall := 0
+	call_npcid(GAS)
+	return
+	}
+	return
+}
+
+Return
+
+
+call_npcid(nid){
+SetFormat, Integer, H
+EXECUTE_527ACC()
+set_NPC_memory()
+set_NPC_memory_with_nid(nid)
+run_527B4C()
+;run_590000()
+SetFormat, Integer, d
+return
+}
 
 NPCLIST:
 	gui,listview,npcidlist
@@ -4767,6 +4956,22 @@ set_NPC_memory2() {
 	}
 	guicontrolget,NPCID
 	WriteMemory(0x00527b54, NPCID, "UInt")
+	}
+
+	set_NPC_memory_with_nid(nid) {
+	WinGet, pid, PID, %WindowTitle%
+	ProcHwnd := DllCall("OpenProcess", "int", 2035711, "char", 0, "UInt", PID, "UInt")
+	target = 40C700527ACCB88EE8000000001A000000C3FFFAAB0000000000000000000000
+	Addrs := 0x00527B4C
+	Loop, 5
+	{
+	A := SubStr(target, 1, 14)
+	C := Substr(target, 15)
+	target := C
+	write_sys_memory("0x"A, Addrs, PID)
+	Addrs := Addrs+7
+	}
+	WriteMemory(0x00527b54, nid, "UInt")
 	}
 
 EXECUTE_527ACC() {
