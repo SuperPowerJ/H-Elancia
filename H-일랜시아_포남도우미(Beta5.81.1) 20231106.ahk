@@ -11290,12 +11290,12 @@ Global 서버상태
 									}
 									else if (골드바판매여부 && 아이템갯수["GARLID"] < 1000000 && 아이템갯수["골드바"] > 0)
 									{
-										gosub, 골드바판매
+										gosub, 골드바팔기
 										continue
 									}
 									else if (골드바구매여부 && 아이템갯수["GARLID"] > 9600000 )
 									{
-										gosub, 골드바구매
+										gosub, 골드바사기
 										continue
 									}
 									else if (무기수리필요 || 식빵구매필요 || 라깃구매필요) && (아이템갯수["GARLID"] < 100000)
