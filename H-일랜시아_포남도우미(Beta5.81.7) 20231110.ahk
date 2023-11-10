@@ -9459,11 +9459,11 @@ else
 }
 if (제작이동 = 1)
 {
-	CheatEngine_NoLimitMovementDuringCook
+	CheatEngine_NoLimitMovementDuringCook()
 }
 else
 {
-	CheatEngine_CancelNoLimitMovementDuringCook
+	CheatEngine_CancelNoLimitMovementDuringCook()
 }
 
 if (캐릭제거 = 1)
@@ -10603,7 +10603,7 @@ Gui, Add, GroupBox, x15 y120 w164 h80, 치트엔진
 Gui, Add, Checkbox, x25 y135 h20 g사용자선택 v위치고정,위치고정
 Gui, Add, Checkbox, x25 y155 h20 g사용자선택 v배경제거,배경제거
 Gui, Add, Checkbox, x25 y175 h20 g사용자선택 v캐릭제거,캐릭제거
-Gui, Add, Checkbox, x115 y135 h20 g사용자선택 v제작이동,제작이동
+Gui, Add, Checkbox, x100 y135 h20 g사용자선택 v제작이동,제작이동
 
 Gui, Add, GroupBox, x180 y30 w152 h240, 어빌사용
 Gui, Add, GroupBox, x99 y30 w80 h85, 데미지
