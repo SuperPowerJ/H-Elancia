@@ -4940,18 +4940,17 @@ return this.SizeOfStructure
 			for index, existingData in itemList
 			{
 				Last := A_Index
-
 				if (type = "좌표리스트")
 				{
-					IniRead, existingData, itemList, %A_index%
+					IniRead, existingData, %FileName%,  %맵번호%, %A_index%
 				}
 				else if (type = "NEWDB" || type = "MonsterList" || tpye = "NPC리스트")
 				{
-					IniRead, existingData, itemList, %A_index%
+					IniRead, existingData, %FileName%, %저장할맵번호%, %A_index%
 				}
 				else
 				{
-					IniRead, existingData, itemList, %A_index%
+					IniRead, existingData, %FileName%, %type%, %A_index%
 				}
 				*/
 				; 데이터를 쉼표로 분리하여 각 필드를 얻습니다.
@@ -5092,7 +5091,7 @@ return this.SizeOfStructure
 
 			found := False
 
-			for index, coord in itemList
+			for index, item in itemList
 			{
 				if (type = "좌표리스트")
 				{
@@ -5131,7 +5130,7 @@ return this.SizeOfStructure
 			if (type = "좌표리스트")
 			{
 				IniDelete, %FileName%, %subject%
-				for a, item in newItems
+				for index, item in newItems
 				{
 					; 새로운 아이템을 다시 씁니다.
 					IniWrite, %item%, %FileName%, %subject%, %index%
@@ -5140,8 +5139,8 @@ return this.SizeOfStructure
 			}
 			else if (type = "NPC리스트")
 			{
-				IniDelete, %FileName%, %subject%
-				for a, item in newItems
+				IniDelete, %FileName%, %맵번호%
+				for index, item in newItems
 				{
 					; 새로운 아이템을 다시 씁니다.
 					IniWrite, %item%, %FileName%, %맵번호%, %index%
@@ -5151,7 +5150,7 @@ return this.SizeOfStructure
 			else
 			{
 				IniDelete, %FileName%, %type%
-				for _, item in newMapList
+				for index, item in newItems
 				{
 					; 새로운 아이템을 다시 씁니다.
 					IniWrite, %item%, %FileName%, %type%, %index%
@@ -9094,11 +9093,13 @@ return
 
 행깃구매:
 ;{
+
 return
 ;}
 
 행깃교환:
 ;{
+
 return
 ;}
 
@@ -10603,7 +10604,7 @@ Gui, Add, GroupBox, x15 y120 w164 h80, 치트엔진
 Gui, Add, Checkbox, x25 y135 h20 g사용자선택 v위치고정,위치고정
 Gui, Add, Checkbox, x25 y155 h20 g사용자선택 v배경제거,배경제거
 Gui, Add, Checkbox, x25 y175 h20 g사용자선택 v캐릭제거,캐릭제거
-Gui, Add, Checkbox, x100 y135 h20 g사용자선택 v제작이동,제작이동
+Gui, Add, Checkbox, x105 y135 h20 g사용자선택 v제작이동,제작이동
 
 Gui, Add, GroupBox, x180 y30 w152 h240, 어빌사용
 Gui, Add, GroupBox, x99 y30 w80 h85, 데미지
@@ -14316,7 +14317,6 @@ if (리메듐사용 = 1)
 	sleep, 1
 }
 if (라리메듐사용 = 1)
-	sleep, 1
 {
 	마법사용("라리메듐", 특수리메듐타겟OID)
 	sleep, 1
