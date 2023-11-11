@@ -10391,7 +10391,7 @@ return
 			sleep, 1000
 			맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
 			if (IsDataInList(맵번호, 설정된마을))
-				continue
+				return
 		}
 		라깃사용하기(마을,목적차원)
 		sleep,100
@@ -10420,7 +10420,7 @@ return
 			sleep, 1000
 			맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
 			if (IsDataInList(맵번호, 설정된마을))
-				continue
+				return
 		}
 		라깃사용하기(마을,목적차원)
 		return
