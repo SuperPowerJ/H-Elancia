@@ -49,15 +49,19 @@ return
 ;{
 초기항목선언:
 ;{
+
+;전체 작동 및 작동중지 가능한 옵션
+GLOBAL Coin := False
+
 ;옵션 리스트 구분
 Lists := [ "CheckBoxList", "DropDownList", "EditList", "RadioButton" ]
 ;사용된 옵션들
-CheckBoxList := ["길탐색책사용","원거리타겟","리메듐타겟","오란의깃사용여부","길탐색1번사용여부","길탐색2번사용여부","길탐색3번사용여부","길탐색4번사용여부","길탐색5번사용여부","자동재접속사용여부","힐링포션사용여부", "HP마을귀환사용여부", "리메듐사용여부", "마나포션사용여부", "MP마을귀환사용여부", "브렐사용여부", "식빵사용여부", "식빵구매여부", "골드바판매여부", "골드바구매여부", "대화사용", "명상사용", "더블어택사용", "체력향상사용", "민첩향상사용", "활방어사용", "마력향상사용", "마법방어향상사용", "3번", "4번", "5번", "6번", "7번", "8번", "은행넣기활성화", "소각활성화","아템먹기여부","자동이동여부", "훔치기사용", "훔쳐보기사용", "Sense사용", "자동사냥여부", "무기사용여부","특오자동교환여부","행깃구매여부","라깃구매여부","독침사용","현혹사용","폭검사용","무기공격사용","집중사용","회피사용","몸통찌르기사용","리메듐사용","라리메듐사용","엘리메듐사용","쿠로사용","빛의갑옷사용","공포보호사용","다라사용","브렐사용","브레마사용","물의갑옷사용","감속사용","마스사용","라크사용","번개사용","브리스사용","파스티사용","슈키사용","클리드사용","스톤스킨사용","파라스사용","베네피쿠스사용","저주사용","자동파티여부", "포레스트네자동대화","RemoveArmor사용","좀비몹감지", "위치고정", "배경제거", "캐릭제거","버스기사모드","나프사용","제작이동"]
+CheckBoxList := ["수련길탐딜레이","이동속도사용","게임배속사용","길탐색책사용","원거리타겟","리메듐타겟","오란의깃사용여부","길탐색1번사용여부","길탐색2번사용여부","길탐색3번사용여부","길탐색4번사용여부","길탐색5번사용여부","자동재접속사용여부","힐링포션사용여부", "HP마을귀환사용여부", "리메듐사용여부", "마나포션사용여부", "MP마을귀환사용여부", "브렐사용여부", "식빵사용여부", "식빵구매여부", "골드바판매여부", "골드바구매여부", "대화사용", "명상사용", "더블어택사용", "체력향상사용", "민첩향상사용", "활방어사용", "마력향상사용", "마법방어향상사용", "3번", "4번", "5번", "6번", "7번", "8번", "은행넣기활성화", "소각활성화","아템먹기여부","자동이동여부", "훔치기사용", "훔쳐보기사용", "Sense사용", "자동사냥여부", "무기사용여부","특오자동교환여부","행깃구매여부","라깃구매여부","독침사용","현혹사용","폭검사용","무기공격사용","집중사용","회피사용","몸통찌르기사용","리메듐사용","라리메듐사용","엘리메듐사용","쿠로사용","빛의갑옷사용","공포보호사용","다라사용","브렐사용","브레마사용","물의갑옷사용","감속사용","마스사용","라크사용","번개사용","브리스사용","파스티사용","슈키사용","클리드사용","스톤스킨사용","파라스사용","베네피쿠스사용","저주사용","자동파티여부", "포레스트네자동대화","RemoveArmor사용","좀비몹감지", "위치고정", "배경제거", "캐릭제거","버스기사모드","나프사용","제작이동"]
 SpellList := ["나프", "마스","리메듐","라리메듐","엘리메듐","쿠로","빛의갑옷","공포보호","다라","브렐","브레마","물의갑옷","감속","라크","번개","브리스","파스티","슈키","클리드","스톤스킨","파라스","베네피쿠스","저주"]
-DropDownList := ["오란의깃마을","길탐색1번목적지", "길탐색2번목적지", "길탐색3번목적지", "길탐색4번목적지", "길탐색5번목적지", "오란의깃단축키", "길탐색책단축키", "메인캐릭터서버", "메인캐릭터순서", "힐링포션사용단축키", "마나포션사용단축키", "식빵사용단축키", "식빵구매마을" ,"지침서", "오란의깃사용단축키", "포레스트네자동대화딜레이","현재모드"]
+DropDownList := ["오란의깃마을","길탐색1번목적지", "길탐색2번목적지", "길탐색3번목적지", "길탐색4번목적지", "길탐색5번목적지", "오란의깃단축키", "길탐색책단축키", "메인캐릭터서버", "메인캐릭터순서", "힐링포션사용단축키", "마나포션사용단축키", "식빵사용단축키", "식빵구매마을" ,"지침서", "오란의깃사용단축키", "포레스트네자동대화딜레이","CurrentMode"]
 EditList := ["원거리타겟아이디","리메듐타겟아이디","힐링포션사용제한", "HP마을귀환사용제한", "MP마을귀환사용제한", "리메듐사용제한", "마나포션사용제한", "브렐사용제한", "식빵사용제한", "MP마을귀환사용여부", "넣을아이템","Multiplyer","NPC_MSG_ADR" ,"마지막사냥장소", "수련용길탐색딜레이", "NPC대화딜레이", "MoveSpeed", "게임배속","무기교체딜레이"]
 공격어빌 := ["격투", "봉", "검", "창", "활", "스태프", "현금", "도", "도끼", "단검"] ; 배열 내부에 검사하고 싶은 20개의 항목을 넣습니다.
-
+마통작마법 := ["리메듐","엘리메듐","라리메듐","브렐"]
 ;게임내 파티 플레이어용 GUI 이름들
 loop, 10
 {
@@ -85,7 +89,7 @@ SkillListA := ["훔치기","훔쳐보기","Sense","현혹","폭검","독침","�
 
 오란의깃마을_DDLOptions := ["로랜시아","에필로리아","세르니카","크로노시스","포프레스네"]
 길탐색5번목적지_DDLOptions := 길탐색4번목적지_DDLOptions := 길탐색3번목적지_DDLOptions := 길탐색2번목적지_DDLOptions := 길탐색1번목적지_DDLOptions := ["로랜시아 목공소","로랜시아 퍼브","로랜시아 우체국","로랜시아 퍼브 우체국","에필로리아 목공소","에필로리아 퍼브","에필로리아 우체국","에필로리아 퍼브 우체국","세르니카 퍼브","세르니카 우체국","세르니카 목공소","포프레스네 무기상점"]
-현재모드_DDLOptions := ["대기모드","자동감응","일반자사","포남자사","포북자사","나프마통작","마잠또는밥통","광물캐기","배달하기","행깃교환","행깃구매"]
+CurrentMode_DDLOptions := ["대기모드","자동감응","일반자사","포남자사","포북자사","나프마통작","마잠또는밥통","광물캐기","배달하기","행깃교환","행깃구매"]
 메인캐릭터서버_DDLOptions := ["엘","테스"]
 메인캐릭터순서_DDLOptions := [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
 힐링포션사용단축키_DDLOptions := [3,4,5,6,7,8]
@@ -101,7 +105,8 @@ SkillListA := ["훔치기","훔쳐보기","Sense","현혹","폭검","독침","�
 
 Global 나가기가능맵 := [208,214,217,219,1208,1214,1217,1219,2208,2214,2217,2219,4200,4207,4209,4211,4213,4215,4216,4219]
 
-Global 현재모드
+Global CurrentMode
+Global 서버상태
 
 ;자동사냥용
 Global 몬스터소탕 := {}
@@ -5438,7 +5443,7 @@ return 0
 	loop,
 	{
 		sleep, 1000
-		;if (현재모드 = "대기모드")
+		;if (CurrentMode = "대기모드")
 		;	continue
 
 		맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
@@ -5636,7 +5641,7 @@ return
 	loop,
 	{
 		sleep, 1000
-		;if (현재모드 = "대기모드")
+		;if (CurrentMode = "대기모드")
 		;	continue
 
 		맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
@@ -5838,7 +5843,7 @@ return
 	loop,
 	{
 		sleep, 1000
-		;if (현재모드 = "대기모드")
+		;if (CurrentMode = "대기모드")
 		;	continue
 
 		맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
@@ -6904,7 +6909,7 @@ return
 	loop,
 	{
 		sleep, 1000
-		;if (현재모드 = "대기모드")
+		;if (CurrentMode = "대기모드")
 		;	continue
 
 		맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
@@ -7109,7 +7114,7 @@ return
 	loop,
 	{
 		sleep, 1000
-		;if (현재모드 = "대기모드")
+		;if (CurrentMode = "대기모드")
 		;	continue
 
 		맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
@@ -7862,10 +7867,10 @@ Send, qjsro{Enter}
 	GetMoreInformation()
 	기존맵번호 := 0
 
-	if (현재모드 = "상인어빌수련")
+	if (CurrentMode = "상인어빌수련")
 	{
-		현재모드 := "대기모드"
-		guicontrol,,현재모드,%현재모드%
+		CurrentMode := "대기모드"
+		guicontrol,,CurrentMode,%CurrentMode%
 	}
 	return
 ;}
@@ -7988,10 +7993,41 @@ GuiControl,, Multiplyer, %Multiplyer%
 return
 }
 
+실행:
+;{
+if (TargetPID = "")
+{
+	MSGBOX, 캐릭터를 선택해 주세요.
+	return
+}
+guicontrol,Disabled,CurrentMode
+guicontrol,enable,중지
+guicontrol,Disabled,실행
+guicontrol,Hide,실행
+guicontrol,Show,중지
+Coin := True
+return
+;}
+
 중지:
 ;{
 SB_SETTEXT("사용자가 중지를 요청",2)
-gosub, 현재모드_대기모드
+temp_variable := CurrentMode
+Item := "CurrentMode"
+guicontrol,enable,CurrentMode
+GuiControl,, CurrentMode, %temp_variable%||
+Temp_list := Item . "_DDLOptions"
+for Index, option in %Temp_list%
+{
+	if (temp_variable != option)
+		GuiControl,, %Item%, %option%
+}
+Coin := False
+gosub, CurrentMode_대기모드
+guicontrol,Disabled,중지
+guicontrol,enable,실행
+guicontrol,Hide,중지
+guicontrol,Show,실행
 return
 ;}
 
@@ -8616,8 +8652,8 @@ return
 		if (인벤토리 >= 50)
 		{
 			SB_SetText("오류로 인한 중지 - 인벤토리 1칸이상 비우고 시작해"   ,2)
-			현재모드 := "대기모드"
-			guicontrol, ,현재모드,%현재모드%
+			CurrentMode := "대기모드"
+			guicontrol, ,CurrentMode,%CurrentMode%
 			return
 		}
 		if (Result_Msg_Addr == 0 || Result_Msg_Addr ="")
@@ -8660,8 +8696,8 @@ return
 		else
 		{
 			SB_SetText("알림창 메모리위치 구하기 실패",2)
-			현재모드 := "대기모드"
-			guicontrol,,현재모드,%현재모드%
+			CurrentMode := "대기모드"
+			guicontrol,,CurrentMode,%CurrentMode%
 			sleep,1000
 			return
 		}
@@ -8671,7 +8707,7 @@ return
 	sleep, % cookdelay
 	loop,
 	{
-		if (현재모드 != "상인단순제작")
+		if (CurrentMode != "상인단순제작")
 			break
 		sleep, 100
 		Keyclick(0) ;수련키트 장착
@@ -8689,7 +8725,7 @@ return
 		SB_SetText("은행넣기" RepairCount ,1)
 		loop,  ; 0.05초마다 결과 확인
 		{
-			if (현재모드 != "상인단순제작")
+			if (CurrentMode != "상인단순제작")
 				break
 			Read_Result_MSG := mem.readString(Result_Msg_Addr, 50, "UTF-16", aOffsets*)
 			ifinstring, Read_Result_MSG, 실패했습니다주세요.
@@ -8710,7 +8746,7 @@ return
 			}
 			sleep, 50
 		}
-		if (현재모드 != "상인단순제작")
+		if (CurrentMode != "상인단순제작")
 			break
 
 		Count_A := 0
@@ -8718,7 +8754,7 @@ return
 		sleep, 1000
 		loop,  ; 0.5초마다 결과 확인
 		{
-			if (현재모드 != "상인단순제작")
+			if (CurrentMode != "상인단순제작")
 				break
 			상승어빌 := mem.readString(상승어빌주소 + 0x64, 20, "UTF-16", aOffsets*)
 			상승어빌값 := mem.read(상승어빌주소 + 0x264, "UInt", aOffsets*)
@@ -8763,7 +8799,7 @@ return
 				break
 		}
 
-		if (현재모드 != "상인단순제작")
+		if (CurrentMode != "상인단순제작")
 			break
 		RunMemory("은행빼기")
 		SB_SetText("은행빼기" ,1)
@@ -8816,8 +8852,8 @@ return
 		if (인벤토리 >= 50)
 		{
 			SB_SetText("오류로 인한 중지 - 인벤토리 1칸이상 비우고 시작해"   ,2)
-			현재모드 := "대기모드"
-			guicontrol, ,현재모드,%현재모드%
+			CurrentMode := "대기모드"
+			guicontrol, ,CurrentMode,%CurrentMode%
 			return
 		}
 		if (Result_Msg_Addr == 0 || Result_Msg_Addr ="")
@@ -8860,8 +8896,8 @@ return
 		else
 		{
 			SB_SetText("알림창 메모리위치 구하기 실패",2)
-			현재모드 := "대기모드"
-			guicontrol,,현재모드,%현재모드%
+			CurrentMode := "대기모드"
+			guicontrol,,CurrentMode,%CurrentMode%
 			sleep,1000
 			return
 		}
@@ -8916,7 +8952,7 @@ return
 	sleep, % cookdelay
 	loop,
 	{
-		if (현재모드 != "상인어빌수련")
+		if (CurrentMode != "상인어빌수련")
 			break
 		sleep, 100
 		Keyclick(0) ;수련키트 장착
@@ -8934,7 +8970,7 @@ return
 		SB_SetText("은행넣기" RepairCount ,1)
 		loop,  ; 0.05초마다 결과 확인
 		{
-			if (현재모드 != "상인어빌수련")
+			if (CurrentMode != "상인어빌수련")
 				break
 			Read_Result_MSG := mem.readString(Result_Msg_Addr, 50, "UTF-16", aOffsets*)
 			ifinstring, Read_Result_MSG, 실패했습니다주세요.
@@ -8955,7 +8991,7 @@ return
 			}
 			sleep, 50
 		}
-		if (현재모드 != "상인어빌수련")
+		if (CurrentMode != "상인어빌수련")
 			break
 		gosub, 어빌리티읽어오기
 		Gui,ListView,어빌리티리스트
@@ -8969,7 +9005,7 @@ return
 				if (미용어빌 >= 미용제한)
 				{
 					SB_SetText(abillity_name "어빌" 미용제한 "달성, 대기" ,2)
-					gosub,현재모드_대기모드
+					gosub,CurrentMode_대기모드
 				}
 			}
 			else if (abillity_name = "요리")
@@ -8978,7 +9014,7 @@ return
 				if (요리어빌 >= 요리제한)
 				{
 					SB_SetText(abillity_name "어빌" 요리제한 "달성, 대기" ,2)
-					gosub,현재모드_대기모드
+					gosub,CurrentMode_대기모드
 				}
 			}
 			else if (abillity_name = "재단")
@@ -8987,7 +9023,7 @@ return
 				if (재단어빌 >= 재단제한)
 				{
 					SB_SetText(abillity_name "어빌" 재단제한 "달성, 대기" ,2)
-					gosub,현재모드_대기모드
+					gosub,CurrentMode_대기모드
 				}
 			}
 			else if (abillity_name = "세공")
@@ -8996,7 +9032,7 @@ return
 				if (세공어빌 >= 세공제한)
 				{
 					SB_SetText(abillity_name "어빌" 세공제한 "달성, 대기" ,2)
-					gosub,현재모드_대기모드
+					gosub,CurrentMode_대기모드
 				}
 			}
 			else if (abillity_name = "스미스")
@@ -9005,7 +9041,7 @@ return
 				if (스미스어빌 >= 스미스제한)
 				{
 					SB_SetText(abillity_name "어빌" 스미스제한 "달성, 대기" ,2)
-					gosub,현재모드_대기모드
+					gosub,CurrentMode_대기모드
 				}
 			}
 			else if (abillity_name = "목공")
@@ -9014,7 +9050,7 @@ return
 				if (목공어빌 >= 목공제한)
 				{
 					SB_SetText(abillity_name "어빌" 목공제한 "달성, 대기" ,2)
-					gosub,현재모드_대기모드
+					gosub,CurrentMode_대기모드
 				}
 			}
 			else if (abillity_name = "연금술")
@@ -9023,7 +9059,7 @@ return
 				if (연금술어빌 >= 연금술제한)
 				{
 					SB_SetText(abillity_name "어빌" 연금술제한 "달성, 대기" ,2)
-					gosub,현재모드_대기모드
+					gosub,CurrentMode_대기모드
 				}
 			}
 		}
@@ -9034,7 +9070,7 @@ return
 		SB_SetText("키아키트 장착" ,1)
 		loop,  ; 0.5초마다 결과 확인
 		{
-			if (현재모드 != "상인어빌수련")
+			if (CurrentMode != "상인어빌수련")
 				break
 			상승어빌 := mem.readString(상승어빌주소 + 0x64, 20, "UTF-16", aOffsets*)
 			상승어빌값 := mem.read(상승어빌주소 + 0x264, "UInt", aOffsets*)
@@ -9067,7 +9103,7 @@ return
 				break
 		}
 
-		if (현재모드 != "상인어빌수련")
+		if (CurrentMode != "상인어빌수련")
 			break
 		RunMemory("은행빼기")
 		SB_SetText("은행빼기" ,1)
@@ -9112,14 +9148,17 @@ return
 	}
 	CheatEngine_Buy_Unlimitted()
 	시작인벤토리 := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14) - floor((아이템갯수["식빵"]+49)/50)
-	GuiControlGet, 수련용길탐색딜레이
-	if (수련용길탐색딜레이 == 0)
+	if 수련길탐딜레이 = 1
+	{
+		GuiControlGet, 수련용길탐색딜레이
+	}
+	else
 	{
 		수련용길탐색딜레이 := 1000
 	}
 	loop,
 	{
-		if (현재모드 != "길탐수련")
+		if (CurrentMode != "길탐수련")
 			break
 
 		;FP최소값 구하기
@@ -9202,7 +9241,7 @@ return
 
 			loop, 41
 			{
-				if (현재모드 != "길탐수련")
+				if (CurrentMode != "길탐수련")
 					break
 				target := NPC이름 . A_Index
 				target := %target%
@@ -9294,11 +9333,11 @@ return
 ;-------------------------------------------------------
 ;{
 
-현재모드_대기모드:
+CurrentMode_대기모드:
 ;{
-현재모드 := "대기모드"
-Item := "현재모드"
-temp_variable := 현재모드
+CurrentMode := "대기모드"
+Item := "CurrentMode"
+temp_variable := CurrentMode
 Control, ChooseString, %Item%, %temp_variable%
 GuiControl,, %Item%, |
 GuiControl,, %Item%, %temp_variable%||
@@ -9311,30 +9350,12 @@ for Index, option in %Temp_list%
 return
 ;}
 
-현재모드_행깃구매:
-;{
-SB_SETTEXT("사용자가 행깃구매를 요청",2)
-현재모드 := "행깃구매"
-Item := "현재모드"
-temp_variable := 현재모드
-Control, ChooseString, %Item%, %temp_variable%
-GuiControl,, %Item%, |
-GuiControl,, %Item%, %temp_variable%||
-Temp_list := Item . "_DDLOptions"
-for Index, option in %Temp_list%
-{
-	if (temp_variable != option)
-		GuiControl,, %Item%, %option%
-}
-return
-;}
-
-현재모드_행깃교환:
+CurrentMode_행깃구매:
 ;{
 SB_SETTEXT("사용자가 행깃구매를 요청",2)
-현재모드 := "행깃교환"
-Item := "현재모드"
-temp_variable := 현재모드
+CurrentMode := "행깃구매"
+Item := "CurrentMode"
+temp_variable := CurrentMode
 Control, ChooseString, %Item%, %temp_variable%
 GuiControl,, %Item%, |
 GuiControl,, %Item%, %temp_variable%||
@@ -9347,11 +9368,29 @@ for Index, option in %Temp_list%
 return
 ;}
 
-현재모드_상인어빌수련:
+CurrentMode_행깃교환:
+;{
+SB_SETTEXT("사용자가 행깃구매를 요청",2)
+CurrentMode := "행깃교환"
+Item := "CurrentMode"
+temp_variable := CurrentMode
+Control, ChooseString, %Item%, %temp_variable%
+GuiControl,, %Item%, |
+GuiControl,, %Item%, %temp_variable%||
+Temp_list := Item . "_DDLOptions"
+for Index, option in %Temp_list%
+{
+	if (temp_variable != option)
+		GuiControl,, %Item%, %option%
+}
+return
+;}
+
+CurrentMode_상인어빌수련:
 ;{
 SB_SETTEXT("상인어빌수련 시작",2)
 gui,submit,nohide
-Item := "현재모드"
+Item := "CurrentMode"
 temp_variable := "상인어빌수련"
 Control, ChooseString, %Item%, %temp_variable%
 GuiControl,, %Item%, |
@@ -9365,11 +9404,11 @@ for Index, option in %Temp_list%
 return
 ;}
 
-현재모드_상인단순제작:
+CurrentMode_상인단순제작:
 ;{
 SB_SETTEXT("상인단순제작 시작",2)
 gui,submit,nohide
-Item := "현재모드"
+Item := "CurrentMode"
 temp_variable := "상인단순제작"
 Control, ChooseString, %Item%, %temp_variable%
 GuiControl,, %Item%, |
@@ -9383,11 +9422,11 @@ for Index, option in %Temp_list%
 return
 ;}
 
-현재모드_길탐수련:
+CurrentMode_길탐수련:
 ;{
 SB_SETTEXT("길탐수련 시작",2)
 gui,submit,nohide
-Item := "현재모드"
+Item := "CurrentMode"
 temp_variable := "길탐수련"
 Control, ChooseString, %Item%, %temp_variable%
 GuiControl,, %Item%, |
@@ -9407,9 +9446,14 @@ global 주먹사용여부
 global 사용할무기수량
 Gui, Submit, nohide
 
+if (이동속도 = 1)
+{
 CheatEngine_MoveSpeedTo(MoveSpeed)
+}
+if (게임배속 = 1)
+{
 CheatEngine_GameSpeedTo(게임배속)
-
+}
 if (차원결정유지 = 1)
 {
 	Dimension := mem.read(0x0058EB1C, "UInt", 0x10A)
@@ -9516,30 +9560,27 @@ NPC리스트실행:
 	LV_GetText(C8,row,8)
 	LV_GetText(C9,row,9)
 
-	gosub, 기본정보읽기
-
-	CheckIfMyNPC := TargetTitle . "의"
-	ifinstring, C5, %CheckIfMyNPC%
-	{
-		distanceX := Abs(C7 - 좌표X)
-		distanceY := Abs(C8 - 좌표Y)
-		if (distanceX > 16 || distanceY > 7)
-			return
-	}
-
-	if (C2 = 차원 && C4 = 맵번호)
-	{
-		WriteExecutableMemory("NPC호출용1")
-		WriteExecutableMemory("NPC호출용2")
-		mem.write(0x00527b54, C6, "UInt", aOffset*)
-		sleep, 50
-		RunMemory("NPC호출")
-		return
-	}
-
 	if A_GuiEvent = DoubleClick
 	{
-		return
+		gosub, 기본정보읽기
+		CheckIfMyNPC := TargetTitle . "의"
+		ifinstring, C5, %CheckIfMyNPC%
+		{
+			distanceX := Abs(C7 - 좌표X)
+			distanceY := Abs(C8 - 좌표Y)
+			if (distanceX > 16 || distanceY > 7)
+				return
+		}
+
+		if (C2 = 차원 && C4 = 맵번호)
+		{
+			WriteExecutableMemory("NPC호출용1")
+			WriteExecutableMemory("NPC호출용2")
+			mem.write(0x00527b54, C6, "UInt", aOffset*)
+			sleep, 50
+			RunMemory("NPC호출")
+			return
+		}
 	}
 	if A_GuiEvent = click
 	{
@@ -9679,32 +9720,38 @@ return
 
 원하는몬스터삭제:
 {
-	Gui, Submit, Nohide
-	gui, listview, 원하는몬스터리스트
-	SelectRowNum := 0
-	RowNumber = 0
-	loop
+    Gui, Submit, Nohide
+    gui, listview, 원하는몬스터리스트
+    SelectedRows := []
+    RowNumber = 0
+	Loop
 	{
 		RowNumber := LV_GetNext(RowNumber)
 		if not RowNumber
 			break
-		SelectRowNum := RowNumber
+		SelectedRows.Push(RowNumber)
 	}
-	LV_GetText(targetitem,SelectRowNum)
-	Setting_DELETE("원하는몬스터리스트", targetItem)
-	SB_SetText(targetItem " 삭제", 2)
-	gui, listview, 원하는몬스터리스트
-	Lv_Delete(SelectRowNum)
-	RowCount := LV_GetCount()
-	WantedMonsters := []
-	Loop, %RowCount%
-	{
-		LV_GetText(row,A_Index,1)
-		WantedMonsters.Push(row)  ; Add the current row's array to the main ListViewItems array
-	}
-	WantedMonsterlength := WantedMonsters.MaxIndex()
 
-	return
+    ; 선택된 행을 역순으로 순회하며 삭제
+    Loop, % SelectedRows.Length()
+    {
+        Index := SelectedRows.MaxIndex() - A_Index + 1
+        RowNumber := SelectedRows[Index]
+        LV_GetText(targetItem, RowNumber)
+        Setting_DELETE("원하는몬스터리스트", targetItem)
+        LV_Delete(RowNumber)
+        SB_SetText(targetItem " 삭제", 2)
+    }
+
+    ; 리스트 뷰 업데이트
+    WantedMonsters := []
+    Loop, LV_GetCount()
+    {
+        LV_GetText(row, A_Index, 1)
+        WantedMonsters.Push(row)
+    }
+    WantedMonsterlength := WantedMonsters.MaxIndex()
+    return
 }
 
 원하는아이템넣을아이템추가:
@@ -9730,30 +9777,38 @@ return
 
 원하는아이템넣을아이템삭제:
 {
-	Gui, Submit, Nohide
-	gui, listview, 원하는아이템리스트
-	SelectRowNum := 0
-	RowNumber = 0
-	loop
+    Gui, Submit, Nohide
+    gui, listview, 원하는아이템리스트
+    SelectedRows := []
+    RowNumber = 0
+	Loop
 	{
 		RowNumber := LV_GetNext(RowNumber)
 		if not RowNumber
 			break
-		SelectRowNum := RowNumber
+		SelectedRows.Push(RowNumber)
 	}
-	LV_GetText(targetitem,SelectRowNum)
-	Setting_DELETE("원하는아이템리스트", targetItem)
-	SB_SetText(targetItem " 삭제", 2)
-	gui, listview, 원하는아이템리스트
-	Lv_Delete(SelectRowNum)
-	WantedItems := []
-	Loop, %RowCount%
-	{
-		LV_GetText(row,A_Index,1)
-		WantedItems.Push(row)  ; Add the current row's array to the main ListViewItems array
-	}
-	WantedItemlength := % WantedItems.MaxIndex()
-	return
+
+    ; 선택된 행을 역순으로 순회하며 삭제
+    Loop, % SelectedRows.Length()
+    {
+        Index := SelectedRows.MaxIndex() - A_Index + 1
+        RowNumber := SelectedRows[Index]
+        LV_GetText(targetItem, RowNumber)
+        Setting_DELETE("원하는아이템리스트", targetItem)
+        LV_Delete(RowNumber)
+        SB_SetText(targetItem " 삭제", 2)
+    }
+
+    ; 리스트 뷰 업데이트
+    WantedItems := []
+    Loop, LV_GetCount()
+    {
+        LV_GetText(row, A_Index, 1)
+        WantedItems.Push(row)
+    }
+    WantedItemLength := WantedItems.MaxIndex()
+    return
 }
 
 은행넣을아이템추가:
@@ -9769,22 +9824,29 @@ return
 
 은행넣을아이템삭제:
 {
-gui, listview, 은행넣을아이템리스트
-SelectRowNum := 0
-RowNumber = 0
-loop
-{
-	RowNumber := LV_GetNext(RowNumber)
-	if not RowNumber
-		break
-	SelectRowNum := RowNumber
-}
-LV_GetText(targetitem,SelectRowNum)
-Setting_DELETE("은행넣을아이템리스트", targetItem)
-SB_SetText(targetItem " 삭제", 2)
-gui, listview, 은행넣을아이템리스트
-Lv_Delete(SelectRowNum)
-return
+    Gui, Submit, Nohide
+    gui, listview, 은행넣을아이템리스트
+    SelectedRows := []
+    RowNumber = 0
+	Loop
+	{
+		RowNumber := LV_GetNext(RowNumber)
+		if not RowNumber
+			break
+		SelectedRows.Push(RowNumber)
+	}
+
+    ; 선택된 행을 역순으로 순회하며 삭제
+    Loop, % SelectedRows.Length()
+    {
+        Index := SelectedRows.MaxIndex() - A_Index + 1
+        RowNumber := SelectedRows[Index]
+        LV_GetText(targetItem, RowNumber)
+        Setting_DELETE("은행넣을아이템리스트", targetItem)
+        LV_Delete(RowNumber)
+        SB_SetText(targetItem " 삭제", 2)
+    }
+    return
 }
 
 소각할아이템추가:
@@ -9800,22 +9862,29 @@ return
 
 소각할아이템삭제:
 {
-gui, listview, 소각할아이템리스트
-SelectRowNum := 0
-RowNumber = 0
-loop
-{
-	RowNumber := LV_GetNext(RowNumber)
-	if not RowNumber
-		break
-	SelectRowNum := RowNumber
-}
-LV_GetText(targetitem,SelectRowNum)
-Setting_DELETE("소각할아이템리스트", targetItem)
-SB_SetText(targetItem " 삭제", 2)
-gui, listview, 소각할아이템리스트
-Lv_Delete(SelectRowNum)
-return
+    Gui, Submit, Nohide
+    gui, listview, 소각할아이템리스트
+    SelectedRows := []
+    RowNumber = 0
+	Loop
+	{
+		RowNumber := LV_GetNext(RowNumber)
+		if not RowNumber
+			break
+		SelectedRows.Push(RowNumber)
+	}
+
+    ; 선택된 행을 역순으로 순회하며 삭제
+    Loop, % SelectedRows.Length()
+    {
+        Index := SelectedRows.MaxIndex() - A_Index + 1
+        RowNumber := SelectedRows[Index]
+        LV_GetText(targetItem, RowNumber)
+        Setting_DELETE("소각할아이템리스트", targetItem)
+        LV_Delete(RowNumber)
+        SB_SetText(targetItem " 삭제", 2)
+    }
+    return
 }
 
 블랙리스트추가메뉴:
@@ -10282,14 +10351,22 @@ return
 
 	if (리메듐사용여부 = 1 && 리메듐사용제한 > 현재HP && 현재HP != "")
 	{
-		RunMemory("무기탈거")
+		현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
+		if (현재무기 != 0 && 현재무기 != 49153)
+		{
+			RunMemory("무기탈거")
+		}
 		sleep, 1
 		마법사용("리메듐", "자신")
 	}
 
 	if (브렐사용여부 = 1 && 브렐사용제한 > 현재MP && 현재MP != "")
 	{
-		RunMemory("무기탈거")
+		현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
+		if (현재무기 != 0 && 현재무기 != 49153)
+		{
+			RunMemory("무기탈거")
+		}
 		sleep, 1
 		마법사용("브렐","자신")
 	}
@@ -10304,9 +10381,21 @@ return
 	{
 		guicontrol, ,마지막사냥장소, %맵번호%
 		guicontrol, ,마을귀환이유, 현재HP %현재HP% 가 %HP마을귀환사용제한% 보다 낮음
-		keyclick(오란의깃사용단축키)
-		sleep,100
 		SB_setText(HP마을귀환사용제한 "/" 현재HP "HP부족",1)
+		마을 := "포프레스네"
+		목적차원 := "감마"
+		설정된마을 := [4002]
+		if (오란의깃사용여부 = 1 && 오란의깃마을 = 마을 )
+		{
+			keyclick(오란의깃단축키)
+			sleep, 1000
+			맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
+			if (IsDataInList(맵번호, 설정된마을))
+				continue
+		}
+		라깃사용하기(마을,목적차원)
+		sleep,100
+
 		return
 	}
 
@@ -10321,9 +10410,19 @@ return
 	{
 		guicontrol, ,마지막사냥장소, %맵번호%
 		guicontrol, ,마을귀환이유, 현재MP %현재MP% 가 %MP마을귀환사용제한% 보다 낮음
-		keyclick(오란의깃사용단축키)
-		sleep,100
 		SB_setText(MP마을귀환사용제한 "/" 현재MP "HP부족",1)
+		마을 := "포프레스네"
+		목적차원 := "감마"
+		설정된마을 := [4002]
+		if (오란의깃사용여부 = 1 && 오란의깃마을 = 마을 )
+		{
+			keyclick(오란의깃단축키)
+			sleep, 1000
+			맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
+			if (IsDataInList(맵번호, 설정된마을))
+				continue
+		}
+		라깃사용하기(마을,목적차원)
 		return
 	}
 
@@ -10512,32 +10611,34 @@ Gui, Add, Text, x190 y185 w100 h20, 식빵
 Gui, Add, Text, +Right x290 y185 w25 h20 v식빵수량,
 ;캐릭터상태영역
 Gui, Add, GroupBox, x335 y30 w150 h180, 캐릭터 정보
-Gui, Add, Text, x345 y50 w25 h20 ,STR
-Gui, Add, Text, +Right x370 y50 w30 h20 vSTR,
-Gui, Add, Text, x415 y50 w20 h20 ,AGI
-Gui, Add, Text, +Right x440 y50 w30 h20 vAGI,
-Gui, Add, Text, x345 y70 w25 h20 ,INT
-Gui, Add, Text, +Right x370 y70 w30 h20 vINT,
-Gui, Add, Text, x415 y70 w20 h20 ,VIT
-Gui, Add, Text, +Right x440 y70 w30 h20 vVIT,
+Gui, Add, Text, x345 y48 w25 h18 ,STR
+Gui, Add, Text, +Right x370 y48 w30 h18 vSTR,
+Gui, Add, Text, x415 y48 w20 h18 ,AGI
+Gui, Add, Text, +Right x440 y48 w30 h18 vAGI,
+Gui, Add, Text, x345 y66 w25 h18 ,INT
+Gui, Add, Text, +Right x366 y66 w30 h18 vINT,
+Gui, Add, Text, x415 y66 w20 h18 ,VIT
+Gui, Add, Text, +Right x440 y66 w30 h18 vVIT,
 
-Gui, Add, Text, x345 y90 w70 h20 ,QUANTITY
-Gui, Add, Text, +Right x420 y90 w50 h20 vQUANTITY,
-Gui, Add, Text, x345 y110 w60 h20 ,GALRID
-Gui, Add, Text, +Right x410 y110 w60 h20 vGALRID,
-Gui, Add, Text, x345 y130 w60 h20 ,VOTE
-Gui, Add, Text, +Right x410 y130 w60 h20 vVOTE,
-Gui, Add, Text, x345 y150 w60 h20 ,FRAME
-Gui, Add, Text, +Right x410 y150 w60 h20 vFRAME,
+Gui, Add, Text, x345 y84 w70 h18 ,QUANTITY
+Gui, Add, Text, +Right x420 y84 w50 h18 vQUANTITY,
+Gui, Add, Text, x345 y102 w60 h18 ,GALRID
+Gui, Add, Text, +Right x410 y102 w60 h18 vGALRID,
+Gui, Add, Text, x345 y120 w60 h18 ,VOTE
+Gui, Add, Text, +Right x410 y120 w60 h18 vVOTE,
+Gui, Add, Text, x345 y138 w60 h18 ,FRAME
+Gui, Add, Text, +Right x410 y138 w60 h18 vFRAME,
 
-Gui, Add, Text, x345 y170 w130 h20 v좌표,
-Gui, Add, Text, x345 y190 w130 h15 v맵,
+Gui, Add, Text, x345 y156 w130 h18 v좌표,
+Gui, Add, Text, x345 y174 w130 h30 v맵,
 
 Gui, Add, CheckBox, x15 y220 v아템먹기여부, 먹자(+채광)
 Gui, Add, CheckBox, x105 y220 v자동사냥여부, 자동사냥
 Gui, Add, CheckBox, x195 y220 v자동이동여부, 자동이동
-Gui, Add, DropDownList, x280 y215 w80 v현재모드,대기모드||자동감응|일반자사|포남자사|포북자사|광물캐기|배달하기|행깃구매|행깃교환
-Gui, Add, CheckBox, x375 y220 v버스기사모드, 버스기사모드
+Gui, Add, DropDownList, x280 y215 w80 vCurrentMode,대기모드||자동감응|일반자사|포남자사|포북자사|광물캐기|배달하기|나프마통작|행깃구매|행깃교환
+Gui, Add, Button, x375 y213 w100 g실행 v실행, 실행
+Gui, Add, Button, x375 y213 w100 Hidden g중지 v중지, 중지
+
 Gui, Add, GroupBox, x15 y240 w470 h165, 상태창
 ;HP 영역
 Gui, Add, Text, x25 y260 w30 h20 ,HP
@@ -10557,6 +10658,7 @@ Gui, Add, Text, x25 y360 w140 h20,리메듐사용
 Gui, Add, checkbox, x25 y375 w20 h20 v리메듐사용여부,
 Gui, Add, Edit, x50 y375 w55 h20 v리메듐사용제한,
 
+
 ;MP 영역
 Gui, Add, Text, x180 y260 w30 h20 ,MP
 Gui, Add, Text, +Right x200 y260 w110 h20 vMP,
@@ -10566,7 +10668,7 @@ Gui, Add, checkbox, x180 y295 w20 h20 v마나포션사용여부,
 Gui, Add, Edit, x205 y295 w55 h20 v마나포션사용제한,
 Gui, Add, DropDownList, x265 y295 w50 h60 v마나포션사용단축키,5|6||7|8
 
-Gui, Add, Text, x180 y320 w140 h20,마을귀환(오란의깃)
+Gui, Add, Text, x180 y320 w140 h20,마을귀환
 Gui, Add, checkbox, x180 y335 w20 h20  vMP마을귀환사용여부,
 Gui, Add, Edit, x205 y335 w55 h20 vMP마을귀환사용제한,
 
@@ -10641,40 +10743,45 @@ Gui, Add, checkbox, x75 y245 h20  v7번, 7번
 Gui, Add, checkbox, x120 y245 h20  v8번, 8번
 
 Gui, Add, GroupBox, x15 y275 w82 h145,엘
-Gui, Add, checkbox, x25 y295 h20  v리메듐사용, 리메듐
-Gui, Add, checkbox, x25 y315 h20 w70 v라리메듐사용, 라리메듐
-Gui, Add, checkbox, x25 y335 h20 w70 v엘리메듐사용, 엘리메듐
-Gui, Add, checkbox, x25 y355 h20  v쿠로사용, 쿠로
-Gui, Add, checkbox, x25 y375 h20 w70 v빛의갑옷사용, 빛의갑옷
-Gui, Add, checkbox, x25 y395 h20 w70 v공포보호사용, 공포보호
+Gui, Add, checkbox, x25 y295 h15  v리메듐사용, 리메듐
+Gui, Add, checkbox, x25 y315 h15 w70 v라리메듐사용, 라리메듐
+Gui, Add, checkbox, x25 y335 h15 w70 v엘리메듐사용, 엘리메듐
+Gui, Add, checkbox, x25 y355 h15  v쿠로사용, 쿠로
+Gui, Add, checkbox, x25 y375 h15 w70 v빛의갑옷사용, 빛의갑옷
+Gui, Add, checkbox, x25 y395 h15 w70 v공포보호사용, 공포보호
 
 coord_x := 15 + 82 * 1
-Gui, Add, GroupBox, x%coord_x% y275 w82 h145,다뉴
+Gui, Add, GroupBox, x%coord_x% y275 w82 h120,다뉴
 coord_x := 25 + 82 * 1
-Gui, Add, checkbox, x%coord_x% h20  y295 v다라사용, 다라
-Gui, Add, checkbox, x%coord_x% h20  y315 v브렐사용, 브렐
-Gui, Add, checkbox, x%coord_x% h20  y335 v브레마사용, 브레마
-Gui, Add, checkbox, x%coord_x% h20  y355 w70 v물의갑옷사용, 물의갑옷
-Gui, Add, checkbox, x%coord_x% h20  y375 v감속사용, 감속
-Gui, Add, checkbox, x%coord_x% h20  y395 v나프사용, 나프
+Gui, Add, checkbox, x%coord_x% h15  y295 v다라사용, 다라
+Gui, Add, checkbox, x%coord_x% h15  y315 v브렐사용, 브렐
+Gui, Add, checkbox, x%coord_x% h15  y335 v브레마사용, 브레마
+Gui, Add, checkbox, x%coord_x% h15  y355 w70 v물의갑옷사용, 물의갑옷
+Gui, Add, checkbox, x%coord_x% h15  y375 v감속사용, 감속
+Gui, Add, checkbox, x%coord_x% h15  y395 v나프사용, 나프(엘)
 coord_x := 15 + 82 * 2
 Gui, Add, GroupBox, x%coord_x% y275 w77 h85,마하
 coord_x := 25 + 82 * 2
-Gui, Add, checkbox, x%coord_x% h20  y295 v마스사용, 마스
-Gui, Add, checkbox, x%coord_x% h20  y315 v라크사용, 라크
-Gui, Add, checkbox, x%coord_x% h20  y335 v번개사용, 번개
+Gui, Add, checkbox, x%coord_x% h15  y295 v마스사용, 마스
+Gui, Add, checkbox, x%coord_x% h15  y315 v라크사용, 라크
+Gui, Add, checkbox, x%coord_x% h15  y335 v번개사용, 번개
 
-Gui, Add, checkbox, x%coord_x% y375 w80 h20 v원거리타겟,원거리타겟
-Gui, Add, checkbox, x%coord_x% y395 w80 h20 v리메듐타겟,리메듐타겟
+Gui, Add, checkbox, x%coord_x% y360 w80 h20 v원거리타겟,원거리타겟
+Gui, Add, checkbox, x%coord_x% y380 w80 h20 v리메듐타겟,리메듐타겟
 coord_x += 100
-Gui, Add, Edit, x%coord_x%  y372 w100 h20 v원거리타겟아이디,이름
-Gui, Add, Edit, x%coord_x%  y392 w100 h20 v리메듐타겟아이디,이름
+Gui, Add, Edit, x%coord_x%  y360 w100 h20 v원거리타겟아이디,이름
+Gui, Add, Edit, x%coord_x%  y380 w100 h20 v리메듐타겟아이디,이름
 coord_x += 100
-Gui, Add, Edit, x%coord_x%  y372 w30 h20 v특수원거리타겟OID,0x0
-Gui, Add, Edit, x%coord_x%  y392 w30 h20 v특수리메듐타겟OID,0x0
+Gui, Add, Edit, x%coord_x%  y360 w30 h20 v특수원거리타겟OID,0x0
+Gui, Add, Edit, x%coord_x%  y380 w30 h20 v특수리메듐타겟OID,0x0
 coord_x += 30
-Gui, Add, Radio, x%coord_x%  y372 w50 h20 checked v회복, 회복
-Gui, Add, Radio, x%coord_x%  y392 w50 h20 v수리, 수리
+Gui, Add, Radio, x%coord_x%  y360 w50 h20 checked v회복, 회복
+Gui, Add, Radio, x%coord_x%  y380 w50 h20 v수리, 수리
+
+coord_x := 25 + 82 * 2
+Gui, Add, checkbox, x%coord_x% y400 w100 h20 v버스기사모드,버스기사모드
+coord_x += 100
+Gui, Add, checkbox, x%coord_x% y400 w100 h20 v자동그레이드,자동그레이드
 
 coord_x := 15 + 82 * 3 - 5
 Gui, Add, GroupBox, x%coord_x% y275 w77 h85,브리깃드
@@ -10781,6 +10888,20 @@ Y_coord_ := Y_coord - 3
 Gui, Add, CheckBox, x15 y%Y_coord% h20 w40 v길탐색5번사용여부, 5번
 Gui, Add, DropDownList, x60 y%Y_coord_% w150 v길탐색5번목적지, 로랜시아 목공소||로랜시아 퍼브|로랜시아 우체국|에필로리아 퍼브|에필로리아 우체국|에필로리아 목공소|세르니카 퍼브|세르니카 우체국|세르니카 목공소|포프레스네 무기상점
 
+
+Y_coord += 22
+Y_coord_ := Y_coord - 3
+Gui, Add, checkbox, x15 y%Y_coord% w120 h20 v수련길탐딜레이, 수련길탐딜레이
+Gui, Add, EDIT, x125 y%Y_coord_% w70 h20 v수련용길탐색딜레이,
+Y_coord += 22
+Y_coord_ := Y_coord - 3
+Gui, Add, checkbox, x15 y%Y_coord% w100 h20 v이동속도사용, 이동속도
+Gui, Add, EDIT, x125 y%Y_coord_% w70 h20 g사용자선택 vMoveSpeed,
+Y_coord += 22
+Y_coord_ := Y_coord - 3
+Gui, Add, checkbox, x15 y%Y_coord% w100 h20 v게임배속사용, 게임배속
+Gui, Add, EDIT, x125 y%Y_coord_% w70 h20 g사용자선택 v게임배속,
+
 Y_coord := 35
 Gui, Add, Text, x215 y%Y_coord% h20 w70, 목적지가기
 Y_coord -= 3
@@ -10825,9 +10946,10 @@ Gui, Add, Button, x290 y%Y_coord% h20 w60, 감옥섬
 Gui, Add, Button, x355 y%Y_coord% h20 w60, 라그네토
 Gui, Add, Button, x420 y%Y_coord% h20 w60, 보물섬
 
-Gui, Add, Text, x15 y245 h15 w80, 좌표리스트
-Gui, Add, button, x370 y240 w80 h20 g좌표리스트추가 , 좌표추가
-Gui, Add, ListView, x15 y265 h135 w465 v좌표리스트 g좌표리스트실행 +altsubmit, 번호|순번|맵이름|X|Y|Z
+
+Gui, Add, Text, x15 y265 h15 w80, 좌표리스트
+Gui, Add, button, x370 y260 w80 h20 g좌표리스트추가 , 좌표추가
+Gui, Add, ListView, x15 y285 h135 w465 v좌표리스트 g좌표리스트실행 +altsubmit, 번호|순번|맵이름|X|Y|Z
 LV_ModifyCol(1,50)
 LV_ModifyCol(2,50)
 LV_ModifyCol(3,200)
@@ -10983,17 +11105,18 @@ x_coord := x_coord + 90
 Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g게임내지침서사용, 원래지침서
 y_coord := y_coord + 30
 x_coord := 15 + 10
-Gui, Add, button, x%x_coord% y%y_coord% w125 h20 g현재모드_상인어빌수련, 제작 - 재료소모X
+Gui, Add, button, x%x_coord% y%y_coord% w125 h20 gCurrentMode_상인어빌수련, 제작 - 재료소모X
 x_coord := 15 + 10 + 125+10
-Gui, Add, button, x%x_coord% y%y_coord% w125 h20 g현재모드_상인단순제작, 제작 - 단순클릭
+Gui, Add, button, x%x_coord% y%y_coord% w125 h20 gCurrentMode_상인단순제작, 제작 - 단순클릭
 x_coord := 15 + 10 + 90 * 4
 Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g중지, 중지
+/*
 x_coord := 15
 y_coord := 150
 Gui, Add, GroupBox, x%x_coord% y%y_coord% w466 h120, 끝없는 모험
 x_coord := 25
 y_coord := 175
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g현재모드_길탐수련, 길탐수련
+Gui, Add, button, x%x_coord% y%y_coord% w80 h20 gCurrentMode_길탐수련, 길탐수련
 x_coord := x_coord + 90
 Gui, Add, button, x%x_coord% y%y_coord% w80 h20 , 배달수련
 x_coord := x_coord + 90
@@ -11006,7 +11129,7 @@ y_coord := 175+30
 x_coord := 25
 Gui, Add, button, x%x_coord% y%y_coord% w80 h20 ,특오교환
 x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g현재모드_행깃구매, 행깃구매
+Gui, Add, button, x%x_coord% y%y_coord% w80 h20 gCurrentMode_행깃구매, 행깃구매
 x_coord := x_coord + 90
 Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g골드바사기, 골드바사기
 x_coord := x_coord + 90
@@ -11073,6 +11196,7 @@ x_coord := x_coord + 90
 Gui, Add, button, x%x_coord% y%y_coord% w80 h20
 x_coord := x_coord + 90
 Gui, Add, button, x%x_coord% y%y_coord% w80 h20
+*/
 
 gui, tab, 8 ;기본|설정|아템|좌표|검색|기타
 
@@ -11127,14 +11251,12 @@ Gui, Add, text, x280 y130 w100 h20, 좌측상단알림주소
 Gui, Add, text, x280 y150 w100 h20, 상인어빌상승어빌
 Gui, Add, text, x280 y170 w100 h20, 최근상승어빌주소
 Gui, Add, text, x280 y190 w100 h20, 마지막사냥장소
-Gui, Add, text, x280 y210 w100 h20, 수련길탐딜레이
-Gui, Add, text, x280 y230 w100 h20, 이동속도
-Gui, Add, text, x280 y250 w100 h20, 게임배속
+
 Gui, Add, text, x280 y270 w100 h20, 무기수리필요
 Gui, Add, text, x280 y290 w100 h20, 식빵구매필요
 Gui, Add, text, x280 y310 w100 h20, 라깃구매필요
 Gui, Add, text, x280 y330 w100 h20,
-Gui, Add, text, x280 y350 w100 h20, 현재모드
+Gui, Add, text, x280 y350 w100 h20, CurrentMode
 
 Gui, Add, EDIT, x395 y50 w70 h20 v무기교체딜레이,
 Gui, Add, EDIT, x395 y70 w70 h20 vNPC대화딜레이,
@@ -11144,13 +11266,11 @@ Gui, Add, EDIT, x395 y130 w70 h20 vResult_Msg_Addr ,
 Gui, Add, EDIT, x395 y150 w70 h20 v상승어빌 ,
 Gui, Add, EDIT, x395 y170 w70 h20 v상승어빌주소 ,
 Gui, Add, EDIT, x395 y190 w70 h20 v마지막사냥장소 ,
-Gui, Add, EDIT, x395 y210 w70 h20 v수련용길탐색딜레이,
-Gui, Add, EDIT, x395 y230 w70 h20 g사용자선택 vMoveSpeed,
-Gui, Add, EDIT, x395 y250 w70 h20 g사용자선택 v게임배속,
-Gui, Add, EDIT, x395 y270 w70 h20 v무기수리필요상태,
-Gui, Add, EDIT, x395 y290 w70 h20 v식빵구매필요상태,
-Gui, Add, EDIT, x395 y310 w70 h20 v라깃구매필요상태,
-Gui, Add, EDIT, x395 y330 w70 h20 vURL,
+
+Gui, Add, text, x395 y270 w70 h20 v무기수리필요상태,
+Gui, Add, text, x395 y290 w70 h20 v식빵구매필요상태,
+Gui, Add, text, x395 y310 w70 h20 v라깃구매필요상태,
+Gui, Add, text, x395 y330 w70 h20 vURL,
 
 gui, tab, 9 ;스킬관련
 forgui8items := ["SpellList","SkillListA"]
@@ -11332,10 +11452,6 @@ Return
 
 메인루프: ; 1. 메인 스레드
 ;{
-
-Global 현재모드 ; 대기모드 , 행깃구매 ,
-Global 서버상태
-
 	;만약 TargetTitle이 없다면 1000ms (= 1초)간 대기
 	Loop,
 	{
@@ -11364,17 +11480,21 @@ Global 서버상태
 				sleep, 1000
 				FormatTime, CurrentTime,, HH:mm  ; 현재 시간을 HH:mm 형식으로 가져옵니다.
 				SB_SetText("정상(" CurrentTime ")" ,4)
-				if (서버상태) ;만약 서버접속중이 확인되면 현재 모드를 확인
+				if !(Coin)
 				{
-					guicontrolget,현재모드
+					continue
+				}
+				else if (서버상태) ;만약 서버접속중이 확인되면 현재 모드를 확인
+				{
+					guicontrolget,CurrentMode
 					;만약 "대기모드" 라면
 					if !(서버상태)
 						break
-					else if (현재모드 = "대기모드")
+					else if (CurrentMode = "대기모드")
 					{
 						loop,
 						{
-							if (현재모드 = "대기모드") && (서버상태)
+							if (CurrentMode = "대기모드") && (서버상태) && (Coin)
 							{
 								SB_SetText("대기모드",1)
 								sleep,1000
@@ -11386,7 +11506,7 @@ Global 서버상태
 							}
 						}
 					}
-					else if (현재모드 = "나프마통작")
+					else if (CurrentMode = "나프마통작")
 					{
 						gui, submit, nohide
 							if (수리 = 1)
@@ -11407,7 +11527,7 @@ Global 서버상태
 							}
 						loop,
 						{
-							if (현재모드 = "나프마통작") && (서버상태)
+							if (CurrentMode = "나프마통작") && (서버상태) && (Coin)
 							{
 								gui, submit, nohide
 								SB_SetText("나프마통작",1)
@@ -11438,13 +11558,13 @@ Global 서버상태
 							}
 						}
 					}
-					else if (현재모드 = "마잠또는밥통")
+					else if (CurrentMode = "마잠또는밥통")
 					{
 						AttackStartCounter := A_TickCount
 						SetTimer, 스킬사용하기, off
 						loop,
 						{
-							if (현재모드 = "마잠또는밥통") && (서버상태)
+							if (CurrentMode = "마잠또는밥통") && (서버상태) && (Coin)
 							{
 								gui, submit, nohide
 								SB_SetText("마잠또는밥통",1)
@@ -11470,18 +11590,18 @@ Global 서버상태
 							}
 						}
 					}
-					else if (현재모드 = "자동감응")
+					else if (CurrentMode = "자동감응")
 					{
 						guicontrol,,포레스트네자동대화,1
 						loop,
 						{
 							gui,submit,nohide
 							sleep, 1000
-							if (현재모드 = "자동감응") && (서버상태)
+							if (CurrentMode = "자동감응") && (서버상태) && (Coin)
 							{
 								맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
 								NPC_TALK_DELAY := A_TickCount - NPC_TALK_DELAYCOUNT
-								if ( NPC_TALK_DELAY > 60000 && ( 현재모드 = "포남자사" || 현재모드 = "포북자사" ) && 포레스트네자동대화 = 1 )
+								if ( NPC_TALK_DELAY > 60000 && ( CurrentMode = "포남자사" || CurrentMode = "포북자사" ) && 포레스트네자동대화 = 1 )
 								{
 									NPC_TALK_DELAYCOUNT := A_TickCount
 									NPC대화딜레이+=1
@@ -11509,11 +11629,11 @@ Global 서버상태
 							}
 						}
 					}
-					else if (현재모드 = "행깃구매") ;만약 "행깃구매" 모드라면
+					else if (CurrentMode = "행깃구매") ;만약 "행깃구매" 모드라면
 					{
 						loop,
 						{
-							if (현재모드 = "행깃구매") && (서버상태)
+							if (CurrentMode = "행깃구매") && (서버상태) && (Coin)
 							{
 								gosub, 행깃구매
 							}
@@ -11524,11 +11644,11 @@ Global 서버상태
 							}
 						}
 					}
-					else if (현재모드 = "행깃교환") ;만약 "행깃구매" 모드라면
+					else if (CurrentMode = "행깃교환") ;만약 "행깃구매" 모드라면
 					{
 						loop,
 						{
-							if (현재모드 = "행깃교환") && (서버상태)
+							if (CurrentMode = "행깃교환") && (서버상태) && (Coin)
 							{
 								gosub, 행깃교환
 							}
@@ -11539,11 +11659,11 @@ Global 서버상태
 							}
 						}
 					}
-					else if (현재모드 = "상인어빌수련") ;만약 "상인수련" 모드라면
+					else if (CurrentMode = "상인어빌수련") ;만약 "상인수련" 모드라면
 					{
 						loop,
 						{
-							if (현재모드 = "상인어빌수련") && (서버상태)
+							if (CurrentMode = "상인어빌수련") && (서버상태) && (Coin)
 							{
 								gosub, 상인어빌수련
 							}
@@ -11554,11 +11674,11 @@ Global 서버상태
 							}
 						}
 					}
-					else if (현재모드 = "상인단순제작") ;만약 "단순제작" 모드라면
+					else if (CurrentMode = "상인단순제작") ;만약 "단순제작" 모드라면
 					{
 						loop,
 						{
-							if (현재모드 = "상인단순제작") && (서버상태)
+							if (CurrentMode = "상인단순제작") && (서버상태) && (Coin)
 							{
 								gosub, 상인단순제작
 							}
@@ -11569,12 +11689,12 @@ Global 서버상태
 							}
 						}
 					}
-					else if (현재모드 = "광물캐기") ;만약 "광물캐기" 모드라면
+					else if (CurrentMode = "광물캐기") ;만약 "광물캐기" 모드라면
 					{
 						guicontrol,,일무기,1
 						loop,
 						{
-							if (현재모드 = "광물캐기") && (서버상태)
+							if (CurrentMode = "광물캐기") && (서버상태) && (Coin)
 							{
 								gui,submit,nohide
 								sleep, 1000
@@ -11594,7 +11714,7 @@ Global 서버상태
 								if ( 자사_현재선택 != 0 )
 								{
 									현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
-									if (현재무기 != 45057)
+									if (현재무기 != 45057) ;활
 										keyclick(1)
 									gui,listview,몬스터리스트
 									lv_gettext(현재타겟이름,자사_현재선택,5)
@@ -11658,7 +11778,7 @@ Global 서버상태
 								else if (아템_현재선택 != 0 )
 								{
 									현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
-									if (현재무기 != 53249)
+									if (현재무기 != 53249) ;곡괭이
 										keyclick(2)
 									gui,listview,아이템리스트
 									lv_gettext(현재타겟이름,아템_현재선택,5)
@@ -11842,12 +11962,12 @@ Global 서버상태
 							}
 						}
 					}
-					else if (현재모드 = "배달하기") ;만약 "배달하기" 모드라면
+					else if (CurrentMode = "배달하기") ;만약 "배달하기" 모드라면
 					{
 						SB_SetText("배달하기",1)
 						loop,
 						{
-							if (현재모드 = "배달하기") && (서버상태)
+							if (CurrentMode = "배달하기") && (서버상태) && (Coin)
 							{
 								gosub, 아이템읽어오기
 								if (아이템갯수["라스의깃"] < 2 || 아이템갯수["오란의깃"] < 2)
@@ -12201,11 +12321,11 @@ Global 서버상태
 								break
 						}
 					}
-					else if (현재모드 = "포남자사" || 현재모드 = "포북자사") ;만약 특별한 "자사" 모드라면
+					else if (CurrentMode = "포남자사" || CurrentMode = "포북자사") ;만약 특별한 "자사" 모드라면
 					{
 						loop,
 						{
-							if (현재모드 = "포남자사" || 현재모드 = "포북자사") && (서버상태)
+							if (CurrentMode = "포남자사" || CurrentMode = "포북자사") && (서버상태) && (Coin)
 							{
 								gui,submit,nohide
 								sleep, 300
@@ -12273,7 +12393,7 @@ Global 서버상태
 									}
 									else if (무기수리필요 || 식빵구매필요 || 라깃구매필요) && (GALRID < 100000)
 									{
-										gosub, 현재모드_대기모드
+										gosub, CurrentMode_대기모드
 										SB_SetText("갈리드가 부족합니다.",2)
 										break
 									}
@@ -12302,7 +12422,7 @@ Global 서버상태
 									}
 
 								}
-								else if (( 현재모드 = "포남자사" && 맵번호 != 4005 ) || ( 현재모드 = "포북자사" && 맵번호 != 4003 ))
+								else if (( CurrentMode = "포남자사" && 맵번호 != 4005 ) || ( CurrentMode = "포북자사" && 맵번호 != 4003 ))
 								{
 									IsMoving := mem.read(0x0058EB1C, "UInt", 0x174)
 									if( 맵번호 = 4002 ) ; 마을이라면
@@ -12311,7 +12431,7 @@ Global 서버상태
 										{
 											continue
 										}
-										else if (현재모드 = "포남자사")
+										else if (CurrentMode = "포남자사")
 										{
 											SB_SetText("포남자사: 리노아호출중",2)
 											호출할NPC := "리노아"
@@ -12329,7 +12449,7 @@ Global 서버상태
 												continue
 											}
 										}
-										else if (현재모드 = "포북자사" && IsMoving = 0)
+										else if (CurrentMode = "포북자사" && IsMoving = 0)
 										{
 											keyclick("AltR")
 											sleep, 100
@@ -12352,7 +12472,7 @@ Global 서버상태
 										continue
 									}
 								}
-								else if ( NPC_TALK_DELAY > 60000 && ( 현재모드 = "포남자사" || 현재모드 = "포북자사" ) && 포레스트네자동대화 = 1 )
+								else if ( NPC_TALK_DELAY > 60000 && ( CurrentMode = "포남자사" || CurrentMode = "포북자사" ) && 포레스트네자동대화 = 1 )
 								{
 									if (포레스트네자동대화딜레이 = "10분" )
 										NPC대화반복시간 := 10
@@ -12379,9 +12499,9 @@ Global 서버상태
 									{
 										keyclick(1)
 									}
-									if ( 현재모드 = "포북자사" )
+									if ( CurrentMode = "포북자사" )
 										mem.writeString(0x005901E5, "빛나는가루", "UTF-16", aOffsets*)
-									else if ( 현재모드 = "포남자사" )
+									else if ( CurrentMode = "포남자사" )
 										mem.writeString(0x005901E5, "생명의콩", "UTF-16", aOffsets*)
 									gui,listview,몬스터리스트
 									lv_gettext(현재타겟이름,자사_현재선택,5)
@@ -12605,7 +12725,9 @@ Global 서버상태
 								}
 								else if (아템_현재선택 != 0  && 아템먹기여부 = 1)
 								{
-									RunMemory("무기탈거")
+									현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
+									if (현재무기 != 0 && 현재무기 != 49153)
+										RunMemory("무기탈거")
 									gui,listview,아이템리스트
 									lv_gettext(현재타겟이름,아템_현재선택,5)
 									lv_gettext(현재타겟OID,아템_현재선택,6)
@@ -12687,7 +12809,9 @@ Global 서버상태
 								}
 								else if (좌표갯수 > 0 && 자동이동여부 = 1)
 								{
-									RunMemory("무기탈거")
+									현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
+									if (현재무기 != 0 && 현재무기 != 49153)
+										RunMemory("무기탈거")
 									gui,listview,좌표리스트
 									LV_GetText(목표X, 좌표_현재선택, 4)
 									LV_GetText(목표Y, 좌표_현재선택, 5)
@@ -12761,11 +12885,11 @@ Global 서버상태
 
 						}
 					}
-					else if (현재모드 = "일반자사" ) ;만약 "포남자사" 모드라면
+					else if (CurrentMode = "일반자사" ) ;만약 "포남자사" 모드라면
 					{
 						loop,
 						{
-							if (현재모드 = "일반자사") && (서버상태)
+							if (CurrentMode = "일반자사") && (서버상태) && (Coin)
 							{
 								gui,submit,nohide
 								sleep, 300
@@ -12803,9 +12927,9 @@ Global 서버상태
 									{
 										keyclick(1)
 									}
-									if ( 현재모드 = "포북자사" )
+									if ( CurrentMode = "포북자사" )
 										mem.writeString(0x005901E5, "빛나는가루", "UTF-16", aOffsets*)
-									else if ( 현재모드 = "포남자사" )
+									else if ( CurrentMode = "포남자사" )
 										mem.writeString(0x005901E5, "생명의콩", "UTF-16", aOffsets*)
 									gui,listview,몬스터리스트
 									lv_gettext(현재타겟이름,자사_현재선택,5)
@@ -12838,7 +12962,7 @@ Global 서버상태
 									else ; 그 선택된 몬스터가 새로운 몬스터가 아니라면 ;블랙리스트에 등록할지 말지 결정
 									{
 										현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
-										if (현재무기 = 45057 || 현재무기 = 45058)
+										if (현재무기 = 45057 || 현재무기 = 45058) ;활
 											continue
 										else if (근접체크 = 1 && 공격여부 = 0) ;도착했다면
 										{
@@ -13033,7 +13157,9 @@ Global 서버상태
 								}
 								else if (아템_현재선택 != 0  && 아템먹기여부 = 1)
 								{
-									RunMemory("무기탈거")
+									현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
+									if (현재무기 != 0 && 현재무기 != 49153)
+										RunMemory("무기탈거")
 									gui,listview,아이템리스트
 									lv_gettext(현재타겟이름,아템_현재선택,5)
 									lv_gettext(현재타겟OID,아템_현재선택,6)
@@ -13116,7 +13242,9 @@ Global 서버상태
 								}
 								else if (좌표갯수 > 0 && 자동이동여부 = 1)
 								{
-									RunMemory("무기탈거")
+									현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
+									if (현재무기 != 0 && 현재무기 != 49153)
+										RunMemory("무기탈거")
 									gui,listview,좌표리스트
 									LV_GetText(목표X, 좌표_현재선택, 4)
 									LV_GetText(목표Y, 좌표_현재선택, 5)
@@ -13205,6 +13333,10 @@ Global 서버상태
 		{
 			SB_SetText("자동재접속시작",2)
 			인벤토리 := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
+			if !(Coin)
+			{
+				continue
+			}
 			if !(인벤토리 > 0 && 인벤토리 <= 50)
 			{
 				SB_SetText("비정상",4)
@@ -13431,7 +13563,7 @@ Global 서버상태
 		}
 		;}
 	}
-
+	SB_SetText("코드끝",1)
 return
 ;}
 
@@ -13479,7 +13611,7 @@ if (자동사냥여부 = 1 || 아템먹기여부 = 1)
 }
 if (아템먹기여부 = 1)
 {
-	if (현재모드 = "광물캐기")
+	if (CurrentMode = "광물캐기")
 		gosub, 메모리검색_아이템_광산
 	else
 		gosub, 메모리검색_아이템
@@ -14295,6 +14427,7 @@ return
 ;}
 
 나프마통작:
+;{
 gui, submit, nohide
 if (나프사용 = 1)
 {
@@ -14326,11 +14459,43 @@ if (엘리메듐사용 = 1)
 	마법사용("엘리메듐", 특수리메듐타겟OID)
 	sleep, 1
 }
+상승어빌 := mem.readString(상승어빌주소 + 0x64, 20, "UTF-16", aOffsets*)
+if (IsWordInList(상승어빌, 마통작마법))
+{
+	상승어빌값 := mem.read(상승어빌주소 + 0x264, "UInt", aOffsets*)
+	상승어빌카운트 := mem.read(상승어빌주소 + 0x264 + 0x8, "UShort", aOffsets*)
+	필요어빌카운트 := mem.read(상승어빌주소 + 0x264 + 0xA, "UShort", aOffsets*)
+	raisedCount := UpdateAbility(상승어빌, 상승어빌값, 상승어빌카운트, 필요어빌카운트)
+	if (raisedCount > 0)
+	{
+		; 가장 최근에 오른 4가지 어빌 중에서 업데이트
+		found := false
+		for index, ability in abilities {
+			if (ability.Name = 상승어빌) {
+				UpdateGUI(index, raisedCount)
+				found := true
+				break
+			}
+		}
+		if (!found) {
+			; 비어있는 어빌 슬롯 찾기 및 업데이트
+			for index, ability in abilities {
+				if (ability.Name = "") {
+					abilities[index].Name := 상승어빌
+					UpdateGUI(index, raisedCount)
+					break
+				}
+			}
+		}
+	}
+}
+
 return
+;}
 
 스킬사용하기: ; 3번 스레드
 ;{
-	if !(서버상태) || (거래창사용중)
+	if !(서버상태) || (거래창사용중) || !(Coin)
 	{
 		return
 	}
@@ -14435,7 +14600,7 @@ return
 		gui,listview,몬스터리스트
 		원거리대상갯수 := LV_GetCount()
 		;원거리선택중대상 := LV_GetNext(0)
-		if (원거리대상갯수 > 0 )||(현재모드 = "마잠또는밥통") ;&& 원거리선택중대상 != 0)
+		if (원거리대상갯수 > 0 )||(CurrentMode = "마잠또는밥통") ;&& 원거리선택중대상 != 0)
 		{
 			원거리루프++
 			if (원거리루프 >= 원거리대상갯수)
