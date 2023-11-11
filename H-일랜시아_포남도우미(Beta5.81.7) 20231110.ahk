@@ -2,9 +2,9 @@
 ;제작자: DCINSIDE 일랜시아 갤러리의 압둘핫산
 ;프로젝트명: H-Elancia
 ;최초작성일: 2023년 6월 17일
-;수정일: 2023년 10월 4일
-;백앤드 만들기!
-;버젼정보: Beta 5.81.7
+;수정일: 2023년 10월 5일
+;체력 증가량 추적하기!
+;버젼정보: Beta 5.81.8
 ;-----------------------------------------------------
 
 
@@ -59,7 +59,7 @@ Lists := [ "CheckBoxList", "DropDownList", "EditList", "RadioButton" ]
 CheckBoxList := ["수련길탐딜레이","이동속도사용","게임배속사용","길탐색책사용","원거리타겟","리메듐타겟","오란의깃사용여부","길탐색1번사용여부","길탐색2번사용여부","길탐색3번사용여부","길탐색4번사용여부","길탐색5번사용여부","자동재접속사용여부","힐링포션사용여부", "HP마을귀환사용여부", "리메듐사용여부", "마나포션사용여부", "MP마을귀환사용여부", "브렐사용여부", "식빵사용여부", "식빵구매여부", "골드바판매여부", "골드바구매여부", "대화사용", "명상사용", "더블어택사용", "체력향상사용", "민첩향상사용", "활방어사용", "마력향상사용", "마법방어향상사용", "3번", "4번", "5번", "6번", "7번", "8번", "은행넣기활성화", "소각활성화","아템먹기여부","자동이동여부", "훔치기사용", "훔쳐보기사용", "Sense사용", "자동사냥여부", "무기사용여부","특오자동교환여부","행깃구매여부","라깃구매여부","독침사용","현혹사용","폭검사용","무기공격사용","집중사용","회피사용","몸통찌르기사용","리메듐사용","라리메듐사용","엘리메듐사용","쿠로사용","빛의갑옷사용","공포보호사용","다라사용","브렐사용","브레마사용","물의갑옷사용","감속사용","마스사용","라크사용","번개사용","브리스사용","파스티사용","슈키사용","클리드사용","스톤스킨사용","파라스사용","베네피쿠스사용","저주사용","자동파티여부", "포레스트네자동대화","RemoveArmor사용","좀비몹감지", "위치고정", "배경제거", "캐릭제거","버스기사모드","나프사용","제작이동"]
 SpellList := ["나프", "마스","리메듐","라리메듐","엘리메듐","쿠로","빛의갑옷","공포보호","다라","브렐","브레마","물의갑옷","감속","라크","번개","브리스","파스티","슈키","클리드","스톤스킨","파라스","베네피쿠스","저주"]
 DropDownList := ["오란의깃마을","길탐색1번목적지", "길탐색2번목적지", "길탐색3번목적지", "길탐색4번목적지", "길탐색5번목적지", "오란의깃단축키", "길탐색책단축키", "메인캐릭터서버", "메인캐릭터순서", "힐링포션사용단축키", "마나포션사용단축키", "식빵사용단축키", "식빵구매마을" ,"지침서", "오란의깃사용단축키", "포레스트네자동대화딜레이","CurrentMode"]
-EditList := ["원거리타겟아이디","리메듐타겟아이디","힐링포션사용제한", "HP마을귀환사용제한", "MP마을귀환사용제한", "리메듐사용제한", "마나포션사용제한", "브렐사용제한", "식빵사용제한", "MP마을귀환사용여부", "넣을아이템","Multiplyer","NPC_MSG_ADR" ,"마지막사냥장소", "수련용길탐색딜레이", "NPC대화딜레이", "MoveSpeed", "게임배속","무기교체딜레이"]
+EditList := ["원거리타겟아이디","리메듐타겟아이디","힐링포션사용제한", "HP마을귀환사용제한", "MP마을귀환사용제한", "리메듐사용제한", "마나포션사용제한", "브렐사용제한", "식빵사용제한", "MP마을귀환사용여부", "넣을아이템","Multiplyer","NPC_MSG_ADR" ,"마지막사냥장소", "수련용길탐색딜레이", "NPC대화딜레이", "MoveSpeed", "게임배속", "특수리메듐타겟OID"]
 공격어빌 := ["격투", "봉", "검", "창", "활", "스태프", "현금", "도", "도끼", "단검"] ; 배열 내부에 검사하고 싶은 20개의 항목을 넣습니다.
 마통작마법 := ["리메듐","엘리메듐","라리메듐","브렐"]
 ;게임내 파티 플레이어용 GUI 이름들
@@ -7856,6 +7856,7 @@ Send, qjsro{Enter}
 	gosub, 아이템읽어오기
 	guicontrolget,시작시간
 	guicontrolget,시작체력
+	guicontrolget,시작FP
 	if (시작시간 = "시작시간")
 	{
 		guicontrol, ,현재TargetTitle, %TargetTitle%
@@ -7863,6 +7864,8 @@ Send, qjsro{Enter}
 		FormatTime, 지금시각_R, %지금시각%, yyyy 년 MM월 dd일 HH:mm
 		guicontrol, ,시작시간, %지금시각_R%
 		guicontrol, ,시작체력, %최대HP%
+		guicontrol, ,시작마력, %최대MP%
+		guicontrol, ,시작밥통, %최대FP%
 	}
 	GetMoreInformation()
 	기존맵번호 := 0
@@ -10438,14 +10441,37 @@ return
 	}
 
 	경과시간 := floor((A_TickCount - StartTime) / 1000)
-
+	guicontrolget,시작마력
 	guicontrolget,시작체력
+
+	시작마력 += 0
 	시작체력 += 0
+
 	최대HP += 0
+	최대MP += 0
+
 	상승체력 := floor(최대HP - 시작체력)
 	예상시간당상승체력 := floor((상승체력 / 경과시간) * 60 * 60)
-	guicontrol, ,현재체력, %최대HP% ( %상승체력% 증가함 )
-	guicontrol, ,경과시간, %경과시간% 초 ( %예상시간당상승체력% )
+	guicontrol, ,현재체력,(%상승체력% 증가) (%예상시간당상승체력%)
+
+	상승마력 := floor(최대MP - 시작마력)
+	예상시간당상승마력 := floor((상승마력 / 경과시간) * 60 * 60)
+	guicontrol, ,현재마력,(%상승마력% 증가) (%예상시간당상승마력%)
+	if (최대FP < 1000)
+	{
+		guicontrolget,시작밥통
+		시작밥통 += 0
+		최대FP += 0
+		상승밥통 := floor(최대FP - 시작밥통)
+		예상시간당상승밥통 := floor((상승밥통 / 경과시간) * 60 * 60)
+		guicontrol, ,현재밥통,(%상승밥통% 증가) (%예상시간당상승밥통%)
+	}
+	else
+	{
+		guicontrol, ,현재밥통, 최대치도달
+	}
+	guicontrol, ,경과시간,작동시간 %경과시간% 초
+	GetMoreInformation()
 	return
 ;}
 
@@ -10586,7 +10612,7 @@ ExitApp
 ShowGui:
 ;{
 ;600x400
-Gui, Add, Tab2, vTab1 x2 y2 w496 h426 AltSubmit cBlack gTab, 기본|설정|아템|이동|검색|파티|기타|개발용|스킬
+Gui, Add, Tab2, vTab1 x2 y2 w496 h426 AltSubmit cBlack gTab, 기본|설정|아템|이동|검색|파티|기타 ;|개발용|스킬
 Gui, Font, S9 Arial ,
 Gui, Color, FFFFFF
 gui, tab, 1
@@ -10616,7 +10642,7 @@ Gui, Add, Text, +Right x370 y48 w30 h18 vSTR,
 Gui, Add, Text, x415 y48 w20 h18 ,AGI
 Gui, Add, Text, +Right x440 y48 w30 h18 vAGI,
 Gui, Add, Text, x345 y66 w25 h18 ,INT
-Gui, Add, Text, +Right x366 y66 w30 h18 vINT,
+Gui, Add, Text, +Right x370 y66 w30 h18 vINT,
 Gui, Add, Text, x415 y66 w20 h18 ,VIT
 Gui, Add, Text, +Right x440 y66 w30 h18 vVIT,
 
@@ -10639,61 +10665,67 @@ Gui, Add, DropDownList, x280 y215 w80 vCurrentMode,대기모드||자동감응|�
 Gui, Add, Button, x375 y213 w100 g실행 v실행, 실행
 Gui, Add, Button, x375 y213 w100 Hidden g중지 v중지, 중지
 
-Gui, Add, GroupBox, x15 y240 w470 h165, 상태창
+Gui, Add, GroupBox, x15 y240 w470 h185, 상태창
 ;HP 영역
 Gui, Add, Text, x25 y260 w30 h20 ,HP
 Gui, Add, Text, +Right x45 y260 w110 h20 vHP,
 
-Gui, Add, Text, x25 y280 w140 h20,힐링포션 사용
-Gui, Add, checkbox, x25 y295 w20 h20 v힐링포션사용여부,
-Gui, Add, Edit, x50 y295 w55 h20 v힐링포션사용제한,
-Gui, Add, DropDownList, x110 y295 w50 h60 v힐링포션사용단축키,5||6|7|8
+Gui, Add, text, +Right x45 y280 w110 h20 v현재체력 , 현재체력
 
-Gui, Add, Text, x25 y320 w140 h20,마을귀환
-Gui, Add, checkbox, x25 y335 w20 h20 vHP마을귀환사용여부,
-Gui, Add, Edit, x50 y335 w55 h20 vHP마을귀환사용제한,
-Gui, Add, DropDownList, x110 y335 w50 h60 v오란의깃사용단축키,5||6|7|8
+Gui, Add, Text, x25 y300 w140 h20,힐링포션 사용
+Gui, Add, checkbox, x25 y315 w20 h20 v힐링포션사용여부,
+Gui, Add, Edit, x50 y315 w55 h20 v힐링포션사용제한,
+Gui, Add, DropDownList, x110 y315 w50 h60 v힐링포션사용단축키,5||6|7|8
 
-Gui, Add, Text, x25 y360 w140 h20,리메듐사용
-Gui, Add, checkbox, x25 y375 w20 h20 v리메듐사용여부,
-Gui, Add, Edit, x50 y375 w55 h20 v리메듐사용제한,
+Gui, Add, Text, x25 y340 w140 h20,마을귀환
+Gui, Add, checkbox, x25 y355 w20 h20 vHP마을귀환사용여부,
+Gui, Add, Edit, x50 y355 w55 h20 vHP마을귀환사용제한,
+Gui, Add, DropDownList, x110 y355 w50 h60 v오란의깃사용단축키,5||6|7|8
+
+Gui, Add, Text, x25 y380 w140 h20,리메듐사용
+Gui, Add, checkbox, x25 y395 w20 h20 v리메듐사용여부,
+Gui, Add, Edit, x50 y395 w55 h20 v리메듐사용제한,
 
 
 ;MP 영역
 Gui, Add, Text, x180 y260 w30 h20 ,MP
 Gui, Add, Text, +Right x200 y260 w110 h20 vMP,
 
-Gui, Add, Text, x180 y280 w110 h20,마나포션 사용
-Gui, Add, checkbox, x180 y295 w20 h20 v마나포션사용여부,
-Gui, Add, Edit, x205 y295 w55 h20 v마나포션사용제한,
-Gui, Add, DropDownList, x265 y295 w50 h60 v마나포션사용단축키,5|6||7|8
+Gui, Add, text, +Right x200 y280 w110 h20 v현재마력 , 현재마력
 
-Gui, Add, Text, x180 y320 w140 h20,마을귀환
-Gui, Add, checkbox, x180 y335 w20 h20  vMP마을귀환사용여부,
-Gui, Add, Edit, x205 y335 w55 h20 vMP마을귀환사용제한,
+Gui, Add, Text, x180 y300 w110 h20,마나포션 사용
+Gui, Add, checkbox, x180 y315 w20 h20 v마나포션사용여부,
+Gui, Add, Edit, x205 y315 w55 h20 v마나포션사용제한,
+Gui, Add, DropDownList, x265 y315 w50 h60 v마나포션사용단축키,5|6||7|8
 
-Gui, Add, Text, x180 y360 w140 h20,브렐사용
-Gui, Add, checkbox, x180 y375 w20 h20 v브렐사용여부,
-Gui, Add, Edit, x205 y375 w55 h20 v브렐사용제한,
+Gui, Add, Text, x180 y340 w140 h20,마을귀환
+Gui, Add, checkbox, x180 y355 w20 h20  vMP마을귀환사용여부,
+Gui, Add, Edit, x205 y355 w55 h20 vMP마을귀환사용제한,
+
+Gui, Add, Text, x180 y380 w140 h20,브렐사용
+Gui, Add, checkbox, x180 y395 w20 h20 v브렐사용여부,
+Gui, Add, Edit, x205 y395 w55 h20 v브렐사용제한,
 
 ;FP 영역
 Gui, Add, Text, x335 y260 w30 h20 ,FP
 Gui, Add, Text, +Right x355 y260 w110 h20 vFP,
 
-Gui, Add, Text, x335 y280 w140 h20,식빵 사용
-Gui, Add, checkbox, x335 y295 w20 h20 v식빵사용여부,
-Gui, Add, Edit, x360 y295 w55 h20 v식빵사용제한,1
-Gui, Add, DropDownList, x420 y295 w50 h60 v식빵사용단축키,9||
+Gui, Add, text,  +Right x355 y280 w110 h20 v현재밥통 , 현재밥통
 
-Gui, Add, Text, x335 y320 w140 h20,식빵구매
-Gui, Add, checkbox, x335 y335 w20 h20  v식빵구매여부,
-Gui, Add, DropDownList, x360 y335 w110 h80  v식빵구매마을,로랜시아||에필로리아|세르니카|크로노시스|포프레스네
+Gui, Add, Text, x335 y300 w140 h20,식빵 사용
+Gui, Add, checkbox, x335 y315 w20 h20 v식빵사용여부,
+Gui, Add, Edit, x360 y315 w55 h20 v식빵사용제한,1
+Gui, Add, DropDownList, x420 y315 w50 h60 v식빵사용단축키,9||
 
-Gui, Add, Text, x335 y360 w140 h20,골드바
-Gui, Add, checkbox, x335 y375 w20 h20  v골드바판매여부,
-Gui, Add, Text, x355 y380 w30 h20 ,판매
-Gui, Add, checkbox, x400 y375 w20 h20  v골드바구매여부,
-Gui, Add, Text, x420 y380 w30 h20 ,구매
+Gui, Add, Text, x335 y340 w140 h20,식빵구매
+Gui, Add, checkbox, x335 y355 w20 h20  v식빵구매여부,
+Gui, Add, DropDownList, x360 y355 w110 h80  v식빵구매마을,로랜시아||에필로리아|세르니카|크로노시스|포프레스네
+
+Gui, Add, Text, x335 y380 w140 h20,골드바
+Gui, Add, checkbox, x335 y395 w20 h20  v골드바판매여부,
+Gui, Add, Text, x355 y400 w30 h20 ,판매
+Gui, Add, checkbox, x400 y395 w20 h20  v골드바구매여부,
+Gui, Add, Text, x420 y400 w30 h20 ,구매
 
 gui, tab, 2
 Gui, Add, GroupBox, x15 y30 w80 h85, 무기바꾸기
@@ -10895,12 +10927,12 @@ Gui, Add, checkbox, x15 y%Y_coord% w120 h20 v수련길탐딜레이, 수련길탐
 Gui, Add, EDIT, x125 y%Y_coord_% w70 h20 v수련용길탐색딜레이,
 Y_coord += 22
 Y_coord_ := Y_coord - 3
-Gui, Add, checkbox, x15 y%Y_coord% w100 h20 v이동속도사용, 이동속도
-Gui, Add, EDIT, x125 y%Y_coord_% w70 h20 g사용자선택 vMoveSpeed,
+Gui, Add, checkbox, x15 y%Y_coord% w100 h20 g사용자선택 v이동속도사용, 이동속도
+Gui, Add, EDIT, x125 y%Y_coord_% w70 h20 vMoveSpeed,
 Y_coord += 22
 Y_coord_ := Y_coord - 3
-Gui, Add, checkbox, x15 y%Y_coord% w100 h20 v게임배속사용, 게임배속
-Gui, Add, EDIT, x125 y%Y_coord_% w70 h20 g사용자선택 v게임배속,
+Gui, Add, checkbox, x15 y%Y_coord% w100 h20 g사용자선택 v게임배속사용, 게임배속
+Gui, Add, EDIT, x125 y%Y_coord_% w70 h20 v게임배속,
 
 Y_coord := 35
 Gui, Add, Text, x215 y%Y_coord% h20 w70, 목적지가기
@@ -11110,109 +11142,49 @@ x_coord := 15 + 10 + 125+10
 Gui, Add, button, x%x_coord% y%y_coord% w125 h20 gCurrentMode_상인단순제작, 제작 - 단순클릭
 x_coord := 15 + 10 + 90 * 4
 Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g중지, 중지
-/*
-x_coord := 15
-y_coord := 150
-Gui, Add, GroupBox, x%x_coord% y%y_coord% w466 h120, 끝없는 모험
-x_coord := 25
-y_coord := 175
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 gCurrentMode_길탐수련, 길탐수련
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 , 배달수련
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 , 밥통작
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 , 덥탭수련
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h25 g포남링교환, 포남링교환
-y_coord := 175+30
-x_coord := 25
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 ,특오교환
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 gCurrentMode_행깃구매, 행깃구매
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g골드바사기, 골드바사기
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g수리하기, 수리하기
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g골드바팔기, 골드바팔기
-y_coord := 175+30+30
-x_coord := 25
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 , ;리메듐 얻기
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 , ;브리스 얻기
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 , ;슈키 얻기
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 , ;다라 얻기
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 , ;클리드 얻기
-y_coord := 175+30+30+40
-x_coord := 15
-Gui, Add, GroupBox, x%x_coord% y%y_coord% w466 h130, 기타
 
-x_coord := x_coord + 90
-y_coord := 175+30+30+30+30
-x_coord := 25
-Gui, Add, checkbox, x%x_coord% y%y_coord% w80 h20 v특오자동교환여부, 특오교환
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g세르니카베타가기, 세르베타
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g크로노시스베타가기, 크로베타
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g포프레스네베타가기, 포프베타
-x_coord := x_coord + 90
-Gui, Add, EDIT, x%x_coord% y%y_coord% w80 h20 ,
-y_coord := 175+30+30+30+30+25
-x_coord := 25
-Gui, Add, checkbox, x%x_coord% y%y_coord% w80 h20 v행깃구매여부, 행깃구매
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g세르니카감마가기, 세르감마
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g세르니카알파가기, 세르알파
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g스킬사용하기, 스킬
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 ,
-y_coord := 175+30+30+30+30+25+25
-x_coord := 25
-Gui, Add, checkbox, x%x_coord% y%y_coord% w80 h20 v라깃구매여부, 라깃구매
-x_coord := x_coord + 90
-Gui, Add, Button, x%x_coord% y%y_coord% w80 h20 g라깃구매, 라깃구매
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g식빵구매, 식빵구매
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 g무기수리강제, 무기수리
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20,
-y_coord := 175+30+30+30+30+25+25+25
-x_coord := 25
-Gui, Add, checkbox, x%x_coord% y%y_coord% w80 h20 ,
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 ,
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20 ,
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20
-x_coord := x_coord + 90
-Gui, Add, button, x%x_coord% y%y_coord% w80 h20
-*/
+x_coord := 15
+y_coord := 145
+Gui, Add, GroupBox, x%x_coord% y%y_coord% w466 h150,
+; GroupBox 내부의 컴포넌트들
+Gui, Add, Text, x30 y170 w150 h20 v시작시간, 시작시간
+Gui, Add, Text, x30 y190 w150 h20 v경과시간,
+Gui, Add, Text, x30 y210 w150 h20 v재접속횟수기록,
+Gui, Add, Text, x30 y230 w150 h20 v접속여부확인상태,
+
+Gui, Add, Text, x200 y170 w150 h20, NPC 자동 대화 대기
+Gui, Add, Text, x200 y190 w150 h20, 해상도 배율
+Gui, Add, Text, x200 y210 w150 h20, NPC 대화 주소
+Gui, Add, Text, x200 y230 w150 h20, 좌측 상단 알림 주소
+Gui, Add, Text, x200 y250 w150 h20, 상인 어빌 상승 어빌
+Gui, Add, Text, x200 y270 w150 h20, 최근 상승 어빌 주소
+
+Gui, Add, Text, x350 y170 w100 h20 vNPC대화딜레이
+Gui, Add, Text, x350 y190 w100 h20 vMultiplyer
+Gui, Add, Text, x350 y210 w100 h20 vNPC_MSG_ADR
+Gui, Add, Text, x350 y230 w100 h20 vResult_Msg_Addr
+Gui, Add, Text, x350 y250 w100 h20 v상승어빌
+Gui, Add, Text, x350 y270 w100 h20 v상승어빌주소
+
+x_coord := 15
+y_coord := 300
+Gui, Add, GroupBox, x%x_coord% y%y_coord% w466 h120, 프로그램정보
+x_coord += 20
+y_coord += 25
+Gui, Add, Text,  x%x_coord% y%y_coord% w426 gOpenLink, H-Elancia는 "불법유료" 외부 프로그램의 경쟁력 약화를 위한 `n`n오픈소스, 무료 공개 프로젝트입니다.`n`n컴파일하여 사용함으로 발생하는 모든 책임은 최종 사용자에게 있습니다. `n `nhttps://github.com/SuperPowerJ/H-Elancia
 
 gui, tab, 8 ;기본|설정|아템|좌표|검색|기타
 
-Gui, Add, text, x125 y50 w140 h20 v메모리_주변검색상태 , 메모리_주변검색
-Gui, Add, text, x125 y70 w140 h20 v재접속횟수기록 ,
-Gui, Add, text, x125 y90 w140 h20 v접속여부확인상태 , 접속여부확인
-Gui, Add, text, x125 y110 w140 h20 v기타동작상태 , 기타동작
+Gui, Add, text, x280 y190 w100 h20, 마지막사냥장소
+Gui, Add, EDIT, x395 y190 w70 h20 v마지막사냥장소 ,
 Gui, Add, text, x125 y130 w140 h20 v스킬사용상태 , 스킬사용상태
-Gui, Add, text, x125 y150 w140 h20 v무기자동바꾸기상태 , 무기자동바꾸기상태
-Gui, Add, text, x125 y170 w140 h20 v행운장매수상태 , 행운장매수상태
 Gui, Add, text, x125 y190 w140 h20 v현재TargetTitle , 현재TargetTitle
-Gui, Add, text, x125 y210 w150 h20 v시작시간, 시작시간
+
 Gui, Add, text, x125 y230 w150 h20 v시작체력 , 시작체력
-Gui, Add, text, x125 y250 w150 h20 v현재체력 , 현재체력
-Gui, Add, text, x125 y270 w100 h20 v경과시간, 경과시간
-Gui, Add, text, x125 y290 w100 h20  ,
+Gui, Add, text, x125 y250 w150 h20 v시작밥통 , 시작밥통
+Gui, Add, text, x125 y270 w150 h20 v시작마력 , 시작마력
+
+
 Gui, Add, text, x125 y310 w150 h20 v마을귀환이유, 마을귀환이유
 Gui, Add, text, x125 y330 w100 h20 vabilityName0, 0
 Gui, Add, text, x125 y350 w100 h20 vabilityName1, 0
@@ -11224,53 +11196,36 @@ Gui, Add, text, x225 y370 w100 h20 vabilityCount2, 0
 Gui, Add, text, x225 y390 w100 h20 vabilityCount3, 0
 
 
-Gui, Add, text, x25 y50 w100 h20  , 메모리검색
 Gui, Add, text, x25 y70 w100 h20 , 재접속
 Gui, Add, text, x25 y90 w100 h20  , 접속여부확인
-Gui, Add, text, x25 y110 w100 h20  , 기타동작
+
 Gui, Add, text, x25 y130 w100 h20  , 스킬사용상태
-Gui, Add, text, x25 y150 w100 h20  , 무기바꾸기
-Gui, Add, text, x25 y170 w100 h20  , 행운장매수
 Gui, Add, text, x25 y190 w100 h20  , TargetTitle
-Gui, Add, text, x25 y210 w100 h20  , 시작시간
+
 Gui, Add, text, x25 y230 w100 h20  , 시작체력
-Gui, Add, text, x25 y250 w100 h20  , 현재체력
-Gui, Add, text, x25 y270 w100 h20 , 경과시간
-Gui, Add, text, x25 y290 w100 h20 ,
+Gui, Add, text, x25 y250 w100 h20  , 시작밥통
+Gui, Add, text, x25 y270 w100 h20  , 시작마력
+
+
 Gui, Add, text, x25 y310 w100 h20 , 마을귀환이유
 Gui, Add, text, x25 y330 w100 h20 , 영번어빌이름
 Gui, Add, text, x25 y350 w100 h20 , 일번어빌이름
 Gui, Add, text, x25 y370 w100 h20 , 이번어빌이름
 Gui, Add, text, x25 y390 w100 h20 , 삼번어빌이름
 
-Gui, Add, text, x280 y50 w100 h20, 무기교체딜레이
-Gui, Add, text, x280 y70 w100 h20, NPC자동대화대기
-Gui, Add, text, x280 y90 w100 h20 , 해상도배율
-Gui, Add, text, x280 y110 w100 h20, NPC대화주소
-Gui, Add, text, x280 y130 w100 h20, 좌측상단알림주소
-Gui, Add, text, x280 y150 w100 h20, 상인어빌상승어빌
-Gui, Add, text, x280 y170 w100 h20, 최근상승어빌주소
-Gui, Add, text, x280 y190 w100 h20, 마지막사냥장소
 
-Gui, Add, text, x280 y270 w100 h20, 무기수리필요
+
 Gui, Add, text, x280 y290 w100 h20, 식빵구매필요
 Gui, Add, text, x280 y310 w100 h20, 라깃구매필요
-Gui, Add, text, x280 y330 w100 h20,
+Gui, Add, text, x280 y330 w100 h20, 무기수리필요
 Gui, Add, text, x280 y350 w100 h20, CurrentMode
 
-Gui, Add, EDIT, x395 y50 w70 h20 v무기교체딜레이,
-Gui, Add, EDIT, x395 y70 w70 h20 vNPC대화딜레이,
-Gui, Add, EDIT, x395 y90 w70 h20 vMultiplyer ,
-Gui, Add, EDIT, x395 y110 w70 h20 vNPC_MSG_ADR ,
-Gui, Add, EDIT, x395 y130 w70 h20 vResult_Msg_Addr ,
-Gui, Add, EDIT, x395 y150 w70 h20 v상승어빌 ,
-Gui, Add, EDIT, x395 y170 w70 h20 v상승어빌주소 ,
-Gui, Add, EDIT, x395 y190 w70 h20 v마지막사냥장소 ,
 
-Gui, Add, text, x395 y270 w70 h20 v무기수리필요상태,
+
 Gui, Add, text, x395 y290 w70 h20 v식빵구매필요상태,
 Gui, Add, text, x395 y310 w70 h20 v라깃구매필요상태,
-Gui, Add, text, x395 y330 w70 h20 vURL,
+Gui, Add, text, x395 y330 w70 h20 v무기수리필요상태,
+Gui, Add, text, x395 y350 w70 h20 vURL,
 
 gui, tab, 9 ;스킬관련
 forgui8items := ["SpellList","SkillListA"]
@@ -11426,8 +11381,6 @@ if (TargetTitle != "")
 			temp_variable := 400
 			else if (item = "게임배속")
 			temp_variable := 5
-			else if (item = "무기교체딜레이")
-			temp_variable := 333
 			else
 			temp_variable := 0
 			GuiControl,,%Item%, %temp_variable%
@@ -14312,7 +14265,7 @@ return
 접속여부확인: ; 2번 스레드
 ;{
 접속여부확인상태RunCount++
-guicontrol, ,접속여부확인상태, %접속여부확인상태RunCount%
+guicontrol, ,접속여부확인상태, 접속여부확인횟수: %접속여부확인상태RunCount%
 
 gui, submit, nohide
 PT_Delay := A_TickCount - PT_Delays
@@ -14504,6 +14457,11 @@ return
 	스킬사용상태RunCount++
 	guicontrol, ,스킬사용상태, %스킬사용상태RunCount%
 
+	현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
+	if (일무기 == 1 && 현재무기 == 0)
+	{
+		keyclick(1)
+	}
 	;단축키사용
 	;{
 	if !(NPC대화창사용중) && !(거래창사용중)
@@ -14673,3 +14631,7 @@ return
 
 return
 ;}
+
+OpenLink:
+    Run, https://github.com/SuperPowerJ/H-Elancia
+return
