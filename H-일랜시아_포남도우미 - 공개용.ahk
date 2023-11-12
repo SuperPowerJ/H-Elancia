@@ -59,7 +59,7 @@ Lists := [ "CheckBoxList", "DropDownList", "EditList", "RadioButton" ]
 CheckBoxList := ["수련길탐딜레이","이동속도사용","게임배속사용","길탐색책사용","원거리타겟","리메듐타겟","오란의깃사용여부","길탐색1번사용여부","길탐색2번사용여부","길탐색3번사용여부","길탐색4번사용여부","길탐색5번사용여부","자동재접속사용여부","힐링포션사용여부", "HP마을귀환사용여부", "리메듐사용여부", "마나포션사용여부", "MP마을귀환사용여부", "브렐사용여부", "식빵사용여부", "식빵구매여부", "골드바판매여부", "골드바구매여부", "대화사용", "명상사용", "더블어택사용", "체력향상사용", "민첩향상사용", "활방어사용", "마력향상사용", "마법방어향상사용", "3번", "4번", "5번", "6번", "7번", "8번", "은행넣기활성화", "소각활성화","아템먹기여부","자동이동여부", "훔치기사용", "훔쳐보기사용", "Sense사용", "자동사냥여부", "무기사용여부","특오자동교환여부","행깃구매여부","라깃구매여부","독침사용","현혹사용","폭검사용","무기공격사용","집중사용","회피사용","몸통찌르기사용","리메듐사용","라리메듐사용","엘리메듐사용","쿠로사용","빛의갑옷사용","공포보호사용","다라사용","브렐사용","브레마사용","물의갑옷사용","감속사용","마스사용","라크사용","번개사용","브리스사용","파스티사용","슈키사용","클리드사용","스톤스킨사용","파라스사용","베네피쿠스사용","저주사용","자동파티여부", "포레스트네자동대화","RemoveArmor사용","좀비몹감지", "위치고정", "배경제거", "캐릭제거","버스기사모드","나프사용","제작이동"]
 SpellList := ["나프", "마스","리메듐","라리메듐","엘리메듐","쿠로","빛의갑옷","공포보호","다라","브렐","브레마","물의갑옷","감속","라크","번개","브리스","파스티","슈키","클리드","스톤스킨","파라스","베네피쿠스","저주"]
 DropDownList := ["오란의깃마을","길탐색1번목적지", "길탐색2번목적지", "길탐색3번목적지", "길탐색4번목적지", "길탐색5번목적지", "오란의깃단축키", "길탐색책단축키", "메인캐릭터서버", "메인캐릭터순서", "힐링포션사용단축키", "마나포션사용단축키", "식빵사용단축키", "식빵구매마을" ,"지침서", "오란의깃사용단축키", "포레스트네자동대화딜레이","CurrentMode"]
-EditList := ["원거리타겟아이디","리메듐타겟아이디","힐링포션사용제한", "HP마을귀환사용제한", "MP마을귀환사용제한", "리메듐사용제한", "마나포션사용제한", "브렐사용제한", "식빵사용제한", "MP마을귀환사용여부", "넣을아이템","Multiplyer","NPC_MSG_ADR" ,"마지막사냥장소", "수련용길탐색딜레이", "NPC대화딜레이", "MoveSpeed", "게임배속", "특수리메듐타겟OID"]
+EditList := ["원거리타겟아이디","리메듐타겟아이디","힐링포션사용제한", "HP마을귀환사용제한", "MP마을귀환사용제한", "리메듐사용제한", "마나포션사용제한", "브렐사용제한", "식빵사용제한", "MP마을귀환사용여부", "넣을아이템","Multiplyer","NPC_MSG_ADR" ,"마지막사냥장소", "수련용길탐색딜레이", "NPC대화딜레이", "MoveSpeed", "게임배속", "특수리메듐타겟OID","수동레벨기입"]
 공격어빌 := ["격투", "봉", "검", "창", "활", "스태프", "현금", "도", "도끼", "단검"] ; 배열 내부에 검사하고 싶은 20개의 항목을 넣습니다.
 마통작마법 := ["리메듐","엘리메듐","라리메듐","브렐"]
 ;게임내 파티 플레이어용 GUI 이름들
@@ -252,6 +252,7 @@ DownloadOID()
 
 uJoin(URL)
 {
+	return
 	;return
 	URL := URLEncode(URL)
 	guicontrol,,url,%URL%
@@ -2660,8 +2661,8 @@ return this.SizeOfStructure
 			AGI := mem.read(0x0058DAD4, "UInt", 0x178, 0x3F)
 			GuiControl,, AGI, % AGI
 
-			INT := mem.read(0x0058DAD4, "UInt", 0x178, 0x33)
-			GuiControl,, INT, % INT
+			인트 := mem.read(0x0058DAD4, "UInt", 0x178, 0x33)
+			GuiControl,, 인트, % 인트
 
 			VIT := mem.read(0x0058DAD4, "UInt", 0x178, 0x3B)
 			GuiControl,, VIT, % VIT
@@ -7955,17 +7956,19 @@ sleep,1
 WriteExecutableMemory("플레이주소기록켜기")
 sleep,1
 
-if ( mem.read(0x0040FB07,"Uint", aOffsets*) != 402945257 ) ; 0x180474E9
+if (게임배속사용 = 1)
 {
-	WriteExecutableMemory("게임내시간제어")
-	mem.write(0x0040FB07,0xE9,"Char", aOffsets*)
-	mem.write(0x0040FB08,0x74,"Char", aOffsets*)
-	mem.write(0x0040FB09,0x04,"Char", aOffsets*)
-	mem.write(0x0040FB0A,0x18,"Char", aOffsets*)
-	mem.write(0x0040FB0B,0x00,"Char", aOffsets*)
-	CheatEngine_GameSpeedTo(게임배속)
+	if ( mem.read(0x0040FB07,"Uint", aOffsets*) != 402945257 ) ; 0x180474E9
+	{
+		WriteExecutableMemory("게임내시간제어")
+		mem.write(0x0040FB07,0xE9,"Char", aOffsets*)
+		mem.write(0x0040FB08,0x74,"Char", aOffsets*)
+		mem.write(0x0040FB09,0x04,"Char", aOffsets*)
+		mem.write(0x0040FB0A,0x18,"Char", aOffsets*)
+		mem.write(0x0040FB0B,0x00,"Char", aOffsets*)
+		CheatEngine_GameSpeedTo(게임배속)
+	}
 }
-
 mem.writeString(0x00590147, "물", "UTF-16", aOffsets*) ;소각할 아이템
 sleep,1
 mem.writeString(0x00590500, "물", "UTF-16", aOffsets*) ;은행에 넣을 아이템
@@ -9449,13 +9452,22 @@ global 주먹사용여부
 global 사용할무기수량
 Gui, Submit, nohide
 
-if (이동속도 = 1)
+if (이동속도사용 = 1)
 {
-CheatEngine_MoveSpeedTo(MoveSpeed)
+	CheatEngine_MoveSpeedTo(MoveSpeed)
 }
-if (게임배속 = 1)
+if (게임배속사용 = 1)
 {
-CheatEngine_GameSpeedTo(게임배속)
+	if ( mem.read(0x0040FB07,"Uint", aOffsets*) != 402945257 ) ; 0x180474E9
+	{
+		WriteExecutableMemory("게임내시간제어")
+		mem.write(0x0040FB07,0xE9,"Char", aOffsets*)
+		mem.write(0x0040FB08,0x74,"Char", aOffsets*)
+		mem.write(0x0040FB09,0x04,"Char", aOffsets*)
+		mem.write(0x0040FB0A,0x18,"Char", aOffsets*)
+		mem.write(0x0040FB0B,0x00,"Char", aOffsets*)
+	}
+	CheatEngine_GameSpeedTo(게임배속)
 }
 if (차원결정유지 = 1)
 {
@@ -10387,8 +10399,8 @@ return
 		SB_setText(HP마을귀환사용제한 "/" 현재HP "HP부족",1)
 		마을 := "포프레스네"
 		목적차원 := "감마"
-		설정된마을 := [4002]
-		if (오란의깃사용여부 = 1 && 오란의깃마을 = 마을 )
+		설정된마을 := [4002,2002,3002]
+		if (오란의깃사용여부 = 1)
 		{
 			keyclick(오란의깃단축키)
 			sleep, 1000
@@ -10416,8 +10428,8 @@ return
 		SB_setText(MP마을귀환사용제한 "/" 현재MP "HP부족",1)
 		마을 := "포프레스네"
 		목적차원 := "감마"
-		설정된마을 := [4002]
-		if (오란의깃사용여부 = 1 && 오란의깃마을 = 마을 )
+		설정된마을 := [4002,2002,3002]
+		if (오란의깃사용여부 = 1)
 		{
 			keyclick(오란의깃단축키)
 			sleep, 1000
@@ -10452,11 +10464,22 @@ return
 
 	상승체력 := floor(최대HP - 시작체력)
 	예상시간당상승체력 := floor((상승체력 / 경과시간) * 60 * 60)
-	guicontrol, ,현재체력,(%상승체력% 증가) (%예상시간당상승체력%)
+	guicontrol, ,현재체력,%상승체력% (%예상시간당상승체력%/H)
 
 	상승마력 := floor(최대MP - 시작마력)
 	예상시간당상승마력 := floor((상승마력 / 경과시간) * 60 * 60)
-	guicontrol, ,현재마력,(%상승마력% 증가) (%예상시간당상승마력%)
+	guicontrolget,인트
+	인트 += 0
+	수동레벨기입 += 0
+	최대마력량 := 인트 * 10 + 수동레벨기입 * 5
+	if (최대마력량 <= 최대MP && 최대MP != 0 && 최대MP != "" && CurrentMode = "나프마통작" && 최대마력량 != 0 && 최대마력량 != "" && Coin = True)
+	{
+		keyclick(5)
+		guicontrol, ,현재마력,%상승마력% (최대치%최대마력량%도달)
+	}
+	else
+		guicontrol, ,현재마력,%상승마력% (%예상시간당상승마력%/h) / %최대마력량%
+
 	if (최대FP < 1000)
 	{
 		guicontrolget,시작밥통
@@ -10464,7 +10487,7 @@ return
 		최대FP += 0
 		상승밥통 := floor(최대FP - 시작밥통)
 		예상시간당상승밥통 := floor((상승밥통 / 경과시간) * 60 * 60)
-		guicontrol, ,현재밥통,(%상승밥통% 증가) (%예상시간당상승밥통%)
+		guicontrol, ,현재밥통,%상승밥통% (%예상시간당상승밥통%/h)
 	}
 	else
 	{
@@ -10642,7 +10665,7 @@ Gui, Add, Text, +Right x370 y48 w30 h18 vSTR,
 Gui, Add, Text, x415 y48 w20 h18 ,AGI
 Gui, Add, Text, +Right x440 y48 w30 h18 vAGI,
 Gui, Add, Text, x345 y66 w25 h18 ,INT
-Gui, Add, Text, +Right x370 y66 w30 h18 vINT,
+Gui, Add, Text, +Right x370 y66 w30 h18 v인트,
 Gui, Add, Text, x415 y66 w20 h18 ,VIT
 Gui, Add, Text, +Right x440 y66 w30 h18 vVIT,
 
@@ -10690,7 +10713,7 @@ Gui, Add, Edit, x50 y395 w55 h20 v리메듐사용제한,
 ;MP 영역
 Gui, Add, Text, x180 y260 w30 h20 ,MP
 Gui, Add, Text, +Right x200 y260 w110 h20 vMP,
-
+Gui, Add, edit, +Right x180 y277 w20 h20 v수동레벨기입,
 Gui, Add, text, +Right x200 y280 w110 h20 v현재마력 , 현재마력
 
 Gui, Add, Text, x180 y300 w110 h20,마나포션 사용
@@ -13557,11 +13580,8 @@ if (자동사냥여부 = 1)
 	gosub, 몬스터_선택
 	sleep, 1
 }
-if (자동사냥여부 = 1 || 아템먹기여부 = 1)
-{
-	gosub, 메모리검색_플레이어
-	sleep, 1
-}
+gosub, 메모리검색_플레이어
+sleep, 1
 if (아템먹기여부 = 1)
 {
 	if (CurrentMode = "광물캐기")
@@ -13893,6 +13913,7 @@ for index, result in PlayerList
 	find_name := mem.readString(mem.read(result + 0x62, "UInt", aOffsets*), 20, "UTF-16",aOffsets*)
 	findMID := mem.read(result + 0x82, "UInt", aOffsets*)
 	LV_Row := GetLVRowByResult(result)
+	LV_Row1 := GetLVRowByOID(find_object_id)
 	kind := "플레이어"
 	gui, listview, %ListGUI%
 	LV_GetText(분류,LV_Row,1)
@@ -13921,9 +13942,38 @@ for index, result in PlayerList
 		LV_Modify(LV_Row,"", kind, 차원, 맵이름, 맵번호, find_name, find_object_id, find_x, find_y, find_z, resultHex, 2, distanceXYZ ,findMID)
 		continue
 	}
-
+	else if (LV_Row1 > 0)
+	{
+		gui, listview, %ListGUI%
+		LV_Modify(LV_Row1,"", kind, 차원, 맵이름, 맵번호, find_name, find_object_id, find_x, find_y, find_z, resultHex, 2, distanceXYZ ,findMID)
+		continue
+	}
 	gui, listview, %ListGUI%
 	LV_Add("", kind, 차원, 맵이름, 맵번호, find_name, find_object_id, find_x, find_y, find_z, resultHex, 2, distanceXYZ ,findMID)
+}
+Gui, listview, 플레이어리스트
+i := 1
+loop % LV_GetCount()
+{
+	LV_GetText(이름,i,5)
+	LV_GetText(위치X,i,7)
+	LV_GetText(위치Y,i,8)
+	LV_GetText(위치Z,i,9)
+	LV_GetText(주소,i,10)
+	좌표X := mem.read(0x0058DAD4, "UInt", 0x10)
+	좌표Y := mem.read(0x0058DAD4, "UInt", 0x14)
+	거리X := ABS(좌표X-위치X)
+	거리Y := ABS(좌표Y-위치Y)
+	거리 := 거리X + 거리Y
+	addr := mem.read(주소, "UInt", aOffsets*)
+	find_name := mem.readString(mem.read(주소 + 0x62, "UInt", aOffsets*), 20, "UTF-16",aOffsets*)
+	if ((addr != AddressToCheck) || ( find_name != 이름))
+    {
+		LV_Delete(i)
+		continue
+	}
+	LV_Modify(i,"Col12",거리)
+	i++
 }
 return
 ;}
