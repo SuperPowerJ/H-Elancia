@@ -11447,7 +11447,7 @@ if (TargetTitle != "")
 	WantedItemlength := WantedItems.MaxIndex()
 	WantedMonsterlength := WantedMonsters.MaxIndex()
 
-	Gui,Listview,원하는몬스터리스트
+	Gui,Listview,원하지않는몬스터리스트
 	sleep, 1
 	RowCount := LV_GetCount()
 	sleep, 1
@@ -11457,6 +11457,7 @@ if (TargetTitle != "")
 		LV_GetText(row,A_Index,1)
 		DisWantedMonsters.Push(row)  ; Add the current row's array to the main ListViewItems array
 	}
+	DisWantedMonsterlength := DisWantedMonsters.MaxIndex()
 
 	저장위치 := a_scriptdir . "\SaveOf" . TargetTitle
 	if !FileExist(저장위치)
@@ -11860,7 +11861,7 @@ Return
 									LV_GetText(목표Z,아템_현재선택, 9)
 									mem.write(0x00590770, 현재타겟OID, "UInt", aOffsets*)
 									거리X := ABS(목표X - 좌표X)
-									거리Y := ABS(목표Y - 목표Y)
+									거리Y := ABS(목표Y - 좌표Y)
 									좌표입력(목표X,목표Y,1)
 									sleep,50
 									SB_SetText(좌표X " " 시작X " " 좌표Y " " 시작Y ,5)
@@ -11958,7 +11959,7 @@ Return
 									LV_GetText(목표Z, 좌표_현재선택, 6)
 									좌표입력(목표X,목표Y,목표Z)
 									거리X := ABS(목표X - 좌표X)
-									거리Y := ABS(목표Y - 목표Y)
+									거리Y := ABS(목표Y - 좌표Y)
 									다음좌표 := 좌표_현재선택 + 1
 									if (다음좌표 > 좌표갯수)
 									{
@@ -12808,7 +12809,7 @@ Return
 									LV_GetText(목표Z, 아템_현재선택, 9)
 									mem.write(0x00590770, 현재타겟OID, "UInt", aOffsets*)
 									거리X := ABS(목표X - 좌표X)
-									거리Y := ABS(목표Y - 목표Y)
+									거리Y := ABS(목표Y - 좌표Y)
 									좌표입력(목표X,목표Y,목표Z)
 									if ( 마지막타겟OID != 현재타겟OID ) ; 그 선택된 몬스터가 새로운 몬스터라면
 									{
@@ -12889,7 +12890,7 @@ Return
 									LV_GetText(목표Z, 좌표_현재선택, 6)
 									좌표입력(목표X,목표Y,목표Z)
 									거리X := ABS(목표X - 좌표X)
-									거리Y := ABS(목표Y - 목표Y)
+									거리Y := ABS(목표Y - 좌표Y)
 									다음좌표 := 좌표_현재선택 + 1
 									if (다음좌표 > 좌표갯수)
 									{
@@ -13242,7 +13243,7 @@ Return
 									LV_GetText(목표Z, 아템_현재선택, 9)
 									mem.write(0x00590770, 현재타겟OID, "UInt", aOffsets*)
 									거리X := ABS(목표X - 좌표X)
-									거리Y := ABS(목표Y - 목표Y)
+									거리Y := ABS(목표Y - 좌표Y)
 									좌표입력(목표X,목표Y,목표Z)
 									if ( 마지막타겟OID != 현재타겟OID ) ; 그 선택된 몬스터가 새로운 몬스터라면
 									{
@@ -13359,7 +13360,7 @@ Return
 									LV_GetText(목표Z, 좌표_현재선택, 6)
 									좌표입력(목표X,목표Y,목표Z)
 									거리X := ABS(목표X - 좌표X)
-									거리Y := ABS(목표Y - 목표Y)
+									거리Y := ABS(목표Y - 좌표Y)
 									다음좌표 := 좌표_현재선택 + 1
 									if (다음좌표 > 좌표갯수)
 									{
@@ -14003,9 +14004,9 @@ Loop, %LVCount%
     LV_GetText(col5Value, thisRow, 5) ; 현재 행의 Col5 값을 가져옵니다
     LV_GetText(col6Value, thisRow, 6) ; 현재 행의 Col6 값을 가져옵니다
 	;SB_SetText("비교중" A_Index " " WantedMonsterlength, 5)
-	SB_SETTEXT(WantedMonsterlength,5)
+	SB_SETTEXT(WantedMonsterlength "/" DisWantedMonsterLength,5)
     ; Col12 값이 현재 가장 낮은 값보다 낮고, Col5 값이 WantedList에 포함되고, Col6 값이 BlackList에 없는 경우
-    if (col12Value < lowestCol12Value && !IsDataInList(col6Value, BlackList)) && ((IsDataInList(col5Value, WantedMonsters) && WantedMonsterlength >= 1) || WantedMonsterlength < 1 ) && ((!IsDataInList(col5Value, DisWantedMonsters) && DisWantedMonsterlength >= 1) || DisWantedMonsterlength < 1 )
+    if ((col12Value < lowestCol12Value && !IsDataInList(col6Value, BlackList)) && ((IsDataInList(col5Value, WantedMonsters) && WantedMonsterLength >= 1) || WantedMonsterLength < 1 ) && ((!IsDataInList(col5Value, DisWantedMonsters) && DisWantedMonsterLength>=1) || DisWantedMonsterLength == 0))
 	{
 		lowestCol12Value := col12Value
 		selectedRow := thisRow
