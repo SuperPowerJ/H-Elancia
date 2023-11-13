@@ -11007,7 +11007,7 @@ Y_coord += 22
 Y_coord_ := Y_coord - 3
 Gui, Add, checkbox, x15 y%Y_coord% w120 h20 v수련길탐딜레이, 수련길탐딜레이
 Gui, Add, EDIT, x125 y%Y_coord_% w70 h20 v수련용길탐색딜레이,
-Gui, Add, checkbox, x215 y%Y_coord% w120 h20 v특오자동교환여부, 특오자동교환
+Gui, Add, checkbox, x215 y%Y_coord% h20 v특오자동교환여부, 특오자동교환(길탐색3번 성검사 4번 사냥터)
 Y_coord += 22
 Y_coord_ := Y_coord - 3
 Gui, Add, checkbox, x15 y%Y_coord% w100 h20 g사용자선택 v이동속도사용, 이동속도
@@ -11207,7 +11207,7 @@ Gui, Add, Checkbox, x15 y%y_coord% w120 h20 v자동파티여부, 1분마다다�
 gui, tab, 7  ;기본|설정|아템|좌표|검색|기타|번외
 x_coord := 15
 y_coord := 30
-Gui, Add, GroupBox, x%x_coord% y%y_coord% w466 h110, 부의 축적 - 제작
+Gui, Add, GroupBox, x%x_coord% y%y_coord% w466 h110, 부의 축적 - 제작 (단축키 9번 키아무기, 0번 수련장비)
 x_coord := x_coord + 10
 y_coord := y_coord + 23
 Gui, Add, text, x%x_coord% y%y_coord% w80 h20, 은행넣을템
