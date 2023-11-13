@@ -1,10 +1,6 @@
 ﻿;-----------------------------------------------------
 ;제작자: DCINSIDE 일랜시아 갤러리의 압둘핫산
 ;프로젝트명: H-Elancia
-;최초작성일: 2023년 6월 17일
-;수정일: 2023년 10월 5일
-;체력 증가량 추적하기!
-;버젼정보: Beta 5.81.8
 ;-----------------------------------------------------
 
 
@@ -89,7 +85,7 @@ SkillListA := ["훔치기","훔쳐보기","Sense","현혹","폭검","독침","�
 
 오란의깃마을_DDLOptions := ["로랜시아","에필로리아","세르니카","크로노시스","포프레스네"]
 길탐색5번목적지_DDLOptions := 길탐색4번목적지_DDLOptions := 길탐색3번목적지_DDLOptions := 길탐색2번목적지_DDLOptions := 길탐색1번목적지_DDLOptions := ["로랜시아 목공소","로랜시아 퍼브","로랜시아 우체국","로랜시아 퍼브 우체국","에필로리아 목공소","에필로리아 퍼브","에필로리아 우체국","에필로리아 퍼브 우체국","세르니카 퍼브","세르니카 우체국","세르니카 목공소","포프레스네 무기상점"]
-CurrentMode_DDLOptions := ["대기모드","자동감응","일반자사","포남자사","포북자사","나프마통작","마잠또는밥통","광물캐기","배달하기","행깃교환","행깃구매"]
+CurrentMode_DDLOptions := ["대기모드","자동감응","일반자사","포남자사","포북자사","나프마통작","마잠또는밥통","광물캐기","배달하기","행깃교환","행깃구매","리스무기구매"]
 메인캐릭터서버_DDLOptions := ["엘","테스"]
 메인캐릭터순서_DDLOptions := [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
 힐링포션사용단축키_DDLOptions := [3,4,5,6,7,8]
@@ -134,11 +130,10 @@ Global countCheck := {}
 Global abilityCheck := {}
 Global abilityStates := []
 global RecentWeapons := []
-
 ;메모리검색용
 Global WantedItemlength := 0
-Global WantedMonsterlength := 0
 Global WantedMonsters := []
+Global DisWantedMonsters := []
 Global WantedItems := []
 Global BlackList := []
 Global MonsterList := []
@@ -179,6 +174,7 @@ Global RunThreadCounter := A_TickCount
 Global PT_Delays := A_TickCount
 Global NSK_Counts := A_TickCount
 Global NPC_TALK_DELAYCOUNT := A_TickCount
+Global Read_Memory_Count := A_TickCount
 
 ;윈도우 배율
 Global Multiplyer := "없음" ;Windows7 800x600 기준 = 1
@@ -5516,6 +5512,7 @@ return 0
 		SB_SetText(NPC이름 " 근처에 가는중",2)
 		loop, 5
 		{
+			CheatEngine_Move_Buy()
 			NpcMenuSelection := mem.read(0x0058F0A4, "UInt", aOffset*) ; 메뉴창이 잘 떳는지 확인
 			if (NpcMenuSelection = 0)
 			{
@@ -5915,6 +5912,7 @@ return
 		SB_SetText(NPC이름 " 근처에 가는중",2)
 		loop, 5
 		{
+			CheatEngine_Move_Buy()
 			NpcMenuSelection := mem.read(0x0058F0A4, "UInt", aOffset*) ; 메뉴창이 잘 떳는지 확인
 			if (NpcMenuSelection = 0)
 			{
@@ -9133,6 +9131,12 @@ return
 	return
 ;}
 
+리스무기구매:
+;{
+
+return
+;}
+
 행깃구매:
 ;{
 
@@ -9730,6 +9734,7 @@ return
 		WantedMonsters.Push(row)  ; Add the current row's array to the main ListViewItems array
 	}
 	WantedMonsterlength := WantedMonsters.MaxIndex()
+	SB_SetText("현재원하는몬스터숫자:" WantedMonsterlength,2)
 	return
 }
 
@@ -9766,6 +9771,60 @@ return
         WantedMonsters.Push(row)
     }
     WantedMonsterlength := WantedMonsters.MaxIndex()
+    return
+}
+
+원하지않는몬스터추가:
+{
+	Gui, Submit, Nohide
+	type := "원하지않는몬스터리스트"
+	Setting_RECORD(type,원하지않는몬스터추가할몬스터명)
+	Gui, ListView, 원하지않는몬스터리스트
+	LV_Delete()
+	Setting_Reload(type)
+	RowCount := LV_GetCount()
+	DisWantedMonsters := []
+	Loop, %RowCount%
+	{
+		LV_GetText(row,A_Index,1)
+		DisWantedMonsters.Push(row)  ; Add the current row's array to the main ListViewItems array
+	}
+
+	return
+}
+
+원하지않는몬스터삭제:
+{
+    Gui, Submit, Nohide
+    gui, listview, 원하지않는몬스터리스트
+    SelectedRows := []
+    RowNumber = 0
+	Loop
+	{
+		RowNumber := LV_GetNext(RowNumber)
+		if not RowNumber
+			break
+		SelectedRows.Push(RowNumber)
+	}
+
+    ; 선택된 행을 역순으로 순회하며 삭제
+    Loop, % SelectedRows.Length()
+    {
+        Index := SelectedRows.MaxIndex() - A_Index + 1
+        RowNumber := SelectedRows[Index]
+        LV_GetText(targetItem, RowNumber)
+        Setting_DELETE("원하지않는몬스터리스트", targetItem)
+        LV_Delete(RowNumber)
+        SB_SetText(targetItem " 삭제", 2)
+    }
+
+    ; 리스트 뷰 업데이트
+    DisWantedMonsters := []
+    Loop, LV_GetCount()
+    {
+        LV_GetText(row, A_Index, 1)
+        DisWantedMonsters.Push(row)
+    }
     return
 }
 
@@ -10948,6 +11007,7 @@ Y_coord += 22
 Y_coord_ := Y_coord - 3
 Gui, Add, checkbox, x15 y%Y_coord% w120 h20 v수련길탐딜레이, 수련길탐딜레이
 Gui, Add, EDIT, x125 y%Y_coord_% w70 h20 v수련용길탐색딜레이,
+Gui, Add, checkbox, x215 y%Y_coord% w120 h20 v특오자동교환여부, 특오자동교환
 Y_coord += 22
 Y_coord_ := Y_coord - 3
 Gui, Add, checkbox, x15 y%Y_coord% w100 h20 g사용자선택 v이동속도사용, 이동속도
@@ -11013,13 +11073,21 @@ LV_ModifyCol(5,40)
 LV_ModifyCol(6,40)
 
 gui, tab, 5
-Gui, Add, text, x15 y33 w180 h20 ,원하는몬스터
+Gui, Add, text, x15 y33 w180 h20 ,사냥을원하는몬스터
 Gui, Add, edit, x15 y50 w180 h20 v원하는몬스터추가할몬스터명,
 Gui, Add, button, x15 y70 w85 h20 g원하는몬스터추가, 추가
 Gui, Add, button, x110 y70 w85 h20 g원하는몬스터삭제, 삭제
-Gui, Add, ListView, x15 y95 h180 w240 v원하는몬스터리스트 +altsubmit, 사냥할몬스터
+Gui, Add, ListView, x15 y95 h90 w240 v원하는몬스터리스트 +altsubmit, 사냥할몬스터
 LV_ModifyCol(1,200)
 
+Gui, Add, text, x15 y193 w180 h20 ,사냥을원하지않는몬스터
+Gui, Add, edit, x15 y210 w180 h20 v원하지않는몬스터추가할몬스터명,
+Gui, Add, button, x15 y230 w85 h20 g원하지않는몬스터추가, 추가
+Gui, Add, button, x110 y230 w85 h20 g원하지않는몬스터삭제, 삭제
+Gui, Add, ListView, x15 y255 h90 w240 v원하지않는몬스터리스트 +altsubmit, 사냥안할몬스터
+LV_ModifyCol(1,200)
+
+/*
 Gui, Add, Text, x15 y280 h15 w80, 블랙 리스트
 Gui, Add, ListView, x15 y295 h120 w240 v블랙리스트 g블랙리스트실행 +altsubmit, 분류|차원|맵이름|번호|이름|OID|X|Y|Z|삭제카운트
 LV_ModifyCol(1,0)
@@ -11032,6 +11100,7 @@ LV_ModifyCol(7,30)
 LV_ModifyCol(8,30)
 LV_ModifyCol(9,30)
 LV_ModifyCol(10,0)
+*/
 
 x_coord := 15 + 240 + 5
 Gui, Add, Text, x%x_coord% y30 h15 w80, 플레이어
@@ -11344,7 +11413,7 @@ Fill:
 ;{
 if (TargetTitle != "")
 {
-	types := ["보관할아이템리스트", "원하는아이템리스트", "은행넣을아이템리스트", "소각할아이템리스트","원하는몬스터리스트","NPC리스트", "좌표리스트"]
+	types := ["보관할아이템리스트", "원하는아이템리스트", "은행넣을아이템리스트", "소각할아이템리스트","원하는몬스터리스트","원하지않는몬스터리스트","NPC리스트", "좌표리스트"]
 	for index, type in types
 	{
 		ListName := type
@@ -11375,8 +11444,19 @@ if (TargetTitle != "")
 		LV_GetText(row,A_Index,1)
 		WantedMonsters.Push(row)  ; Add the current row's array to the main ListViewItems array
 	}
-	WantedItemlength := % WantedItems.MaxIndex()
-	WantedMonsterlength := % WantedMonsters.MaxIndex()
+	WantedItemlength := WantedItems.MaxIndex()
+	WantedMonsterlength := WantedMonsters.MaxIndex()
+
+	Gui,Listview,원하는몬스터리스트
+	sleep, 1
+	RowCount := LV_GetCount()
+	sleep, 1
+	DisWantedMonsters := []
+	Loop, %RowCount%
+	{
+		LV_GetText(row,A_Index,1)
+		DisWantedMonsters.Push(row)  ; Add the current row's array to the main ListViewItems array
+	}
 
 	저장위치 := a_scriptdir . "\SaveOf" . TargetTitle
 	if !FileExist(저장위치)
@@ -11597,6 +11677,21 @@ Return
 										gosub, 포레스트네자동감응
 									}
 								}
+							}
+							else
+							{
+								sleep,1000
+								break
+							}
+						}
+					}
+					else if (CurrentMode = "리스무기구매") ;만약 "행깃구매" 모드라면
+					{
+						loop,
+						{
+							if (CurrentMode = "리스무기구매") && (서버상태) && (Coin)
+							{
+								gosub, 리스무기구매
 							}
 							else
 							{
@@ -12861,7 +12956,7 @@ Return
 
 						}
 					}
-					else if (CurrentMode = "일반자사" ) ;만약 "포남자사" 모드라면
+					else if (CurrentMode = "일반자사" )
 					{
 						loop,
 						{
@@ -12903,10 +12998,6 @@ Return
 									{
 										keyclick(1)
 									}
-									if ( CurrentMode = "포북자사" )
-										mem.writeString(0x005901E5, "빛나는가루", "UTF-16", aOffsets*)
-									else if ( CurrentMode = "포남자사" )
-										mem.writeString(0x005901E5, "생명의콩", "UTF-16", aOffsets*)
 									gui,listview,몬스터리스트
 									lv_gettext(현재타겟이름,자사_현재선택,5)
 									lv_gettext(현재타겟OID,자사_현재선택,6)
@@ -12939,7 +13030,13 @@ Return
 									{
 										현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
 										if (현재무기 = 45057 || 현재무기 = 45058) ;활
+										{
+											if (공격여부 = 0)
+											{
+												RunMemory("공격하기")
+											}
 											continue
+										}
 										else if (근접체크 = 1 && 공격여부 = 0) ;도착했다면
 										{
 											RunMemory("공격하기")
@@ -13216,6 +13313,41 @@ Return
 									}
 									continue
 								}
+								else if (몬스터소탕["스톤고렘"] >= 31 && 특오자동교환여부 = 1)
+								{
+									특오교환:
+									몬스터소탕["스톤고렘"] := 0
+									book := 6
+									KeyClick(Book)
+									sleep, 100
+									맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
+									Num := 3 ;길탐수련 - 기본 길탐번호 변경을 원하면 여기를 수정 1,2,3,4,5 중 한개 입력
+									if (맵번호 != 269)
+									Search_Book(Num)
+									sleep, 1000
+									CallNPC("성검사")
+									sleep, 1000
+									MouseClick(400,324)
+									loop, 15
+									{
+										keyclick("K6")
+										sleep, 100
+									}
+									 mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
+									if formnumber != 0
+									{
+										loop, 15
+										{
+											keyclick("K6")
+											sleep, 100
+										}
+									}
+									MouseClickRightButton(400,300)
+									sleep, 1000
+									Num := 4 ;길탐수련 - 기본 길탐번호 변경을 원하면 여기를 수정 1,2,3,4,5 중 한개 입력
+									Search_Book(Num)
+									continue
+								}
 								else if (좌표갯수 > 0 && 자동이동여부 = 1)
 								{
 									현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
@@ -13287,10 +13419,9 @@ Return
 										시작Z := 좌표Z
 									}
 									continue
-
-
-
 								}
+								else
+									SB_SetText("일반자사오류발생",2)
 							}
 							else
 								break
@@ -13574,13 +13705,18 @@ if ((기존맵번호 != 맵번호 || 기존차원 != 차원) && (맵번호 != ""
 	stopsign := False
 }
 gosub, 아이템읽어오기
-gosub, 메모리검색_몬스터
-if (자동사냥여부 = 1)
+RM_Delay := A_TickCount - Read_Memory_Count
+if (RM_Delay > 5000) || (자동사냥여부 = 1)
 {
-	gosub, 몬스터_선택
-	sleep, 1
+	Read_Memory_Count := A_TickCount
+	gosub, 메모리검색_몬스터
+		if (자동사냥여부 = 1)
+		{
+			gosub, 몬스터_선택
+			sleep, 1
+		}
+	gosub, 메모리검색_플레이어
 }
-gosub, 메모리검색_플레이어
 sleep, 1
 if (아템먹기여부 = 1)
 {
@@ -13728,7 +13864,7 @@ for index, result in MonsterList
 	if (kind = "알수없음")
 	{
 		kind := "몬스터"
-		Setting_RECORD("MonsterList", kind, 차원, 맵이름, 맵번호, find_name, find_object_id, find_x, find_y, find_z, 중요도, result, findMID)
+		;Setting_RECORD("MonsterList", kind, 차원, 맵이름, 맵번호, find_name, find_object_id, find_x, find_y, find_z, 중요도, result, findMID)
 	}
 
 	if (LV_Row > 0)
@@ -13756,12 +13892,10 @@ for index, result in MonsterList
 		{
 			LV_Add("", kind, 차원, 맵이름, 맵번호, find_name, find_object_id, find_x, find_y, find_z, resultHex, , distanceXYZ ,findMID)
 		}
-		/*
 		else
 		{
 			LV_Modify(CurrentRow, "", kind, 차원, 맵이름, 맵번호, find_name, find_object_id, find_x, find_y, find_z, resultHex, , distanceXYZ ,findMID)
 		}
-		*/
 		continue
 	}
 	else if (kind = "NPC")
@@ -13827,9 +13961,7 @@ LVSelect := LV_GetNext(0)
 if ((LVSelect != 0) || !(LVCount = 0))
 {
 	LV_GetText(col5Value,LVSelect,5)
-	if (IsDataInList(col5Value, WantedMonsters)|| WantedMonsterlength = "" || WantedMonsterlength < 1)
-		return
-	else
+	if (!IsDataInList(col5Value, WantedMonsters) && WantedMonsterlength >= 1)
 	{
 		gui, listview, 몬스터리스트
 		LV_Modify(0,"-Select")
@@ -13855,6 +13987,8 @@ wantedList := ["원하는값1", "원하는값2", "원하는값3"] ; 원하는 �
 ; ListView의 모든 행을 검색합니다
  ; ListView의 항목 수를 가져옵니다
 
+WantedMonsterlength := WantedMonsters.MaxIndex()
+DisWantedMonsterlength := DisWantedMonsters.MaxIndex()
 
 Loop, %LVCount%
 {
@@ -13863,12 +13997,12 @@ Loop, %LVCount%
     LV_GetText(col5Value, thisRow, 5) ; 현재 행의 Col5 값을 가져옵니다
     LV_GetText(col6Value, thisRow, 6) ; 현재 행의 Col6 값을 가져옵니다
 	;SB_SetText("비교중" A_Index " " WantedMonsterlength, 5)
-
+	SB_SETTEXT(WantedMonsterlength,5)
     ; Col12 값이 현재 가장 낮은 값보다 낮고, Col5 값이 WantedList에 포함되고, Col6 값이 BlackList에 없는 경우
-    if (col12Value < lowestCol12Value && !IsDataInList(col6Value, BlackList)) && (IsDataInList(col5Value, WantedMonsters) || WantedMonsterlength = "" || WantedMonsterlength < 1)
-    {
-        lowestCol12Value := col12Value
-        selectedRow := thisRow
+    if (col12Value < lowestCol12Value && !IsDataInList(col6Value, BlackList)) && ((IsDataInList(col5Value, WantedMonsters) && WantedMonsterlength >= 1) || WantedMonsterlength < 1 ) && ((!IsDataInList(col5Value, DisWantedMonsters) && DisWantedMonsterlength >= 1) || DisWantedMonsterlength < 1 )
+	{
+		lowestCol12Value := col12Value
+		selectedRow := thisRow
     }
 }
 
@@ -13945,7 +14079,8 @@ for index, result in PlayerList
 	else if (LV_Row1 > 0)
 	{
 		gui, listview, %ListGUI%
-		LV_Modify(LV_Row1,"", kind, 차원, 맵이름, 맵번호, find_name, find_object_id, find_x, find_y, find_z, resultHex, 2, distanceXYZ ,findMID)
+		LV_Delete(LV_Row1)
+		;LV_Modify(LV_Row1,"", kind, 차원, 맵이름, 맵번호, find_name, find_object_id, find_x, find_y, find_z, resultHex, 2, distanceXYZ ,findMID)
 		continue
 	}
 	gui, listview, %ListGUI%
@@ -13967,7 +14102,7 @@ loop % LV_GetCount()
 	거리 := 거리X + 거리Y
 	addr := mem.read(주소, "UInt", aOffsets*)
 	find_name := mem.readString(mem.read(주소 + 0x62, "UInt", aOffsets*), 20, "UTF-16",aOffsets*)
-	if ((addr != AddressToCheck) || ( find_name != 이름))
+	if ((addr != AddressToCheck) || (find_name != 이름))
     {
 		LV_Delete(i)
 		continue
