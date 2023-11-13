@@ -13987,8 +13987,14 @@ wantedList := ["원하는값1", "원하는값2", "원하는값3"] ; 원하는 �
 ; ListView의 모든 행을 검색합니다
  ; ListView의 항목 수를 가져옵니다
 
-WantedMonsterlength := WantedMonsters.MaxIndex()
-DisWantedMonsterlength := DisWantedMonsters.MaxIndex()
+WantedMonsterLength := 0 ; 기본값을 0으로 설정
+if WantedMonsters.MaxIndex() ; 배열이 비어있지 않은 경우
+    WantedMonsterLength := WantedMonsters.MaxIndex()
+
+DisWantedMonsterLength := 0 ; 기본값을 0으로 설정
+if DisWantedMonsters.MaxIndex() ; 배열이 비어있지 않은 경우
+    DisWantedMonsterLength := DisWantedMonsters.MaxIndex()
+
 
 Loop, %LVCount%
 {
