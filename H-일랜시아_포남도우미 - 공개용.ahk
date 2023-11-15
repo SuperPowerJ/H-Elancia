@@ -52,7 +52,7 @@ GLOBAL Coin := False
 ;옵션 리스트 구분
 Lists := [ "CheckBoxList", "DropDownList", "EditList", "RadioButton" ]
 ;사용된 옵션들
-CheckBoxList := ["수련길탐딜레이","이동속도사용","게임배속사용","길탐색책사용","원거리타겟","리메듐타겟","오란의깃사용여부","길탐색1번사용여부","길탐색2번사용여부","길탐색3번사용여부","길탐색4번사용여부","길탐색5번사용여부","자동재접속사용여부","힐링포션사용여부", "HP마을귀환사용여부", "리메듐사용여부", "마나포션사용여부", "MP마을귀환사용여부", "브렐사용여부", "식빵사용여부", "식빵구매여부", "골드바판매여부", "골드바구매여부", "대화사용", "명상사용", "더블어택사용", "체력향상사용", "민첩향상사용", "활방어사용", "마력향상사용", "마법방어향상사용", "3번", "4번", "5번", "6번", "7번", "8번", "은행넣기활성화", "소각활성화","아템먹기여부","자동이동여부", "훔치기사용", "훔쳐보기사용", "Sense사용", "자동사냥여부", "무기사용여부","특오자동교환여부","행깃구매여부","라깃구매여부","독침사용","현혹사용","폭검사용","무기공격사용","집중사용","회피사용","몸통찌르기사용","리메듐사용","라리메듐사용","엘리메듐사용","쿠로사용","빛의갑옷사용","공포보호사용","다라사용","브렐사용","브레마사용","물의갑옷사용","감속사용","마스사용","라크사용","번개사용","브리스사용","파스티사용","슈키사용","클리드사용","스톤스킨사용","파라스사용","베네피쿠스사용","저주사용","자동파티여부", "포레스트네자동대화","RemoveArmor사용","좀비몹감지", "위치고정", "배경제거", "캐릭제거","버스기사모드","나프사용","제작이동"]
+CheckBoxList := ["수련길탐딜레이","이동속도사용","게임배속사용","길탐색책사용","원거리타겟","리메듐타겟","오란의깃사용여부","길탐색1번사용여부","길탐색2번사용여부","길탐색3번사용여부","길탐색4번사용여부","길탐색5번사용여부","자동재접속사용여부","힐링포션사용여부", "HP마을귀환사용여부", "리메듐사용여부", "마나포션사용여부", "MP마을귀환사용여부", "브렐사용여부", "식빵사용여부", "식빵구매여부", "골드바판매여부", "골드바구매여부", "대화사용", "명상사용", "더블어택사용", "체력향상사용", "민첩향상사용", "활방어사용", "마력향상사용", "마법방어향상사용", "3번", "4번", "5번", "6번", "7번", "8번", "은행넣기활성화", "소각활성화","아템먹기여부","자동이동여부", "훔치기사용", "훔쳐보기사용", "Sense사용", "자동사냥여부", "무기사용여부","특오자동교환여부","행깃구매여부","라깃구매여부","독침사용","현혹사용","폭검사용","무기공격사용","집중사용","회피사용","몸통찌르기사용","리메듐사용","라리메듐사용","엘리메듐사용","쿠로사용","빛의갑옷사용","공포보호사용","다라사용","브렐사용","브레마사용","물의갑옷사용","감속사용","마스사용","라크사용","번개사용","브리스사용","파스티사용","슈키사용","클리드사용","스톤스킨사용","파라스사용","베네피쿠스사용","저주사용","자동파티여부", "포레스트네자동대화","RemoveArmor사용","좀비몹감지", "위치고정", "배경제거", "캐릭제거","버스기사모드","나프사용","제작이동","자동그레이드"]
 SpellList := ["나프", "마스","리메듐","라리메듐","엘리메듐","쿠로","빛의갑옷","공포보호","다라","브렐","브레마","물의갑옷","감속","라크","번개","브리스","파스티","슈키","클리드","스톤스킨","파라스","베네피쿠스","저주"]
 DropDownList := ["오란의깃마을","길탐색1번목적지", "길탐색2번목적지", "길탐색3번목적지", "길탐색4번목적지", "길탐색5번목적지", "오란의깃단축키", "길탐색책단축키", "메인캐릭터서버", "메인캐릭터순서", "힐링포션사용단축키", "마나포션사용단축키", "식빵사용단축키", "식빵구매마을" ,"지침서", "오란의깃사용단축키", "포레스트네자동대화딜레이","CurrentMode","링단축키"]
 EditList := ["원거리타겟아이디","리메듐타겟아이디","힐링포션사용제한", "HP마을귀환사용제한", "MP마을귀환사용제한", "리메듐사용제한", "마나포션사용제한", "브렐사용제한", "식빵사용제한", "MP마을귀환사용여부", "넣을아이템","Multiplyer","NPC_MSG_ADR" ,"마지막사냥장소", "수련용길탐색딜레이", "NPC대화딜레이", "MoveSpeed", "게임배속", "특수리메듐타겟OID","수동레벨기입","수리소야이름","수리소야아이템순서","수리소야아이템갯수"]
@@ -142,6 +142,7 @@ Global abilityStates := []
 Global RecentWeapons := []
 Global 그레이드종류
 Global 그레이드할어빌
+Global GALRID
 ;메모리검색용
 Global WantedItemlength := 0
 Global WantedMonsters := []
@@ -6698,8 +6699,45 @@ return
 return
 ;}
 
-
-
+마하디움링교환:
+;{
+gosub, 아이템읽어오기
+a := 0
+b := 0
+a += floor(아이템갯수["마하디움"]/10)
+b += floor(아이템갯수["아이언링"]/2)
+if (a < 1 || b < 1)
+	return
+else if a > b
+	반복횟수 := b
+else
+	반복횟수 := a
+loop, % 반복횟수
+{
+	호출할NPC := "루비"
+	CallNPC(호출할NPC)
+	sleep, 500
+	NPCMENUSELECT("Talk")
+	sleep, 500
+	loop, 3
+	{
+		KeyClick("K6")
+		sleep,100
+	}
+	temp := get_NPCTalk_cordi()
+	x:=temp.x
+	y:=temp.y + 28 ; 마하디움링
+	MouseClick(x,y)
+	sleep, 500
+	loop, 7
+	{
+		KeyClick("K6")
+		sleep,100
+	}
+	MouseClickRightButton(x,y)
+}
+return
+;}
 포레스트네자동대화실행:
 ;{
 	gui, submit, nohide
@@ -7041,6 +7079,44 @@ else if (맵번호 = 4005)
 		else
 			다음대화꾼 := "동쪽파수꾼"
 		callnpc(다음대화꾼)
+		if ((NPC_MSG_ADR = "없음") || (NPC_MSG_ADR < 1))
+		{
+			sleep, 500
+			SetFormat, Integer, H
+			startAddress := 0x00100000
+			endAddress := 0x00200000
+			NPC_MSG_ADR := mem.processPatternScan(startAddress, endAddress, 0x5B, 0x00, 0xD9, 0xB3, 0xBD, 0xCA, 0x0C, 0xD3, 0x18, 0xC2, 0xBC, 0xAF, 0x5D, 0x00) ; "[동쪽파수꾼]" 를 검색
+			if ((NPC_MSG_ADR = "없음") || (NPC_MSG_ADR < 1))
+			{
+				sleep, 500
+				SetFormat, Integer, H
+				startAddress := 0x00100000
+				endAddress := 0x00200000
+				NPC_MSG_ADR := mem.processPatternScan(startAddress, endAddress, 0x5B, 0x00, 0x1C, 0xC1, 0xBD, 0xCA, 0x0C, 0xD3, 0x18, 0xC2, 0xBC, 0xAF, 0x5D, 0x00) ; "[서쪽파수꾼]" 를 검색
+				if ((NPC_MSG_ADR = "없음") || (NPC_MSG_ADR < 1))
+				{
+					sleep, 500
+					SetFormat, Integer, H
+					startAddress := 0x00100000
+					endAddress := 0x00200000
+					NPC_MSG_ADR := mem.processPatternScan(startAddress, endAddress, 0xB4, 0xC5, 0xBB, 0xB5, 0x8C, 0xAC, 0x20, 0x00, 0xEC, 0xC5, 0x30, 0xAE, 0x4C, 0xAE) ; "어떻게 여기까" 를 검색
+					SetFormat, Integer, D
+					SB_SetText("NPC대화주소검색중" NPC_MSG_ADR,2)
+					GuiControl,, NPC_MSG_ADR, %NPC_MSG_ADR%
+					sleep, 100
+				}
+				SetFormat, Integer, D
+				SB_SetText("NPC대화주소검색중" NPC_MSG_ADR,2)
+				GuiControl,, NPC_MSG_ADR, %NPC_MSG_ADR%
+				sleep, 100
+			}
+			SetFormat, Integer, D
+			SB_SetText("NPC대화주소검색중" NPC_MSG_ADR,2)
+			GuiControl,, NPC_MSG_ADR, %NPC_MSG_ADR%
+			sleep, 100
+		}
+
+
 		loop, 5
 		{
 			sleep,1000
@@ -7434,6 +7510,8 @@ return
 
 그레이드하기:
 ;{
+gosub, 어빌리티읽어오기
+gosub, 마법읽어오기
 gui, submit, nohide
 ;최소충족조건
 GALRID := mem.read(0x0058DAD4, "UInt", 0x178, 0x6F)
@@ -7443,7 +7521,17 @@ if !(GALRID > 1000000 && 아이템갯수["정령의보석"] > 10)
 	그레이드필요 := False
 	;return
 }
-목적마을 := "에필로리아"
+맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
+if (맵번호 = 2 || 맵번호 = 229 )
+	목적마을 := "로렌시아"
+else if (맵번호 = 1002 || 맵번호 = 1229 )
+	목적마을 := "에필로리아"
+else if (맵번호 = 2002 || 맵번호 = 2229 )
+	목적마을 := "세르니카"
+else if (맵번호 = 3002 || 맵번호 = 3229 )
+	목적마을 := "크로노시스"
+else
+	목적마을 := "포프레스네"
 목적지 := "신전"
 gosub, 배달상점이동세팅
 gosub, 배달상점가기
@@ -7489,6 +7577,13 @@ loop,
 	sleep, 500
 	NPCMsg := mem.readString(NPC_MSG_ADR, 100, "UTF-16", aOffsets*)
 	FormNumber := mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
+	IfInString,NPCMsg,[%그레이드할어빌%]의
+	{
+		SB_SetText("그레이드중완료",2)
+		keyClick("K6")
+		sleep,10
+		break
+	}
 	IfInString,NPCMsg,당신의 성향
 	{
 		SB_SetText("그레이드중 - 기도성공",2)
@@ -7570,6 +7665,14 @@ loop,
 		sleep,10
 		continue
 	}
+	else IfInString,NPCMsg,부족합니다
+	{
+		SB_SetText("그레이드중 - 12",2)
+		mem.writeString(NPC_MSG_ADR, "", "UTF-16", aOffsets*)
+		KeyClick("K6")
+		sleep,10
+		break
+	}
 	else IfInString,NPCMsg,어빌리티를 마스터
 	{
 		SB_SetText("그레이드중 - 9",2)
@@ -7583,7 +7686,7 @@ loop,
 	}
 	else IfInString,NPCMsg,잘못된
 	{
-		SB_SetText("그레이드중 - 9",2)
+		SB_SetText("그레이드중 - 13",2)
 		mem.writeString(NPC_MSG_ADR, "", "UTF-16", aOffsets*)
 		temp:=get_NPCTalk_cordi()
 		x:=temp.x - 10
@@ -7594,6 +7697,8 @@ loop,
 	}
 	else if(FormNumber = 38)
 	{
+		SB_SetText("그레이드중 - 10" 그레이드할어빌 ,2)
+		mem.writeString(NPC_MSG_ADR, "", "UTF-16", aOffsets*)
 		IfWinNotActive,ahk_pid %jPID%
 		{
 		WinActivate, ahk_pid %jPID%
@@ -7605,9 +7710,19 @@ loop,
 			SendMagicName(그레이드할어빌)
 		continue
 	}
+	else IfInString,NPCMsg,%그레이드할어빌%
+	{
+		SB_SetText("그레이드중 - 11",2)
+		mem.writeString(NPC_MSG_ADR, "", "UTF-16", aOffsets*)
+		temp:=get_NPCTalk_cordi()
+		x:=temp.x - 10
+		y:=temp.y
+		MouseClick(x,y)
+		sleep,10
+		break
+	}
 }
-gosub, 어빌리티읽어오기
-gosub, 마법읽어오기
+
 return
 
 
@@ -8691,12 +8806,12 @@ return
 		if (Ability = 100)
 		{
 			GuiControlGet,그레이드여부,,%마법이름%
-			if (그레이드여부 = 1 && 자동그레이드 = True)
+			if (그레이드여부 = 1 && GALRID > 1000000 && 아이템갯수["정령의보석"] > 10)
 			{
 				그레이드필요 := True
 				그레이드종류 := "마법" ; "어빌" || "마법"
 				그레이드할어빌 := Ability_name
-				SB_SetText(그레이드할어빌 "그레이드필요",2)
+				SB_SetText(그레이드할어빌 "그레이드필요",5)
 			}
 		}
 		For Index, skill in SpellList
@@ -8748,7 +8863,7 @@ return
 		if (Ability = 10000)
 		{
 			GuiControlGet,그레이드여부,,%어빌리티이름%
-			if (그레이드여부 = 1 && 자동그레이드 = True)
+			if (그레이드여부 = 1 && GALRID > 1000000 && 아이템갯수["정령의보석"] > 10)
 			{
 				그레이드필요 := True
 				그레이드종류 := "어빌" ; "어빌" || "마법"
@@ -10183,7 +10298,7 @@ return
 {
 	Gui, Submit, Nohide
 	type := "원하는아이템리스트"
-	if 원하는아이템추가할아이템명 = ""
+	if (원하는아이템추가할아이템명 = "")
 		return
 	Setting_RECORD(type,원하는아이템추가할아이템명)
 	Gui, ListView, 원하는아이템리스트
@@ -10373,7 +10488,6 @@ return
 {
 gui,listview,좌표리스트
 gosub, 기본정보읽기
-
 Setting_RECORD("좌표리스트",좌표X,좌표Y,좌표Z)
 Gui, listview, 좌표리스트
 LV_Delete()
@@ -11155,7 +11269,7 @@ Gui, Add, DropDownList, x420 y315 w50 h60 v식빵사용단축키,9||
 
 Gui, Add, Text, x335 y340 w140 h20,식빵구매
 Gui, Add, checkbox, x335 y355 w20 h20  v식빵구매여부,
-Gui, Add, DropDownList, x360 y355 w110 h80 disabled v식빵구매마을,로랜시아||에필로리아|세르니카|크로노시스|포프레스네
+Gui, Add, DropDownList, x360 y355 w110 h80  v식빵구매마을,로랜시아||에필로리아|세르니카|크로노시스|포프레스네
 
 Gui, Add, Text, x335 y380 w140 h20,골드바
 Gui, Add, checkbox, x335 y395 w20 h20  v골드바판매여부,
@@ -11280,7 +11394,7 @@ Gui, Add, Button, x438 y52 h20 w45 h20 g포레스트네자동대화실행, 실�
 Gui, Add, GroupBox, x493 y30 w159 h60, 기타설정
 coord_x := 493+15
 Gui, Add, checkbox, x%coord_x% y45 w100 h20 v버스기사모드,버스기사모드
-Gui, Add, checkbox, x%coord_x% y65 w100 h20 disabled v자동그레이드,자동그레이드
+Gui, Add, checkbox, x%coord_x% y65 w100 h20 v자동그레이드,자동그레이드
 
 Gui, Add, GroupBox, x333 y95 h175 w159,NPC리스트
 Gui, Add, Button, x343 y110 h20 w40 gNPC리스트리셋, 리셋
@@ -11569,6 +11683,7 @@ LV_ModifyCol(9,30)
 LV_ModifyCol(10,0)
 
 gui, tab, 6
+gui, add, button, x400 y35 g마하디움링교환, 마하디움링교환
 x_coord := 15
 Y_coord := 50
 loop, 10
@@ -11655,7 +11770,6 @@ gui, tab, 8
 gui, add, text, x35 y35, 게임내에서 스킬순서를 바꿀 경우 체크를 꼭 다시 해야합니다.
 
 gui, add, button, x500 y35 g그레이드하기, 그레이드하기
-gui, add, button, x300 y35 g어빌리티읽어오기, 어빌리티읽어오기
 y_coord := 55
 x_coord := 35
 loop, 72
@@ -12020,7 +12134,7 @@ Return
 								SB_SetText("나프마통작",1)
 								sleep,50
 								gosub, 나프마통작
-								;MZ_Delay := A_TickCount - AttackStartCounter
+								MZ_Delay := A_TickCount - AttackStartCounter
 								if (수리가필요한것같아 > 3 && 수리 = 1)  && (서버상태)
 								{
 									SetTimer,스킬사용하기,off
@@ -12031,6 +12145,8 @@ Return
 								}
 								else if (수리가필요한것같아 > 3 && 소야수리 = 1)  && (서버상태)
 								{
+									gosub, 아이템읽어오기
+									InitialInven := 아이템갯수
 									수리가필요한것같아 := 0
 									CheatEngine_Buy_Unlimitted()
 									SetTimer,스킬사용하기,off
@@ -12078,7 +12194,36 @@ Return
 									sleep,1000
 									NPC거래창닫기()
 									sleep,1000
-									InvenBeforeBuy := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
+									gosub, 아이템읽어오기
+									ChangedInven := 아이템갯수
+									changes := ""
+									for key, newValue in ChangedInven {
+										if key == "GALRID"
+											continue
+										if InitialInven.HasKey(key) {
+											changeAmount := newValue - InitialInven[key]
+											if (changeAmount != 0) {
+												changes .= key . "가 " . Abs(changeAmount) . "개 " . (changeAmount > 0 ? "증가되었습니다." : "감소되었습니다.") . "`n"
+												추적아이템 := key
+												변동된추적아이템갯수 := abs(changeAmount)
+											}
+										} else {
+											changes .= key . "가 새로 추가되었습니다." . "`n"
+											추적아이템 := key
+											변동된추적아이템갯수 := ChangedInven[key]
+										}
+									}
+									for key, oldValue in InitialInven {
+										if key == "GALRID"
+											continue
+										if !ChangedInven.HasKey(key) {
+											changes .= key . "가 제거되었습니다." . "`n"
+											추적아이템 := key
+											변동된추적아이템갯수 := InitialInven[key]
+										}
+									}
+									InitialInven := 아이템갯수
+									SB_SetText(추적아이템 " " 변동된추적아이템갯수 "개 판매됨" ,5)
 									loop,
 									{
 										if !(서버상태)
@@ -12129,16 +12274,50 @@ Return
 										sleep,200
 										NPC거래창OK클릭()
 										sleep,1000
-										InvenAfterBuy := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
 										NPC거래창닫기()
+										gosub, 아이템읽어오기
+										ChangedInven := 아이템갯수
+										changes := ""
+										for key, newValue in ChangedInven {
+											if key == "GALRID"
+												continue
+											if InitialInven.HasKey(key) {
+												changeAmount := newValue - InitialInven[key]
+												if (changeAmount != 0) {
+													changes .= key . "가 " . Abs(changeAmount) . "개 " . (changeAmount > 0 ? "증가되었습니다." : "감소되었습니다.") . "`n"
+													새추적아이템 := key
+													변동된추적아이템갯수 := Abs(changeAmount)
+												}
+											} else {
+												changes .= key . "가 새로 추가되었습니다." . "`n"
+												새추적아이템 := key
+												변동된추적아이템갯수 := ChangedInven[key]
+												}
+										}
+										for key, oldValue in InitialInven {
+											if key == "GALRID"
+												continue
+											if !ChangedInven.HasKey(key) {
+												changes .= key . "가 제거되었습니다." . "`n"
+												새추적아이템 := key
+												변동된추적아이템갯수 := InitialInven[key]
+											}
+										}
 										AttackStartCounter := A_TickCount
-										if (InvenAfterBuy>InvenBeforeBuy)
+										if (추적아이템 != 새추적아이템)
+										{
+											SB_SetText(새추적아이템 "판매된 아이템과 구매된 아이템 불일치" ,5)
+										}
+										else if (아이템갯수[추적아이템] >= 추적아이템갯수)
+										{
+											SB_SetText( 추적아이템 " " 아이템갯수[추적아이템] "개 소지중" ,5)
 											break
+										}
 									}
 									KeyClick(링단축키)
 									sleep, 500
 									SetTimer,스킬사용하기,1000
-									Start_Inven := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
+									Start_Inven := 아이템갯수[추적아이템]
 								}
 								else if (MZ_Delay > 600000 || 현재FP <1 ) && (회복 = 1) && (서버상태)
 								{
@@ -12148,14 +12327,19 @@ Return
 									gosub, 회복하기
 									SetTimer,스킬사용하기,1000
 								}
-								if (수리 = 1 || 소야수리 = 1)  && (서버상태)
+								if (수리 = 1 || 소야수리 = 1)  && (서버상태) && (MZ_Delay > 1000)
 								{
-									New_Inven := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
+									AttackStartCounter := A_TickCount
+									gosub, 아이템읽어오기
+									New_Inven := 아이템갯수[추적아이템]
 									if (New_Inven > Start_Inven)
 									{
 										KeyClick(링단축키)
-										sleep, 400
 										수리가필요한것같아 += 1
+									}
+									else if (New_Inven < Start_Inven)
+									{
+										Start_Inven := New_Inven
 									}
 									else
 									{
@@ -12983,7 +13167,7 @@ Return
 								GALRID := mem.read(0x0058DAD4, "UInt", 0x178, 0x6F)
 								GuiControl,, GALRID, % GALRID
 								AttackStartCounter := A_TickCount
-								if (무기수리필요 || 식빵구매필요 || 라깃구매필요 || 그레이드필요)
+								if (무기수리필요 || 식빵구매필요 || 라깃구매필요 || (그레이드필요 && 자동그레이드 = True))
 								{
 									if !(IsDataInList(맵번호, 설정된마을))
 									{
