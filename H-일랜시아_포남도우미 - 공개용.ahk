@@ -1254,6 +1254,7 @@ return this.SizeOfStructure
 				sleep, 1000
 				RunMemory("NPC호출")
 				SB_SETTEXT(호출할NPC "(" NPCOID ") 호출" , "2")
+				settimer, IsNPCOIDCorret, -3000
 				Return 1
 			}
 			else
@@ -4934,11 +4935,8 @@ return this.SizeOfStructure
 					}
 					else (fields[6] != itemname[6])
 					{
-						FileDelete, %FileName%
-						gui, listview, NPC리스트
-						LV_delete()
+						gosub, 서버점검후OID변경감지
 						Last := 0
-						SB_SetText("서버점검후 OID변경 감지됨",2)
 						break
 					}
 				}
@@ -5067,12 +5065,9 @@ return this.SizeOfStructure
 					}
 					else if (fields[6] != itemname[6])
 					{
-						gui, listview, NPC리스트
-						LV_delete()
-						FileDelete, %FileName%
+						gosub, 서버점검후OID변경감지
 						found := False
 						Last := 0
-						SB_SetText("서버점검후 OID변경 감지됨",2)
 						break
 					}
 				}
@@ -5085,12 +5080,9 @@ return this.SizeOfStructure
 					}
 					else if (fields[6] != itemname[6])
 					{
-						gui, listview, 고용상인리스트
-						LV_delete()
-						FileDelete, %FileName%
+						gosub, 서버점검후OID변경감지
 						found := False
 						Last := 0
-						SB_SetText("서버점검후 OID변경 감지됨",2)
 						break
 					}
 				}
@@ -8456,7 +8448,6 @@ for Index, option in %Temp_list%
 		GuiControl,, %Item%, %option%
 }
 Coin := False
-gosub, CurrentMode_대기모드
 guicontrol,Disabled,중지
 guicontrol,enable,실행
 guicontrol,Hide,중지
@@ -12308,7 +12299,7 @@ Return
 										{
 											SB_SetText(새추적아이템 "판매된 아이템과 구매된 아이템 불일치" ,5)
 										}
-										else if (아이템갯수[추적아이템] >= 추적아이템갯수)
+										else if (아이템갯수[추적아이템] >= 변동된추적아이템갯수)
 										{
 											SB_SetText( 추적아이템 " " 아이템갯수[추적아이템] "개 소지중" ,5)
 											break
@@ -14656,6 +14647,10 @@ for index, result in MonsterList
 				Find := True
 				break
 			}
+			else if(기존NPC맵번호 = 맵번호 && 기존NPC차원 = 차원 && 기존NPC이름 = find_name && 기존NPCOID != find_object_id)
+			{
+				gosub, 서버점검후OID변경감지
+			}
 		}
 		if !(Find)
 		{
@@ -14680,6 +14675,10 @@ for index, result in MonsterList
 			{
 				Find := True
 				break
+			}
+			else if(기존NPC맵번호 = 맵번호 && 기존NPC차원 = 차원 && 기존NPC이름 = find_name && 기존NPCOID != find_object_id)
+			{
+				gosub, 서버점검후OID변경감지
 			}
 		}
 		if !(Find)
@@ -14788,6 +14787,25 @@ if (selectedRow > 0)
 
 return
 ;}
+
+IsNPCOIDCorret:
+if (서버상태)
+	return
+서버점검후OID변경감지:
+FileName := "NPCList.ini"
+FileDelete, %FileName%
+sleep,1
+Gui, Listview, NPC리스트
+LV_Delete()
+FileName := "SellerList.ini"
+FileDelete, %FileName%
+sleep,1
+Gui, Listview, 고용상인리스트
+LV_Delete()
+Setting_Reload("NPC리스트")
+Setting_Reload("고용상인리스트")
+SB_SetText("서버점검후 OID변경 감지됨",2)
+return
 
 메모리검색_플레이어:
 ;{
