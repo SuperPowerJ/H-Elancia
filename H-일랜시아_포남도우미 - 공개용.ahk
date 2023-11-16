@@ -6700,10 +6700,11 @@ a += floor(아이템갯수["마하디움"]/10)
 b += floor(아이템갯수["아이언링"]/2)
 if (a < 1 || b < 1)
 	return
-else if a > b
+else if (a > b)
 	반복횟수 := b
-else
+else if (b > a)
 	반복횟수 := a
+SB_SetText("마하디움" a "번 가능" "아이언링" b "번 가능" 반복횟수 "만큼 반복",5)
 loop, % 반복횟수
 {
 	호출할NPC := "루비"
