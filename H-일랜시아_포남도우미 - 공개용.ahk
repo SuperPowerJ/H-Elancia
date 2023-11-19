@@ -94,9 +94,9 @@ SkillListA := ["훔치기","훔쳐보기","Sense","현혹","폭검","독침","�
 
 오란의깃마을_DDLOptions := ["로랜시아","에필로리아","세르니카","크로노시스","포프레스네"]
 길탐색5번목적지_DDLOptions := 길탐색4번목적지_DDLOptions := 길탐색3번목적지_DDLOptions := 길탐색2번목적지_DDLOptions := 길탐색1번목적지_DDLOptions := ["로랜시아 목공소","로랜시아 퍼브","로랜시아 우체국","로랜시아 퍼브 우체국","에필로리아 목공소","에필로리아 퍼브","에필로리아 우체국","에필로리아 퍼브 우체국","세르니카 퍼브","세르니카 우체국","세르니카 목공소","포프레스네 무기상점"]
-CurrentMode_DDLOptions := ["대기모드","자동감응","일반자사","포남자사","포북자사","나프마통작","마잠또는밥통","광물캐기","배달하기","행깃교환","행깃구매","리스무기구매"]
+CurrentMode_DDLOptions := ["대기모드","자동감응","일반자사","포남자사","포북자사","마법잠수","광물캐기","배달하기"]
 메인캐릭터서버_DDLOptions := ["엘","테스"]
-메인캐릭터순서_DDLOptions := [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+메인캐릭터순서_DDLOptions := [1,2,3,4,5,6,7,8,9,10] ;,11,12,13,14,15,16,17,18,19,20]
 힐링포션사용단축키_DDLOptions := [3,4,5,6,7,8]
 마나포션사용단축키_DDLOptions := [3,4,5,6,7,8]
 식빵사용단축키_DDLOptions := [8,9]
@@ -7573,16 +7573,10 @@ loop,
 	sleep, 500
 	NPCMsg := mem.readString(NPC_MSG_ADR, 100, "UTF-16", aOffsets*)
 	FormNumber := mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
-	IfInString,NPCMsg,올랐습니다!
+	IfInString,NPCMsg,올랐습니다
 	{
 		SB_SetText("그레이드중완료",2)
-		keyClick("K6")
-		sleep,10
-		break
-	}
-	else IfInString,NPCMsg,[%그레이드할어빌%]의
-	{
-		SB_SetText("그레이드중완료",2)
+		mem.writeString(NPC_MSG_ADR, "", "UTF-16", aOffsets*)
 		keyClick("K6")
 		sleep,10
 		break
@@ -7706,11 +7700,15 @@ loop,
 		{
 		WinActivate, ahk_pid %jPID%
 		}
-		sleep, 10
+		sleep, 500
 		if (그레이드종류 = "어빌")
+		{
 			SendWeaponName(그레이드할어빌)
+		}
 		else if (그레이드종류 = "마법")
+		{
 			SendMagicName(그레이드할어빌)
+		}
 		continue
 	}
 	else IfInString,NPCMsg,%그레이드할어빌%
@@ -7722,12 +7720,15 @@ loop,
 		y:=temp.y
 		MouseClick(x,y)
 		sleep,10
-		break
+		continue
 	}
 }
 FormNumber := mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
-if FormNumber != 0
+if (FormNumber != 0)
+{
 	KeyClick("K6")
+}
+settimer, 스킬사용하기, 1000
 return
 
 
@@ -8453,6 +8454,7 @@ SB_SETTEXT("사용자가 중지를 요청",2)
 temp_variable := CurrentMode
 Item := "CurrentMode"
 guicontrol,enable,CurrentMode
+GuiControl,, CurrentMode, |
 GuiControl,, CurrentMode, %temp_variable%||
 Temp_list := Item . "_DDLOptions"
 for Index, option in %Temp_list%
@@ -9582,14 +9584,14 @@ return
 		{
 			settimer, 스킬사용하기, off
 
-			SetTimer, 나프마통작, off
+			SetTimer, 마법잠수, off
 			gosub, 수리하기
 			RepairCount := 300
 			SB_SetText("수리완료"  ,1)
 			sleep, 500
 			settimer, 스킬사용하기, 1000
 			if (나프사용 = 1)
-				SetTimer, 나프마통작, 300
+				SetTimer, 마법잠수, 300
 		}
 		RepairCount -= 1
 		sleep, %cookdelay%
@@ -11047,7 +11049,7 @@ return
 	인트 += 0
 	수동레벨기입 += 0
 	최대마력량 := 인트 * 10 + 수동레벨기입 * 5
-	if (최대마력량 <= 최대MP && 최대MP != 0 && 최대MP != "" && CurrentMode = "나프마통작" && 최대마력량 != 0 && 최대마력량 != "" && Coin = True)
+	if (최대마력량 <= 최대MP && 최대MP != 0 && 최대MP != "" && CurrentMode = "마법잠수" && 최대마력량 != 0 && 최대마력량 != "" && Coin = True)
 	{
 		guicontrol, ,현재마력,%상승마력% (최대치%최대마력량%도달)
 	}
@@ -11263,7 +11265,7 @@ Gui, Add, Text, x345 y174 w130 h30 v맵,
 Gui, Add, CheckBox, x15 y220 v아템먹기여부, 먹자(+채광)
 Gui, Add, CheckBox, x105 y220 v자동사냥여부, 자동사냥
 Gui, Add, CheckBox, x195 y220 v자동이동여부, 자동이동
-Gui, Add, DropDownList, x280 y215 w80 vCurrentMode,대기모드||자동감응|일반자사|포남자사|포북자사|광물캐기|배달하기|나프마통작|행깃구매|행깃교환
+Gui, Add, DropDownList, x280 y215 w80 vCurrentMode,대기모드||자동감응|일반자사|포남자사|포북자사|광물캐기|배달하기|마법잠수|행깃구매|행깃교환
 Gui, Add, Button, x375 y213 w100 g실행 v실행, 실행
 Gui, Add, Button, x375 y213 w100 Hidden g중지 v중지, 중지
 
@@ -12155,7 +12157,7 @@ Return
 							}
 						}
 					}
-					else if (CurrentMode = "나프마통작")
+					else if (CurrentMode = "마법잠수")
 					{
 						Start_Inven := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
 						gui, submit, nohide
@@ -12181,12 +12183,12 @@ Return
 						}
 						loop,
 						{
-							if (CurrentMode = "나프마통작") && (서버상태) && (Coin)
+							if (CurrentMode = "마법잠수") && (서버상태) && (Coin)
 							{
 								gui, submit, nohide
-								SB_SetText("나프마통작",1)
+								SB_SetText("마법잠수",1)
 								sleep,50
-								gosub, 나프마통작
+								gosub, 마법잠수
 								MZ_Delay := A_TickCount - AttackStartCounter
 								if (수리가필요한것같아 > 3 && 수리 = 1)  && (서버상태)
 								{
@@ -12208,45 +12210,54 @@ Return
 									guicontrolget,수리소야아이템순서
 									guicontrolget,링단축키
 									guicontrolget,수리소야아이템갯수
-									동작방법 := "Sell"
-									loop, 5
+									loop, 3
 									{
-										if !(서버상태)
-											break
-										CheatEngine_Move_Sell()
-										CheatEngine_Move_Buy()
-										NpcMenuSelection := mem.read(0x0058F0A4, "UInt", aOffset*) ; 메뉴창이 잘 떳는지 확인
-										if (NpcMenuSelection = 0)
+										시작갯수 := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
+										동작방법 := "Sell"
+										loop, 5
 										{
-											SB_SetText("NPC호출실패 다시호출",2)
-											CallSoya(수리소야이름)
+											if !(서버상태)
+												break
+											CheatEngine_Move_Sell()
+											CheatEngine_Move_Buy()
+											NpcMenuSelection := mem.read(0x0058F0A4, "UInt", aOffset*) ; 메뉴창이 잘 떳는지 확인
+											if (NpcMenuSelection = 0)
+											{
+												SB_SetText("NPC호출실패 다시호출",2)
+												CallSoya(수리소야이름)
+											}
+											else
+											{
+												SB_SetText("NPC호출성공",2)
+												break
+											}
+											sleep, 100
 										}
-										else
+										loop, 5
 										{
-											SB_SetText("NPC호출성공",2)
-											break
+											NPCMENUSELECT(동작방법)
+											sleep, 100
+											if (Check_Shop(동작방법)!=0)
+												break
 										}
-										sleep, 100
-									}
-									loop, 5
-									{
-										NPCMENUSELECT(동작방법)
-										sleep, 100
-										if (Check_Shop(동작방법)!=0)
-											break
-									}
 
-									NPC거래창첫번째메뉴클릭()
-									loop, %수리소야아이템갯수%
-									{
-										keyclick("RightArrow")
-										keyclick("DownArrow")
+										NPC거래창첫번째메뉴클릭()
+										loop, %수리소야아이템갯수%
+										{
+											keyclick("RightArrow")
+											keyclick("DownArrow")
+										}
+										sleep,200
+										NPC거래창OK클릭()
+										sleep,1000
+										NPC거래창닫기()
+										sleep,1000
+										바뀐갯수 := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
+										IF (시작갯수 > 바뀐갯수)
+										{
+											break
+										}
 									}
-									sleep,200
-									NPC거래창OK클릭()
-									sleep,1000
-									NPC거래창닫기()
-									sleep,1000
 									gosub, 아이템읽어오기
 									ChangedInven := 아이템갯수
 									changes := ""
@@ -12367,8 +12378,18 @@ Return
 											break
 										}
 									}
-									KeyClick(링단축키)
-									sleep, 500
+									loop,2
+									{
+										링착용확인전 := 아이템갯수[추적아이템]
+										KeyClick(링단축키)
+										sleep, 500
+										gosub, 아이템읽어오기
+										링착용확인후 := 아이템갯수[추적아이템]
+										if (링착용확인전 > 링착용확인후)
+										{
+											break
+										}
+									}
 									SetTimer,스킬사용하기,1000
 									Start_Inven := 아이템갯수[추적아이템]
 								}
@@ -12403,38 +12424,6 @@ Return
 							else
 							{
 								sleep,1000
-								break
-							}
-						}
-					}
-					else if (CurrentMode = "마잠또는밥통")
-					{
-						AttackStartCounter := A_TickCount
-						SetTimer, 스킬사용하기, off
-						loop,
-						{
-							if (CurrentMode = "마잠또는밥통") && (서버상태) && (Coin)
-							{
-								gui, submit, nohide
-								SB_SetText("마잠또는밥통",1)
-								sleep,1000
-								MZ_Delay := A_TickCount - AttackStartCounter
-								if (MZ_Delay > 600000 && 수리 = 1)
-								{
-									AttackStartCounter := A_TickCount
-									gosub, 수리하기
-								}
-								else if (MZ_Delay > 600000 || 현재FP <1 ) && (회복 = 1)
-								{
-									AttackStartCounter := A_TickCount
-									gosub, 회복하기
-								}
-								gosub, 스킬사용하기
-							}
-							else
-							{
-								sleep,1000
-								SetTimer, 스킬사용하기, 1000
 								break
 							}
 						}
@@ -15417,7 +15406,7 @@ if (자동재접속사용여부 = 1 && TargetTitle != "")
 return
 ;}
 
-나프마통작:
+마법잠수:
 ;{
 gui, submit, nohide
 if (나프사용 = 1)
@@ -15434,6 +15423,10 @@ if (브렐사용 = 1)
 {
 	마법사용("브렐", "자신")
 	sleep, 1
+}
+if (리메듐타겟 = 0)
+{
+	특수리메듐타겟OID := "자신"
 }
 if (리메듐사용 = 1)
 {
@@ -15630,9 +15623,13 @@ return
 					if (temp_skill_usecheck == 1) && (spell = "리메듐" || spell = "라리메듐" || spell = "엘리메듐" || spell = "나프")
 					{
 						if (리메듐타겟 = 1)
+						{
 							마법사용(spell, 특수리메듐타겟OID)
+						}
 						else
+						{
 							마법사용(spell, "자신")
+						}
 						sleep, %스킬마법재사용딜레이%
 					}
 					else if ((temp_skill_usecheck == 1 && 특수원거리타겟OID != 0x0 && 특수원거리타겟OID != "") && (원거리타겟 || 원거리대상갯수 != 0))
