@@ -94,7 +94,7 @@ SkillListA := ["훔치기","훔쳐보기","Sense","현혹","폭검","독침","�
 
 오란의깃마을_DDLOptions := ["로랜시아","에필로리아","세르니카","크로노시스","포프레스네"]
 길탐색5번목적지_DDLOptions := 길탐색4번목적지_DDLOptions := 길탐색3번목적지_DDLOptions := 길탐색2번목적지_DDLOptions := 길탐색1번목적지_DDLOptions := ["로랜시아 목공소","로랜시아 퍼브","로랜시아 우체국","로랜시아 퍼브 우체국","에필로리아 목공소","에필로리아 퍼브","에필로리아 우체국","에필로리아 퍼브 우체국","세르니카 퍼브","세르니카 우체국","세르니카 목공소","포프레스네 무기상점"]
-CurrentMode_DDLOptions := ["대기모드","자동감응","일반자사","포남자사","포북자사","마법잠수","광물캐기","배달하기"] ; ,"행깃구매","리스무기구매"]
+CurrentMode_DDLOptions := ["대기모드","자동감응","일반자사","포남자사","포북자사","마법잠수","광물캐기","배달하기"] ;,"행깃구매","리스무기구매"]
 메인캐릭터서버_DDLOptions := ["엘","테스"]
 메인캐릭터순서_DDLOptions := [1,2,3,4,5,6,7,8,9,10] ;,11,12,13,14,15,16,17,18,19,20]
 힐링포션사용단축키_DDLOptions := [3,4,5,6,7,8]
@@ -1599,6 +1599,26 @@ return this.SizeOfStructure
 		return NPCMsg_address
 	}
 
+	게시판열기:
+		keyclick("AltB")
+		sleep,1000
+		Get_Board_Login()
+	return
+
+	Get_Board_Login()
+	{
+		startAddress := 0x00000000
+		endAddress := 0x50000000
+		URI := mem.processPatternScan(startAddress, endAddress, 0x68,0x00,0x74,0x00,0x74,0x00,0x70,0x00,0x73,0x00,0x3A,0x00,0x2F,0x00,0x2F,0x00,0x6C,0x00,0x6F,0x00,0x67,0x00,0x69,0x00,0x6E,0x00,0x2E,0x00,0x65,0x00,0x6C,0x00,0x61,0x00,0x6E,0x00,0x63,0x00,0x69,0x00,0x61,0x00,0x2E,0x00) ;,0x6E,0x00,0x65,0x00,0x78,0x00,0x6F,0x00,0x6E,0x00,0x2E,0x00,0x63,0x00,0x6F,0x00,0x6D,0x00,0x2F,0x00,0x6C,0x00,0x6F,0x00,0x67,0x00,0x69,0x00,0x6E,0x00,0x2E,0x00,0x61,0x00,0x73,0x00,0x70,0x00,0x78,0x00,0x3F,0x00,0x6B,0x00,0x65,0x00)
+		if URI
+		{
+			URL := mem.readString(URI, 0x400, "UTF-16", aOffsets*)
+			Run, %URL%
+			SB_SetText(URI,2)
+		}
+		else
+			SB_SetText("URI 없음",2)
+	}
 	get_NPCTalk_cordi()
 	{
 		x := mem.read(0x0058EB48, "UInt", 0xC8)
@@ -1951,6 +1971,15 @@ return this.SizeOfStructure
 			PostMessage, 0x100, 18, 540540929,, ahk_pid %PID% ; ALT Lock
 			PostMessage, 0x100, 82, 1245185,, ahk_pid %PID%  ; r Lock
 			PostMessage, 0x101, 82, 1245185,, ahk_pid %PID%  ; r release
+			PostMessage, 0x101, 18, 540540929,, ahk_pid %PID% ; ALT Release
+			sleep, 1
+			}
+			}
+			else if(Key = "AltB"){
+			loop, 1 {
+			PostMessage, 0x100, 18, 540540929,, ahk_pid %PID% ; ALT Lock
+			PostMessage, 0x100, 66, 3145729,, ahk_pid %PID%
+			PostMessage, 0x101, 66, 3145729,, ahk_pid %PID%
 			PostMessage, 0x101, 18, 540540929,, ahk_pid %PID% ; ALT Release
 			sleep, 1
 			}
@@ -13088,6 +13117,7 @@ Gui, Add, Text, x30 y170 w150 h20 v시작시간, 시작시간
 Gui, Add, Text, x30 y190 w150 h20 v경과시간,
 Gui, Add, Text, x30 y210 w150 h20 v재접속횟수기록,
 Gui, Add, Text, x30 y230 w150 h20 v접속여부확인상태,
+Gui, Add, Button, x30 y270 w150 h20 g게시판열기, 일랜게시판
 
 Gui, Add, Text, x200 y170 w150 h20, NPC 자동 대화 대기
 Gui, Add, Text, x200 y190 w150 h20, 해상도 배율
