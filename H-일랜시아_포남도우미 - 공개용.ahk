@@ -1043,7 +1043,9 @@ return this.SizeOfStructure
 		PosY := sub_mem.read(0x0058DAd4, "UInt", 0x14)
 
 		IsMoving := sub_mem.read(0x0058EB1C, "UInt", 0x174)
-
+		FormNumber := sub_mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
+		if (FormNumber != 0)
+			keyclick("K6",sub_jPID)
 		Sub인벤토리 := sub_mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
 		SETFORMAT, integer, D
 		Subinvenslot := 0
@@ -1075,7 +1077,7 @@ return this.SizeOfStructure
 				sleep, 500
 				MouseClick(400,334,sub_jPID)
 				sleep, 200
-				keyclick("K6")
+				keyclick("K6",sub_jPID)
 				sleep, 200
 				x := sub_mem.read(0x0058EB48, "UInt", 0xC8) - 17
 				y := sub_mem.read(0x0058EB48, "UInt", 0xCC) + 15
@@ -1100,7 +1102,7 @@ return this.SizeOfStructure
 					keyclick("Enter",sub_jPID)
 				}
 				sleep, 200
-				keyclick("K6")
+				keyclick("K6",sub_jPID)
 				return
 			}
 			if (PosX != 19 || PosY != 10)
