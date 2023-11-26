@@ -88,9 +88,9 @@ SkillListA := ["훔치기","훔쳐보기","Sense","현혹","폭검","독침","�
 ;몬스터 / NPC / 펫 / 로랜시아간판 / 에필로리아 애완동물구분용
 게임내고용상인들 := ["의소야","의터그","의네시","의미피엘","의엘가노","의휘리스", "의Nesi"]
 게임내NPC이미지 := [131,83,137]
-게임내NPC들 := ["대장로","성향안내","장로","모험가","초보모험가","요리사","초보요리사","사냥꾼","초보무도가","세크티","콥","미너터","카리스","행운장","길드기","길드예선전보로1","길드예선전보로2","길드예선전보로3","길드예선전보로4","길드예선전보로5","길드예선전보로6","길드예선전보로7","길드예선전보로8","우물지기","우물지킴이","파미","실루엣","케이","휴","에레노아","길드만들기","라드","예절보로","할아버지","레나","초브","칼라스","브라키의여전사","테레즈","루비","오크왕자","슈","카딜라","나무보로","이사크","미소니","성궁사","수련장","그레파","미용바니","티포네","홀리","올드스미스","테디","피니","큐트","키드니","스텔라","실비아","네루아","사라","오블로","메티니","무타이","성검사","커스피스","쿠니퍼","라체","지올라","플린","헬러","브레너","에드가","두갈","아이렌","케드마","제프","젠","소니아","아바","네시아","래리","마리오","빈","렉스","다바트","코바니","플라노","미너스","토리온","브로이","카멘","카로에","시상보로","견습미용사","할머니","미스토","브라키의여전사","그라치","드리트","레시트","로크","메크","스타시","스테티나","이스카","호디니","베니","은행가드","파이","샤네트","코페","아일리아","퀘이드","레야","싱","유키오","이시","앨리아","오바","테론","윌라","페툴라","스티븐","우리안","빅터","리프","미네티","피트","비엔","칸느","포럼","콘스티","다인","티셔","백작","보초병","우트","랜스","뮤즈","리즈","브라키의여전사","에스피","코니","스투","라니체","드류","체드","체스터","케인","울드","티모시","포츠","마카","미카","경비병","니키","수라","카르고","엘피","쿠퍼","페니","터크","나크레토","로비어","앤타이","셀포이","비바","마데이아","가토고","엑소포","토이슨","코메이오","저주받은엘프","야노모이","오이피노","카레푸","엠토포","아이보","마나오","클레오","파노아","타키아","카오네자","나노아","미노스","세니코","주사위소녀1","주사위소녀1","주사위소녀2","주사위소녀3","주사위소녀4","주사위소녀5","주사위소녀6","주사위소녀7","주사위소녀8","주사위소녀9","주사위소녀10","주사위","주사위지배인","리노스","투페","히포프","베스","쿠키","소피","포프리아","나무꾼","레아","키아","세르니오","코르티","베커","포비","크로리스","길잃은수색대","동쪽파수꾼","서쪽파수꾼","리노아","펫조련사","게시판","드골"]
+게임내NPC들 := ["대장로","성향안내","장로","모험가","초보모험가","요리사","초보요리사","사냥꾼","초보무도가","세크티","콥","미너터","카리스","행운장","길드기","길드예선전보로1","길드예선전보로2","길드예선전보로3","길드예선전보로4","길드예선전보로5","길드예선전보로6","길드예선전보로7","길드예선전보로8","우물지기","우물지킴이","파미","실루엣","케이","휴","에레노아","길드만들기","라드","예절보로","할아버지","레나","초브","칼라스","브라키의여전사","테레즈","루비","오크왕자","슈","카딜라","나무보로","이사크","미소니","성궁사","수련장","그레파","미용바니","티포네","홀리","올드스미스","테디","피니","큐트","키드니","스텔라","실비아","네루아","사라","오블로","메티니","무타이","성검사","커스피스","쿠니퍼","라체","지올라","플린","헬러","브레너","에드가","두갈","아이렌","케드마","제프","젠","소니아","아바","네시아","래리","마리오","빈","렉스","다바트","코바니","플라노","미너스","토리온","브로이","카멘","카로에","시상보로","견습미용사","할머니","미스토","브라키의여전사","그라치","드리트","레시트","로크","메크","스타시","스테티나","이스카","호디니","베니","은행가드","파이","샤네트","코페","아일리아","퀘이드","레야","싱","유키오","이시","앨리아","오바","테론","윌라","페툴라","스티븐","우리안","빅터","리프","미네티","피트","비엔","칸느","포럼","콘스티","다인","티셔","백작","보초병","우트","랜스","뮤즈","리즈","브라키의여전사","에스피","코니","스투","라니체","드류","체드","체스터","케인","울드","티모시","포츠","마카","미카","경비병","니키","수라","카르고","엘피","쿠퍼","페니","터크","나크레토","로비어","앤타이","셀포이","비바","마데이아","가토고","엑소포","토이슨","코메이오","저주받은엘프","야노모이","오이피노","카레푸","엠토포","아이보","마나오","클레오","파노아","타키아","카오네자","나노아","미노스","세니코","주사위소녀1","주사위소녀2","주사위소녀3","주사위소녀4","주사위소녀5","주사위소녀6","주사위소녀7","주사위소녀8","주사위소녀9","주사위소녀10","주사위지배인","리노스","투페","히포프","베스","쿠키","소피","포프리아","나무꾼","레아","키아","세르니오","코르티","베커","포비","크로리스","길잃은수색대","동쪽파수꾼","서쪽파수꾼","리노아","펫조련사","게시판","드골"]
 로랜시아간판 := [111,608,610,612,614,618,620,622,624,626,630,632,634,636,638,640,642,644,646,648,650]
-이름이바뀌는존재들 := [21,751,753,552,554,560,558,556,496] ;혹은 애완동물
+이름이바뀌는존재들 := [21,751,753,552,554,560,558,556,496,297] ;혹은 애완동물
 
 오란의깃마을_DDLOptions := ["로랜시아","에필로리아","세르니카","크로노시스","포프레스네"]
 길탐색5번목적지_DDLOptions := 길탐색4번목적지_DDLOptions := 길탐색3번목적지_DDLOptions := 길탐색2번목적지_DDLOptions := 길탐색1번목적지_DDLOptions := ["로랜시아 목공소","로랜시아 퍼브","로랜시아 우체국","로랜시아 퍼브 우체국","에필로리아 목공소","에필로리아 퍼브","에필로리아 우체국","에필로리아 퍼브 우체국","세르니카 퍼브","세르니카 우체국","세르니카 목공소","포프레스네 무기상점"]
@@ -165,7 +165,7 @@ global 목적차원
 
 ;아이템 갯수 확인용
 Global 아이템갯수 := {}
-
+Global Sub아이템갯수 := {}
 ;스핵용
 Global MoveSpeed
 Global 게임배속
@@ -202,6 +202,7 @@ Global 상승어빌주소
 
 ;일랜시아 프로그램 감시용
 Global mem
+Global sub_mem
 Global ElanTitles
 Global TargetPid
 Global TargetTitle := ""
@@ -1025,6 +1026,155 @@ return this.SizeOfStructure
 		MouseClick(output_x, output_y)
 	}
 
+	GameIslandMouseClickEvent(TargetTitle)
+	{
+		WinGet,sub_jPID,PID,%TargetTitle%
+		sub_mem := new _ClassMemory("ahk_pid " sub_jPID, "", hProcessCopy)
+		MinimapCheck := sub_mem.read(0x0058EB6C, "UInt", aOffsets*)
+		if (MinimapCheck = 0)
+		{
+			KeyClick("AltV",sub_jPID)
+		}
+		MapNumber := sub_mem.read(0x0058EB1C, "UInt", 0x10E)
+		CurrentMiniMapPosX := sub_mem.read(0x0058EB48, "UInt", 0x80)
+		CurrentMiniMapPosY := sub_mem.read(0x0058EB48, "UInt", 0x84)
+
+		PosX := sub_mem.read(0x0058DAd4, "UInt", 0x10)
+		PosY := sub_mem.read(0x0058DAd4, "UInt", 0x14)
+
+		IsMoving := sub_mem.read(0x0058EB1C, "UInt", 0x174)
+
+		Sub인벤토리 := sub_mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
+		SETFORMAT, integer, D
+		Subinvenslot := 0
+		Sub아이템갯수 := {}
+		loop, 50
+		{
+			Subinvenslot += 4
+			Subinvenitem := sub_mem.readString(0x0058DAD4, 50, "UTF-16", 0x178, 0xBE, 0x8, Subinvenslot, 0x8, 0x8, 0x0)
+			SubItemCount := sub_mem.read(0x0058DAD4, "Uint", 0x178, 0xBE, 0x8, Subinvenslot, 0x8, 0x20)
+			if (Subinvenitem = "")
+				continue
+			Sub아이템갯수[Subinvenitem] := (Sub아이템갯수[Subinvenitem] ? Sub아이템갯수[Subinvenitem] + SubItemCount : SubItemCount)
+		}
+
+		if IsMoving != 0
+			return
+		else if (MapNumber == 3600)
+		{
+			;만약 정령의눈물이 있다면
+			if (Sub아이템갯수["정령의눈물"]>0 && Sub아이템갯수["행운의보석"]>=100)
+			{
+				교환가능수량 := 0
+				교환가능수량 += min(floor(Sub아이템갯수["행운의보석"]/100),Sub아이템갯수["정령의눈물"],50-Sub인벤토리)
+				KeyClick("CTRL9",sub_jPID)
+				sleep, 500
+				X := sub_mem.read(0x0058F0A4, "UInt", 0x9A) +76
+				Y := sub_mem.read(0x0058F0A4, "UInt", 0x9E) +15
+				MouseClick(X,Y,sub_jPID)
+				sleep, 500
+				MouseClick(400,334,sub_jPID)
+				sleep, 200
+				keyclick("K6")
+				sleep, 200
+				x := sub_mem.read(0x0058EB48, "UInt", 0xC8) - 17
+				y := sub_mem.read(0x0058EB48, "UInt", 0xCC) + 15
+				MouseClick(x,y,sub_jPID)
+				sleep, 200
+				IfWinNotActive,ahk_pid %jPID%
+				{
+					WinActivate, ahk_pid %jPID%
+					Sleep, 100
+				}
+				if (교환가능수량 >= 10)
+				{
+					교환가능수량1:=floor(교환가능수량/10)
+					교환가능수량2:=mod(교환가능수량,10)
+					keyclick("w"교환가능수량1,sub_jPID)
+					keyclick("w"교환가능수량2,sub_jPID)
+					keyclick("Enter",sub_jPID)
+				}
+				else
+				{
+					keyclick("w"교환가능수량,sub_jPID)
+					keyclick("Enter",sub_jPID)
+				}
+				sleep, 200
+				keyclick("K6")
+				return
+			}
+			if (PosX != 19 || PosY != 10)
+			{
+				KeyClick("AltR",sub_jPID)
+				sleep, 1
+				TempX := CurrentMiniMapPosX - 12
+				TempY := CurrentMiniMapPosY - 29
+				MouseClick(TempX,TempY,sub_jPID)
+				return
+			}
+			else if (PosX = 19 && PosY = 10)
+			{
+				KeyClick("AltR",sub_jPID)
+				sleep, 1
+				TempX := CurrentMiniMapPosX - 14
+				TempY := CurrentMiniMapPosY - 29
+				MouseClick(TempX,TempY,sub_jPID)
+				return
+			}
+		}
+		else if (MapNumber >= 3601 && MapNumber <= 3610)
+		{
+			Temp_Number := MapNumber - 3600
+			if (PosX <= 31 && PosY <= 29)
+			{
+				KeyClick("Ctrl"Temp_Number,sub_jPID)
+				return
+			}
+			else if (PosY <= 27)
+			{
+				KeyClick("Ctrl"Temp_Number,sub_jPID)
+				return
+			}
+			else if (PosX = 33 && PosY = 28)
+			{
+				KeyClick("Ctrl"Temp_Number,sub_jPID)
+				KeyClick("AltR",sub_jPID)
+				sleep, 1
+				TempX := CurrentMiniMapPosX + 14
+				TempY := CurrentMiniMapPosY + 9
+				MouseClick(TempX,TempY,sub_jPID)
+				return
+			}
+			else if (PosX != 33 || PosY != 28)
+			{
+				KeyClick("AltR",sub_jPID)
+				sleep, 1
+				TempX := CurrentMiniMapPosX + 16
+				TempY := CurrentMiniMapPosY + 6
+				MouseClick(TempX,TempY,sub_jPID)
+				return
+			}
+		}
+	}
+
+	GameIslandMacroText(TargetTitle){
+		sleep,1000
+		WinActivate,%TargetTitle%
+		WinWaitActive,%TargetTitle%
+		send, !2
+		sleep,500
+		Send, !m
+		Sleep,500
+		ime_status := % IME_CHECK("A")
+		if (ime_status = "0")
+		{
+			Send,{vk15sc138}
+			Sleep,100
+		}
+		Sleep,500
+		send,wntkdnlthsu1{space}apsb{Tab}wntkdnlthsu2{space}apsb{Tab}wntkdnlthsu3{space}apsb{Tab}wntkdnlthsu4{space}apsb{Tab}wntkdnlthsu5{space}apsb{Tab}wntkdnlthsu6{space}apsb{Tab}wntkdnlthsu7{space}apsb{Tab}wntkdnlthsu8{space}apsb{Tab}fhqldj{space}apsb{Tab}wntkdnlthsu10{space}apsb{enter}
+	}
+
 	Mapreopen()
 	{
 		Gui,Submit,Nohide
@@ -1451,7 +1601,7 @@ return this.SizeOfStructure
 
 		KeyClick(라스의깃단축키)
 
-		sleep, 10
+		sleep, 100
 		if (UiTest(2) = 0)
 		{
 			SB_SetText("라스의깃을 단축키 0에 넣어줘",2)
@@ -1614,7 +1764,6 @@ return this.SizeOfStructure
 		{
 			URL := mem.readString(URI, 0x400, "UTF-16", aOffsets*)
 			Run, %URL%
-			SB_SetText(URI,2)
 		}
 		else
 			SB_SetText("URI 없음",2)
@@ -1759,9 +1908,10 @@ return this.SizeOfStructure
 	;}
 
 	;{ ; 마우스 및 키입력 제어 함수
-		KeyClick(Key) ; 게임내 KeyBorad 키 보내기
+		KeyClick(Key,PID := "") ; 게임내 KeyBorad 키 보내기
 		{
-			PID := TargetPID
+			if (PID = "")
+				PID := TargetPID
 			;sb_settext(TargetPID "," key ,2)
 			if(Key = "Enter"){
 			loop, 1 {
@@ -1984,6 +2134,15 @@ return this.SizeOfStructure
 			sleep, 1
 			}
 			}
+			else if(Key = "AltV"){
+			loop, 1 {
+			PostMessage, 0x100, 18, 540540929,, ahk_pid %PID% ; ALT Lock
+			PostMessage, 0x100, 86, 3080193,, ahk_pid %PID%
+			PostMessage, 0x101, 86, 3080193,, ahk_pid %PID%
+			PostMessage, 0x101, 18, 540540929,, ahk_pid %PID% ; ALT Release
+			sleep, 1
+			}
+			}
 			else if(Key = "Space"){
 			loop, 1 {
 			PostMessage, 0x100, 32, 3735553,, ahk_pid %PID%
@@ -2120,12 +2279,102 @@ return this.SizeOfStructure
 			sleep, 1
 			}
 			}
-			else if(Key="k0"){
+			else if(Key="w0"){
 			if (mem.read(0x0058EBC8,"Uint",0x140,0x0) != 0)
 				KeyClick("Enter")
 			loop, 1{
 			postmessage, 0x100, 48, 720897, ,ahk_pid %PID% ; 0 Key Lock
-			postmessage, 0x101, 48, 720897, ,ahk_pid %PID% ; 0 Key Release
+			;postmessage, 0x101, 48, 720897, ,ahk_pid %PID% ; 0 Key Release
+			sleep, 1
+			}
+			}
+			else if(Key="w1"){
+			if (mem.read(0x0058EBC8,"Uint",0x140,0x0) != 0)
+				KeyClick("Enter")
+			loop, 1 {
+			postmessage, 0x100, 49, 131073, ,ahk_pid %PID% ; 1 Key Lock
+			;postmessage, 0x101, 49, 131073, ,ahk_pid %PID% ; 1 Key Release
+			sleep, 1
+			}
+			}
+			else if(Key="w2") {
+			if (mem.read(0x0058EBC8,"Uint",0x140,0x0) != 0)
+				KeyClick("Enter")
+			loop, 1 {
+			postmessage, 0x100, 50, 196609, ,ahk_pid %PID% ; 2 Key Lock
+			;postmessage, 0x101, 50, 196609, ,ahk_pid %PID% ; 2 Key Release
+			sleep, 1
+			}
+			}
+			else if(Key="w3") {
+			if (mem.read(0x0058EBC8,"Uint",0x140,0x0) != 0)
+				KeyClick("Enter")
+			loop, 1 {
+			postmessage, 0x100, 51, 262145, ,ahk_pid %PID% ; 3 Key Lock
+			;postmessage, 0x101, 51, 262145, ,ahk_pid %PID% ; 3 Key Release
+			sleep, 1
+			}
+			}
+			else if(Key="w4") {
+			if (mem.read(0x0058EBC8,"Uint",0x140,0x0) != 0)
+				KeyClick("Enter")
+			loop, 1 {
+			postmessage, 0x100, 52, 327681, ,ahk_pid %PID% ; 4 Key Lock
+			;postmessage, 0x101, 52, 327681, ,ahk_pid %PID% ; 4 Key Release
+			sleep, 1
+			}
+			}
+			else if(Key="w5"){
+			if (mem.read(0x0058EBC8,"Uint",0x140,0x0) != 0)
+				KeyClick("Enter")
+			loop, 1{
+			postmessage, 0x100, 53, 393217, ,ahk_pid %PID% ; 5 Key Lock
+			;postmessage, 0x101, 53, 393217, ,ahk_pid %PID% ; 5 Key Release
+			sleep, 1
+			}
+			}
+			else if(Key="w6"){
+			if (mem.read(0x0058EBC8,"Uint",0x140,0x0) != 0)
+				KeyClick("Enter")
+			loop, 1{
+			postmessage, 0x100, 54, 458753, ,ahk_pid %PID% ; 6 Key Lock
+			;postmessage, 0x101, 54, 458753, ,ahk_pid %PID% ; 6 Key Release
+			sleep, 1
+			}
+			}
+			else if(Key="w7"){
+			if (mem.read(0x0058EBC8,"Uint",0x140,0x0) != 0)
+				KeyClick("Enter")
+			loop, 1{
+			postmessage, 0x100, 55, 524289, ,ahk_pid %PID% ; 7 Key Lock
+			;postmessage, 0x101, 55, 524289, ,ahk_pid %PID% ; 7 Key Release
+			sleep, 1
+			}
+			}
+			else if(Key="w8"){
+			if (mem.read(0x0058EBC8,"Uint",0x140,0x0) != 0)
+				KeyClick("Enter")
+			loop, 1{
+			postmessage, 0x100, 56, 589825, ,ahk_pid %PID% ; 8 Key Lock
+			;postmessage, 0x101, 56, 589825, ,ahk_pid %PID% ; 8 Key Release
+			sleep, 1
+			}
+			}
+			else if(Key="w9"){
+			if (mem.read(0x0058EBC8,"Uint",0x140,0x0) != 0)
+				KeyClick("Enter")
+			loop, 1{
+			postmessage, 0x100, 57, 655361, ,ahk_pid %PID% ; 9 Key Lock
+			;postmessage, 0x101, 57, 655361, ,ahk_pid %PID% ; 9 Key Release
+			sleep, 1
+			}
+			}
+			else if(Key="w0"){
+			if (mem.read(0x0058EBC8,"Uint",0x140,0x0) != 0)
+				KeyClick("Enter")
+			loop, 1{
+			postmessage, 0x100, 48, 720897, ,ahk_pid %PID% ; 0 Key Lock
+			;postmessage, 0x101, 48, 720897, ,ahk_pid %PID% ; 0 Key Release
 			sleep, 1
 			}
 			}
@@ -2270,9 +2519,10 @@ return this.SizeOfStructure
 			return DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hWnd, Uint)
 		}
 
-		MouseClick(MouseX,MouseY)  ; 지정한 X, Y 좌표 마우스왼쪽버튼으로 클릭
+		MouseClick(MouseX,MouseY,PID := "")  ; 지정한 X, Y 좌표 마우스왼쪽버튼으로 클릭
 		{
-			PID := TargetPID
+			if (PID = "")
+				PID := TargetPID
 			if (Multiplyer = "없음" || Multiplyer < 1)
 				gosub, 일랜시아창크기구하기
 			MouseX := MouseX * Multiplyer
@@ -2283,9 +2533,10 @@ return this.SizeOfStructure
 			PostMessage, 0x202, 0, %MousePos% ,,ahk_pid %PID%
 		}
 
-		MouseDoubleClickLeftButton(MouseX,MouseY) ; 지정한 X, Y 좌표 마우스왼쪽버튼으로 더블클릭
+		MouseDoubleClickLeftButton(MouseX,MouseY,PID := "") ; 지정한 X, Y 좌표 마우스왼쪽버튼으로 더블클릭
 		{
-			PID := TargetPID
+			if (PID = "")
+				PID := TargetPID
 			if (Multiplyer = "없음" || Multiplyer < 1)
 				gosub, 일랜시아창크기구하기
 			MouseX := MouseX * Multiplyer
@@ -2296,9 +2547,10 @@ return this.SizeOfStructure
 			PostMessage, 0x202, 0, %MousePos% ,,ahk_pid %PID%
 		}
 
-		MouseClickRightButton(MouseX,MouseY) ; 지정한 X, Y 좌표 마우스오른쪽버튼으로 클릭
+		MouseClickRightButton(MouseX,MouseY,PID := "") ; 지정한 X, Y 좌표 마우스오른쪽버튼으로 클릭
 		{
-			PID := TargetPID
+			if (PID = "")
+				PID := TargetPID
 			if (Multiplyer = "없음" || Multiplyer < 1)
 				gosub, 일랜시아창크기구하기
 			MouseX := MouseX * Multiplyer
@@ -2309,9 +2561,10 @@ return this.SizeOfStructure
 			PostMessage, 0x205, 0, %MousePos% ,,ahk_pid %PID%
 		}
 
-		MouseMoveTo(MouseX,MouseY) ; 마우스포인터를 지정한 X, Y 좌표로 이동
+		MouseMoveTo(MouseX,MouseY,PID := "") ; 마우스포인터를 지정한 X, Y 좌표로 이동
 		{
-			PID := TargetPID
+			if (PID = "")
+				PID := TargetPID
 			if (Multiplyer = "없음" || Multiplyer < 1)
 				gosub, 일랜시아창크기구하기
 			MouseX := MouseX * Multiplyer
@@ -8827,7 +9080,7 @@ else if !(GALRID > 1000000) ; && 아이템갯수["정령의보석"] > 10)
 	SB_SetText("소지갈리드 부족, 그레이드 취소",2)
 	return
 }
-else if !(아이템갯수["정령의보석"] > 10)
+else if !(아이템갯수["정령의보석"] >= 10)
 {
 	그레이드필요 := False
 	SB_SetText("정령의보석 부족, 그레이드 취소",2)
@@ -9059,6 +9312,84 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, rurxn{Enter}
+return
+}
+if(WeaponName = "요리")
+{
+ime_status := % IME_CHECK("A")
+if (ime_status = "0")
+{
+Send, {vk15sc138}
+Sleep, 100
+}
+Send, dyfl{Enter}
+return
+}
+if(WeaponName = "스미스")
+{
+ime_status := % IME_CHECK("A")
+if (ime_status = "0")
+{
+Send, {vk15sc138}
+Sleep, 100
+}
+Send, tmaltm{Enter}
+return
+}
+if(WeaponName = "미용")
+{
+ime_status := % IME_CHECK("A")
+if (ime_status = "0")
+{
+Send, {vk15sc138}
+Sleep, 100
+}
+Send, aldyd{Enter}
+return
+}
+if(WeaponName = "재단")
+{
+ime_status := % IME_CHECK("A")
+if (ime_status = "0")
+{
+Send, {vk15sc138}
+Sleep, 100
+}
+Send, woeks{Enter}
+return
+}
+if(WeaponName = "목공")
+{
+ime_status := % IME_CHECK("A")
+if (ime_status = "0")
+{
+Send, {vk15sc138}
+Sleep, 100
+}
+Send, ahrrhd{Enter}
+return
+}
+if(WeaponName = "연금술")
+{
+ime_status := % IME_CHECK("A")
+if (ime_status = "0")
+{
+Send, {vk15sc138}
+Sleep, 100
+}
+Send, dusrmatnf{Enter}
+return
+}
+if(WeaponName = "세공")
+{
+ime_status := % IME_CHECK("A")
+if (ime_status = "0")
+{
+Send, {vk15sc138}
+Sleep, 100
+}
+Send, tprhd{Enter}
+return
 }
 if(WeaponName = "검")
 {
@@ -9069,6 +9400,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, rja{Enter}
+return
 }
 if(WeaponName = "단검")
 {
@@ -9079,6 +9411,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, eksrja{Enter}
+return
 }
 if(WeaponName = "도")
 {
@@ -9089,6 +9422,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, eh{Enter}
+return
 }
 if(WeaponName = "도끼")
 {
@@ -9099,6 +9433,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, ehRl{Enter}
+return
 }
 if(WeaponName = "거대도끼")
 {
@@ -9109,6 +9444,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, rjeoehRl{Enter}
+return
 }
 if(WeaponName = "대검")
 {
@@ -9119,6 +9455,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, eorja{Enter}
+return
 }
 if(WeaponName = "대도")
 {
@@ -9129,6 +9466,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, eoeh{Enter}
+return
 }
 if(WeaponName = "창, 특수창")
 {
@@ -9139,6 +9477,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, ckd,{Space}xmrtnckd{Enter}
+return
 }
 if(WeaponName = "봉, 해머")
 {
@@ -9149,6 +9488,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, qhd,{Space}goaj{Enter}
+return
 }
 if(WeaponName = "현금")
 {
@@ -9159,6 +9499,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, gusrma{Enter}
+return
 }
 if(WeaponName = "활")
 {
@@ -9169,6 +9510,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, ghkf{Enter}
+return
 }
 if(WeaponName = "거대검")
 {
@@ -9179,6 +9521,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, rjeorja{Enter}
+return
 }
 if(WeaponName = "거대도")
 {
@@ -9189,6 +9532,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, rjeoeh{Enter}
+return
 }
 if(WeaponName = "양손단검")
 {
@@ -9199,6 +9543,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, didthseksrja{Enter}
+return
 }
 if(WeaponName = "양손도끼")
 {
@@ -9209,6 +9554,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, didthsehRl{Enter}
+return
 }
 if(WeaponName = "스태프")
 {
@@ -9219,6 +9565,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, tmxovm{Enter}
+return
 }
 if(WeaponName = "대화")
 {
@@ -9229,6 +9576,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, eoghk{Enter}
+return
 }
 if(WeaponName = "명상")
 {
@@ -9239,6 +9587,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, audtkd{Enter}
+return
 }
 if(WeaponName = "집중")
 {
@@ -9249,6 +9598,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, wlqwnd{Enter}
+return
 }
 if(WeaponName = "회피")
 {
@@ -9259,6 +9609,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, ghlvl{Enter}
+return
 }
 if(WeaponName = "몸통지르기")
 {
@@ -9269,6 +9620,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, ahaxhdwlfmrl{Enter}
+return
 }
 if(WeaponName = "민첩향상")
 {
@@ -9279,6 +9631,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, alscjqgidtkd{Enter}
+return
 }
 if(WeaponName = "체력향상")
 {
@@ -9289,6 +9642,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, cpfurgidtkd{Enter}
+return
 }
 if(WeaponName = "활방어")
 {
@@ -9299,6 +9653,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, ghkfqkddj{Enter}
+return
 }
 if(WeaponName = "RemoveArmor")
 {
@@ -9309,6 +9664,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, RemoveArmor{Enter}
+return
 }
 if(WeaponName = "엘")
 {
@@ -9319,6 +9675,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, dpf{Enter}
+return
 }
 if(WeaponName = "테스")
 {
@@ -9329,6 +9686,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, xptm{Enter}
+return
 }
 if(WeaponName = "마하")
 {
@@ -9339,6 +9697,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, akgk{Enter}
+return
 }
 if(WeaponName = "브리깃드")
 {
@@ -9349,6 +9708,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, qmflrltem{Enter}
+return
 }
 if(WeaponName = "다뉴")
 {
@@ -9359,6 +9719,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, eksb{Enter}
+return
 }
 if(WeaponName = "브라키")
 {
@@ -9369,6 +9730,7 @@ Send, {vk15sc138}
 Sleep, 100
 }
 Send, qmfkzl{Enter}
+return
 }
 }
 
@@ -9524,6 +9886,51 @@ Send, qjsro{Enter}
 	}
 	return
 ;}
+
+부캐게임섬:
+if !(SubCharGameIslandCoin)
+{
+	SubCharGameIslandCoin := true
+	settimer, 부캐게임섬돌기, 2000
+	guicontrol, ,부캐게임섬루프, 겜섬오토중지
+}
+else if (SubCharGameIslandCoin)
+{
+	SubCharGameIslandCoin := false
+	settimer, 부캐게임섬돌기, off
+	guicontrol, ,부캐게임섬루프, 부캐게임섬돌기
+}
+return
+
+부캐게임섬세팅:
+	loop, 10
+	{
+		캐릭터사용여부 := A_Index . "번캐릭터사용여부"
+		GuiControlGet,사용여부,, %캐릭터사용여부%
+		if(사용여부 = 1)
+		{
+			임시이름 := A_Index . "번캐릭터명"
+			GuiControlGet,파티타겟이름,,%임시이름%
+			GameIslandMacroText(파티타겟이름)
+		}
+	}
+return
+
+부캐게임섬돌기:
+	Gui, Submit, Nohide
+	SetFormat, Integer, D
+	loop, 10
+	{
+		캐릭터사용여부 := A_Index . "번캐릭터사용여부"
+		GuiControlGet,사용여부,, %캐릭터사용여부%
+		if(사용여부 = 1)
+		{
+			임시이름 := A_Index . "번캐릭터명"
+			GuiControlGet,파티타겟이름,,%임시이름%
+			GameIslandMouseClickEvent(파티타겟이름)
+		}
+	}
+return
 
 원격파티하기: ;서포터용
 ;{
@@ -10746,7 +11153,7 @@ return
 	sleep, % cookdelay
 	loop,
 	{
-		if (CurrentMode != "상인어빌수련")
+		if (CurrentMode != "상인어빌수련" || Coin = False)
 			break
 		sleep, 100
 		Keyclick(0) ;수련키트 장착
@@ -10764,7 +11171,7 @@ return
 		SB_SetText("은행넣기" RepairCount ,1)
 		loop,  ; 0.05초마다 결과 확인
 		{
-			if (CurrentMode != "상인어빌수련")
+			if (CurrentMode != "상인어빌수련" || Coin = False)
 				break
 			Read_Result_MSG := mem.readString(Result_Msg_Addr, 50, "UTF-16", aOffsets*)
 			ifinstring, Read_Result_MSG, 실패했습니다주세요.
@@ -10785,7 +11192,7 @@ return
 			}
 			sleep, 50
 		}
-		if (CurrentMode != "상인어빌수련")
+		if (CurrentMode != "상인어빌수련" || Coin = False)
 			break
 		gosub, 어빌리티읽어오기
 		Gui,ListView,어빌리티리스트
@@ -10864,15 +11271,15 @@ return
 		SB_SetText("키아키트 장착" ,1)
 		loop,  ; 0.5초마다 결과 확인
 		{
-			if (CurrentMode != "상인어빌수련")
+			if (CurrentMode != "상인어빌수련" || Coin = False)
 				break
 			상승어빌 := mem.readString(상승어빌주소 + 0x64, 20, "UTF-16", aOffsets*)
 			상승어빌값 := mem.read(상승어빌주소 + 0x264, "UInt", aOffsets*)
 			guicontrol, ,상승어빌, %상승어빌%
 			IfInString, 상승어빌, 연금술
-			상승어빌 := "연금술"
+				상승어빌 := "연금술"
 			IfInString, 상승어빌, 스미스
-			상승어빌 := "스미스"
+				상승어빌 := "스미스"
 			if (상승어빌 = "연금술" || 상승어빌 = "미용" || 상승어빌 = "요리" || 상승어빌 = "재단" || 상승어빌 = "스미스" || 상승어빌 = "세공" || 상승어빌 = "목공" )
 			{
 				상승어빌카운트 := mem.read(상승어빌주소 + 0x264 + 0x8, "UShort", aOffsets*)
@@ -10897,7 +11304,7 @@ return
 				break
 		}
 
-		if (CurrentMode != "상인어빌수련")
+		if (CurrentMode != "상인어빌수련" || Coin = False)
 			break
 		RunMemory("은행빼기")
 		SB_SetText("은행빼기" ,1)
@@ -11557,6 +11964,7 @@ if (I_Delay > 1000)
 }
 return
 }
+
 
 원하는몬스터추가:
 {
@@ -13059,6 +13467,8 @@ LV_ModifyCol(10,0)
 
 gui, tab, 6
 gui, add, button, x400 y35 g마하디움링교환, 마하디움링교환
+gui, add, button, x400 y60 v부캐게임섬루프 g부캐게임섬, 부캐게임섬돌기
+gui, add, button, x400 y85 g부캐게임섬세팅, 부캐게임섬세팅
 x_coord := 15
 Y_coord := 50
 loop, 10
@@ -13127,7 +13537,7 @@ Gui, Add, Text, x200 y250 w150 h20, 상인 어빌 상승 어빌
 Gui, Add, Text, x200 y270 w150 h20, 최근 상승 어빌 주소
 
 Gui, Add, Text, x350 y170 w100 h20 vNPC대화딜레이
-Gui, Add, Text, x350 y190 w100 h20 vMultiplyer
+Gui, Add, Edit, x350 y190 w100 h20 vMultiplyer
 Gui, Add, Text, x350 y210 w100 h20 vNPC_MSG_ADR
 Gui, Add, Text, x350 y230 w100 h20 vResult_Msg_Addr
 Gui, Add, Text, x350 y250 w100 h20 v상승어빌
@@ -14593,7 +15003,7 @@ Return
 										gosub, 라깃구매
 										continue
 									}
-									else if (그레이드필요 && GALRID > 1000000 && 아이템갯수["정령의보석"] > 10)
+									else if (그레이드필요 && GALRID > 1000000 && 아이템갯수["정령의보석"] >= 10)
 									{
 										gosub, 그레이드하기
 										continue
