@@ -52,7 +52,7 @@ Global MoveCoin := False
 ;옵션 리스트 구분
 Lists := [ "CheckBoxList", "DropDownList", "EditList", "RadioButton" ]
 ;사용된 옵션들
-CheckBoxList := ["수련길탐딜레이","이동속도사용","게임배속사용","길탐색책사용","원거리타겟","리메듐타겟","오란의깃사용여부","길탐색1번사용여부","길탐색2번사용여부","길탐색3번사용여부","길탐색4번사용여부","길탐색5번사용여부","자동재접속사용여부","힐링포션사용여부", "HP마을귀환사용여부", "리메듐사용여부", "마나포션사용여부", "MP마을귀환사용여부", "브렐사용여부", "식빵사용여부", "식빵구매여부", "골드바판매여부", "골드바구매여부", "대화사용", "명상사용", "더블어택사용", "체력향상사용", "민첩향상사용", "활방어사용", "마력향상사용", "마법방어향상사용", "3번", "4번", "5번", "6번", "7번", "8번", "은행넣기활성화", "소각활성화","아템먹기여부","자동이동여부", "훔치기사용", "훔쳐보기사용", "Sense사용", "자동사냥여부", "무기사용여부","특오자동교환여부","행깃구매여부","라깃구매여부","독침사용","현혹사용","폭검사용","무기공격사용","집중사용","회피사용","몸통찌르기사용","리메듐사용","라리메듐사용","엘리메듐사용","쿠로사용","빛의갑옷사용","공포보호사용","다라사용","브렐사용","브레마사용","물의갑옷사용","감속사용","마스사용","라크사용","번개사용","브리스사용","파스티사용","슈키사용","클리드사용","스톤스킨사용","파라스사용","베네피쿠스사용","저주사용","자동파티여부", "포레스트네자동대화","RemoveArmor사용","좀비몹감지", "위치고정", "배경제거", "캐릭제거","버스기사모드","나프사용","제작이동","자동그레이드"]
+CheckBoxList := ["수련길탐딜레이","이동속도사용","게임배속사용","길탐색책사용","원거리타겟","리메듐타겟","오란의깃사용여부","길탐색1번사용여부","길탐색2번사용여부","길탐색3번사용여부","길탐색4번사용여부","길탐색5번사용여부","자동재접속사용여부","힐링포션사용여부", "HP마을귀환사용여부", "리메듐사용여부", "마나포션사용여부", "MP마을귀환사용여부", "브렐사용여부", "식빵사용여부", "식빵구매여부", "골드바판매여부", "골드바구매여부", "대화사용", "명상사용", "더블어택사용", "체력향상사용", "민첩향상사용", "활방어사용", "마력향상사용", "마법방어향상사용", "3번", "4번", "5번", "6번", "7번", "8번", "은행넣기활성화", "소각활성화","아템먹기여부","자동이동여부", "훔치기사용", "훔쳐보기사용", "Sense사용", "자동사냥여부", "무기사용여부","특오자동교환여부","행깃구매여부","라깃구매여부","독침사용","현혹사용","폭검사용","무기공격사용","집중사용","회피사용","몸통찌르기사용","리메듐사용","라리메듐사용","엘리메듐사용","쿠로사용","빛의갑옷사용","공포보호사용","다라사용","브렐사용","브레마사용","물의갑옷사용","감속사용","마스사용","라크사용","번개사용","브리스사용","파스티사용","슈키사용","클리드사용","스톤스킨사용","파라스사용","베네피쿠스사용","저주사용","자동파티여부", "포레스트네자동대화","RemoveArmor사용","좀비몹감지", "위치고정", "배경제거", "캐릭제거","버스기사모드","나프사용","제작이동","자동그레이드","무기자동수리여부","사냥터자동복귀여부"]
 SpellList := ["나프", "마스","리메듐","라리메듐","엘리메듐","쿠로","빛의갑옷","공포보호","다라","브렐","브레마","물의갑옷","감속","라크","번개","브리스","파스티","슈키","클리드","스톤스킨","파라스","베네피쿠스","저주"]
 DropDownList := ["오란의깃마을","길탐색1번목적지", "길탐색2번목적지", "길탐색3번목적지", "길탐색4번목적지", "길탐색5번목적지", "오란의깃단축키", "길탐색책단축키", "메인캐릭터서버", "메인캐릭터순서", "힐링포션사용단축키", "마나포션사용단축키", "식빵사용단축키", "식빵구매마을" ,"지침서", "오란의깃사용단축키", "포레스트네자동대화딜레이","CurrentMode","링단축키"]
 EditList := ["원거리타겟아이디","리메듐타겟아이디","힐링포션사용제한", "HP마을귀환사용제한", "MP마을귀환사용제한", "리메듐사용제한", "마나포션사용제한", "브렐사용제한", "식빵사용제한", "MP마을귀환사용여부", "넣을아이템","Multiplyer","NPC_MSG_ADR" ,"마지막사냥장소", "수련용길탐색딜레이", "NPC대화딜레이", "MoveSpeed", "게임배속", "특수리메듐타겟OID","수동레벨기입","수리소야이름","수리소야아이템순서","수리소야아이템갯수"]
@@ -1071,39 +1071,46 @@ return this.SizeOfStructure
 				교환가능수량 += min(floor(Sub아이템갯수["행운의보석"]/100),Sub아이템갯수["정령의눈물"],50-Sub인벤토리)
 				KeyClick("CTRL9",sub_jPID)
 				sleep, 500
-				X := sub_mem.read(0x0058F0A4, "UInt", 0x9A) +76
-				Y := sub_mem.read(0x0058F0A4, "UInt", 0x9E) +15
-				MouseClick(X,Y,sub_jPID)
-				sleep, 500
-				MouseClick(400,334,sub_jPID)
-				sleep, 200
-				keyclick("K6",sub_jPID)
-				sleep, 200
-				x := sub_mem.read(0x0058EB48, "UInt", 0xC8) - 17
-				y := sub_mem.read(0x0058EB48, "UInt", 0xCC) + 15
-				MouseClick(x,y,sub_jPID)
-				sleep, 200
-				IfWinNotActive,ahk_pid %jPID%
+				NpcMenuSelection := sub_mem.read(0x0058F0A4, "UInt", aOffset*)
+				if NpcMenuSelection = 0
 				{
-					WinActivate, ahk_pid %jPID%
-					Sleep, 100
-				}
-				if (교환가능수량 >= 10)
-				{
-					교환가능수량1:=floor(교환가능수량/10)
-					교환가능수량2:=mod(교환가능수량,10)
-					keyclick("w"교환가능수량1,sub_jPID)
-					keyclick("w"교환가능수량2,sub_jPID)
-					keyclick("Enter",sub_jPID)
 				}
 				else
 				{
-					keyclick("w"교환가능수량,sub_jPID)
-					keyclick("Enter",sub_jPID)
+					X := sub_mem.read(0x0058F0A4, "UInt", 0x9A) +76
+					Y := sub_mem.read(0x0058F0A4, "UInt", 0x9E) +15
+					MouseClick(X,Y,sub_jPID)
+					sleep, 500
+					MouseClick(400,334,sub_jPID)
+					sleep, 200
+					keyclick("K6",sub_jPID)
+					sleep, 200
+					x := sub_mem.read(0x0058EB48, "UInt", 0xC8) - 17
+					y := sub_mem.read(0x0058EB48, "UInt", 0xCC) + 15
+					MouseClick(x,y,sub_jPID)
+					sleep, 200
+					IfWinNotActive,ahk_pid %jPID%
+					{
+						WinActivate, ahk_pid %jPID%
+						Sleep, 100
+					}
+					if (교환가능수량 >= 10)
+					{
+						교환가능수량1:=floor(교환가능수량/10)
+						교환가능수량2:=mod(교환가능수량,10)
+						keyclick("w"교환가능수량1,sub_jPID)
+						keyclick("w"교환가능수량2,sub_jPID)
+						keyclick("Enter",sub_jPID)
+					}
+					else
+					{
+						keyclick("w"교환가능수량,sub_jPID)
+						keyclick("Enter",sub_jPID)
+					}
+					sleep, 200
+					keyclick("K6",sub_jPID)
+					return
 				}
-				sleep, 200
-				keyclick("K6",sub_jPID)
-				return
 			}
 			if (PosX != 19 || PosY != 10)
 			{
@@ -9299,6 +9306,9 @@ if (FormNumber != 0)
 {
 	KeyClick("K6")
 }
+그레이드필요 := False
+gosub, 어빌리티읽어오기
+gosub, 마법읽어오기
 settimer, 스킬사용하기, 1000
 return
 
@@ -10520,7 +10530,6 @@ return
 
 마법읽어오기:
 ;{
-	그레이드필요 := False
 	for Index, spell in SpellList
 	{
 		%spell%번호 := 0
@@ -10575,7 +10584,6 @@ return
 
 어빌리티읽어오기:
 ;{
-	그레이드필요 := False
 	A:=0
 	Gui,ListView,어빌리티리스트
 	LV_Delete()
@@ -11947,7 +11955,7 @@ if (I_Delay > 1000)
 	GuiControl,, 라스의깃수량, %라스의깃갯수%
 	정령의보석갯수 := 아이템갯수["정령의보석"]
 	GuiControl,, 정령의보석수량, %정령의보석갯수%
-	식빵갯수 := 아이템갯수["정령의보석"]
+	식빵갯수 := 아이템갯수["식빵"]
 	GuiControl,, 식빵수량, %식빵갯수%
 	if (아이템갯수["독성포자해독약"] > 9)
 		add_소각할아이템대기리스트("독성포자해독약")
@@ -12013,14 +12021,19 @@ return
         SB_SetText(targetItem " 삭제", 2)
     }
 
-    ; 리스트 뷰 업데이트
-    WantedMonsters := []
-    Loop, LV_GetCount()
-    {
-        LV_GetText(row, A_Index, 1)
-        WantedMonsters.Push(row)
-    }
-    WantedMonsterlength := WantedMonsters.MaxIndex()
+	Gui, ListView, 원하는몬스터리스트
+	LV_Delete()
+	type := "원하는몬스터리스트"
+	Setting_Reload(type)
+	RowCount := LV_GetCount()
+	WantedMonsters := []
+	Loop, %RowCount%
+	{
+		LV_GetText(row,A_Index,1)
+		WantedMonsters.Push(row)  ; Add the current row's array to the main ListViewItems array
+	}
+	WantedMonsterlength := WantedMonsters.MaxIndex()
+	SB_SetText("현재원하는몬스터숫자:" WantedMonsterlength,2)
     return
 }
 
@@ -12068,13 +12081,17 @@ return
         SB_SetText(targetItem " 삭제", 2)
     }
 
-    ; 리스트 뷰 업데이트
-    DisWantedMonsters := []
-    Loop, LV_GetCount()
-    {
-        LV_GetText(row, A_Index, 1)
-        DisWantedMonsters.Push(row)
-    }
+	type := "원하지않는몬스터리스트"
+	Gui, ListView, 원하지않는몬스터리스트
+	LV_Delete()
+	Setting_Reload(type)
+	RowCount := LV_GetCount()
+	DisWantedMonsters := []
+	Loop, %RowCount%
+	{
+		LV_GetText(row,A_Index,1)
+		DisWantedMonsters.Push(row)  ; Add the current row's array to the main ListViewItems array
+	}
     return
 }
 
@@ -12102,6 +12119,7 @@ return
 원하는아이템넣을아이템삭제:
 {
     Gui, Submit, Nohide
+	type := "원하는아이템리스트"
     gui, listview, 원하는아이템리스트
     SelectedRows := []
     RowNumber = 0
@@ -12123,15 +12141,17 @@ return
         LV_Delete(RowNumber)
         SB_SetText(targetItem " 삭제", 2)
     }
-
-    ; 리스트 뷰 업데이트
-    WantedItems := []
-    Loop, LV_GetCount()
-    {
-        LV_GetText(row, A_Index, 1)
-        WantedItems.Push(row)
-    }
-    WantedItemLength := WantedItems.MaxIndex()
+	Gui, ListView, 원하는아이템리스트
+	LV_Delete()
+	Setting_Reload(type)
+	RowCount := LV_GetCount()
+	WantedItems := []
+	Loop, %RowCount%
+	{
+		LV_GetText(row,A_Index,1)
+		WantedItems.Push(row)  ; Add the current row's array to the main ListViewItems array
+	}
+	WantedItemlength := WantedItems.MaxIndex()
     return
 }
 
@@ -12995,7 +13015,7 @@ Gui, Add, Text, x345 y174 w130 h30 v맵,
 Gui, Add, CheckBox, x15 y220 v아템먹기여부, 먹자(+채광)
 Gui, Add, CheckBox, x105 y220 v자동사냥여부, 자동사냥
 Gui, Add, CheckBox, x195 y220 v자동이동여부, 자동이동
-Gui, Add, DropDownList, x280 y215 w80 vCurrentMode,대기모드||자동감응|일반자사|포남자사|포북자사|광물캐기|배달하기|마법잠수|행깃구매|행깃교환
+Gui, Add, DropDownList, x280 y215 w80 vCurrentMode,대기모드||자동감응|일반자사|포남자사|포북자사|광물캐기|배달하기|마법잠수
 Gui, Add, Button, x375 y213 w100 g실행 v실행, 실행
 Gui, Add, Button, x375 y213 w100 Hidden g중지 v중지, 중지
 
@@ -13295,10 +13315,12 @@ Y_coord += 22
 Y_coord_ := Y_coord - 3
 Gui, Add, checkbox, x15 y%Y_coord% w100 h20 g사용자선택 v이동속도사용, 이동속도
 Gui, Add, EDIT, x125 y%Y_coord_% w70 h20 vMoveSpeed,
+Gui, Add, checkbox, x215 y%Y_coord% h20 v무기자동수리여부, 무기자동수리(기본: 포프레스네)
 Y_coord += 22
 Y_coord_ := Y_coord - 3
 Gui, Add, checkbox, x15 y%Y_coord% w100 h20 g사용자선택 v게임배속사용, 게임배속
 Gui, Add, EDIT, x125 y%Y_coord_% w70 h20 v게임배속,
+Gui, Add, checkbox, x215 y%Y_coord% h20 v사냥터자동복귀여부, 사냥터자동복귀
 
 Y_coord := 35
 Gui, Add, Text, x215 y%Y_coord% h20 w70, 목적지가기
@@ -14156,6 +14178,24 @@ Return
 									{
 										수리가필요한것같아 := 0
 									}
+								}
+								if (그레이드필요 && 자동그레이드 = True)
+								{
+									B맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
+									BX := mem.read(0x0058DAD4, "UInt", 0x10)
+									BY := mem.read(0x0058DAD4, "UInt", 0x14)
+									BZ := mem.read(0x0058DAD4, "UInt", 0x18)
+									gosub, 그레이드하기
+									맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
+									좌표X := mem.read(0x0058DAD4, "UInt", 0x10)
+									좌표Y := mem.read(0x0058DAD4, "UInt", 0x14)
+									좌표Z := mem.read(0x0058DAD4, "UInt", 0x18)
+									if (B맵번호 = 맵번호 && 좌표X != BX  && 좌표Y != BY)
+									{
+										좌표입력(BX,BY,BZ)
+										RunMemory("좌표이동")
+									}
+
 								}
 							}
 							else
@@ -15319,153 +15359,184 @@ Return
 									;if (현재무기 != 0 && 현재무기 != 49153)
 									;	RunMemory("무기탈거")
 									gui,listview,아이템리스트
-									lv_gettext(현재타겟이름,아템_현재선택,5)
-									lv_gettext(현재타겟OID,아템_현재선택,6)
-									lv_gettext(근접체크,아템_현재선택,12)
-									LV_GetText(목표X, 아템_현재선택, 7)
-									LV_GetText(목표Y, 아템_현재선택, 8)
-									LV_GetText(목표Z, 아템_현재선택, 9)
-									mem.write(0x00590770, 현재타겟OID, "UInt", aOffsets*)
-									거리X := ABS(목표X - 좌표X)
-									거리Y := ABS(목표Y - 좌표Y)
-									좌표입력(목표X,목표Y,목표Z)
-									if ( 마지막타겟OID != 현재타겟OID ) ; 그 선택된 몬스터가 새로운 몬스터라면
+									lv_gettext(I현재타겟이름,아템_현재선택,5)
+									lv_gettext(I현재타겟OID,아템_현재선택,6)
+									lv_gettext(I근접체크,아템_현재선택,12)
+									LV_GetText(I목표X, 아템_현재선택, 7)
+									LV_GetText(I목표Y, 아템_현재선택, 8)
+									LV_GetText(I목표Z, 아템_현재선택, 9)
+									mem.write(0x00590770, I현재타겟OID, "UInt", aOffsets*)
+									T목표X := I목표X
+									T목표Y := I목표Y
+									T목표Z := I목표Z
+									거리X := ABS(I목표X - 좌표X)
+									거리Y := ABS(I목표Y - 좌표Y)
+									좌표입력(I목표X,I목표Y,I목표Z)
+									if ( I마지막타겟OID != I현재타겟OID ) ; 그 선택된 몬스터가 새로운 몬스터라면
 									{
-										SB_SetText("새로운 먹자목표: " 현재타겟이름,2)
-										마지막타겟OID := 현재타겟OID
-										mem.writeString(0x005901E5, 현재타겟이름, "UTF-16", aOffsets*)
-										시작X := 좌표X
-										시작Y := 좌표Y
-										시작Z := 좌표Z
+										IsMoving := mem.read(0x0058EB1C, "UInt", 0x174)
+										if (IsMoving != 0)
+										{
+											Keyclick("Tab")
+											sleep, 100
+											continue
+										}
+										SB_SetText("새로운 먹자목표: " I현재타겟이름,2)
+										I마지막타겟OID := I현재타겟OID
+
+										mem.writeString(0x005901E5, I현재타겟이름, "UTF-16", aOffsets*)
+										I시작X := 좌표X
+										I시작Y := 좌표Y
+										I시작Z := 좌표Z
 										;if(거리X < 16 && 거리Y < 8)
 										RunMemory("좌표이동")
 										continue
 									}
 									else ; 그 선택된 몬스터가 새로운 몬스터가 아니라면 ;블랙리스트에 등록할지 말지 결정
 									{
-										if (근접체크 < 3)
- ;도착했다면
+										if (I근접체크 < 3) ;도착했다면
 										{
-											SB_SetText( 현재타겟이름 " 근처에 도착완료",2)
+											IMLS_delay := 0
+											SB_SetText(I현재타겟이름 " 근처에 도착완료",2)
 											MLS_delay := 0
-											LV_GetText(대기카운트, 아템_현재선택, 12)
-											대기카운트 := 대기카운트 + 1
-											LV_Modify(아템_현재선택, "col11", 대기카운트)
+											LV_GetText(I대기카운트, 아템_현재선택, 12)
+											I대기카운트 := I대기카운트 + 1
+											LV_Modify(아템_현재선택, "col11", I대기카운트)
+											KeyClick("AltR")
 											continue
 										}
-										else if (좌표X != 시작X && 좌표Y != 시작Y)
+										else if (좌표X != I시작X && 좌표Y != I시작Y)
 										{
-											SB_SetText(현재타겟이름 "근처에 가는중",2)
-											MLS_delay := 0
-											시작X := 좌표X
-											시작Y := 좌표Y
-											시작Z := 좌표Z
+											SB_SetText(I현재타겟이름 "근처에 가는중",2)
+											IMLS_delay := 0
+											I시작X := 좌표X
+											I시작Y := 좌표Y
+											I시작Z := 좌표Z
 											continue
 										}
-										else if (좌표X = 시작X && 좌표Y = 시작Y && MLS_delay < 2) ;만약 2초간 몬스터와 거리 1 초과에 멈춰서있다면
+										else if (좌표X = I시작X && 좌표Y = I시작Y && IMLS_delay < 2) ;만약 2초간 몬스터와 거리 1 초과에 멈춰서있다면
 										{
-											SB_SetText(현재타겟이름 "에 도달불가 " MLS_delay "/1",2)
-											시작X := 좌표X
-											시작Y := 좌표Y
-											시작Z := 좌표Z
-											MLS_delay++
+											SB_SetText(현재타겟이름 "에 도달불가 " IMLS_delay "/1",2)
+											I시작X := 좌표X
+											I시작Y := 좌표Y
+											I시작Z := 좌표Z
+											IMLS_delay++
 											RunMemory("좌표이동")
 											continue
 										}
-										else if (좌표X = 시작X && 좌표Y = 시작Y && MLS_delay = 2) ;만약 2초간 몬스터와 거리 1 초과에 멈춰서있다면
+										else if (좌표X = I시작X && 좌표Y = I시작Y && IMLS_delay = 2) ;만약 2초간 몬스터와 거리 1 초과에 멈춰서있다면
 										{
 											keyclick("AltR")
 											sleep,1
-											SB_SetText(현재타겟이름 "에 도달불가 블랙리스트 등록",2)
-											data := 현재타겟OID
+											SB_SetText(I현재타겟이름 "에 도달불가 블랙리스트 등록",2)
+											data := I현재타겟OID
 											if (!IsDataInList(data, MonsterList))
 												blacklist.Push(data)
 											gui,listview,블랙리스트
-											LV_add("",현재타겟OID)
+											LV_add("",I현재타겟OID)
 											sleep, 50
 											gui,listview,아이템리스트
 											LV_Modify(0, "-Select")
-											MLS_delay := 0
+											IMLS_delay := 0
 											continue
 										}
 										else
 										{
-											시작X := 좌표X
-											시작Y := 좌표Y
-											시작Z := 좌표Z
+											I시작X := 좌표X
+											I시작Y := 좌표Y
+											I시작Z := 좌표Z
 										}
 									}
 									continue
 								}
 								else if (좌표갯수 > 0 && 자동이동여부 = 1)
 								{
-									현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
-									;if (현재무기 != 0 && 현재무기 != 49153)
-									;	RunMemory("무기탈거")
+									IsMoving := mem.read(0x0058EB1C, "UInt", 0x174)
+									if (IsMoving != 0)
+									{
+										continue
+									}
 									gui,listview,좌표리스트
-									LV_GetText(목표X, 좌표_현재선택, 4)
-									LV_GetText(목표Y, 좌표_현재선택, 5)
-									LV_GetText(목표Z, 좌표_현재선택, 6)
-									좌표입력(목표X,목표Y,목표Z)
-									거리X := ABS(목표X - 좌표X)
-									거리Y := ABS(목표Y - 좌표Y)
+
+									T거리X := ABS(T목표X - 좌표X)
+									T거리Y := ABS(T목표Y - 좌표Y)
 									다음좌표 := 좌표_현재선택 + 1
 									if (다음좌표 > 좌표갯수)
 									{
 										다음좌표 := 1
 									}
-									if (거리X <= 2 && 거리Y <= 2)
+									if (T거리X <= 2 && T거리Y <= 2)
 									{
-										SB_SetText(좌표_현재선택 "번 좌표에 도착, 다음좌표 선택",2)
-										LV_Modify(0,"-Select")
-										LV_Modify(다음좌표,"Select")
-										MLS_delay := 0
-										시작X := 좌표X
-										시작Y := 좌표Y
-										시작Z := 좌표Z
+										LV_GetText(T목표X, 좌표_현재선택, 4)
+										LV_GetText(T목표Y, 좌표_현재선택, 5)
+										LV_GetText(T목표Z, 좌표_현재선택, 6)
+										T거리X := ABS(T목표X - 좌표X)
+										T거리Y := ABS(T목표Y - 좌표Y)
+										if (T거리X <= 2 && T거리Y <= 2)
+										{
+											SB_SetText(좌표_현재선택 "번 좌표에 도착, 다음좌표 선택",2)
+											LV_Modify(0,"-Select")
+											LV_Modify(다음좌표,"Select")
+											LV_GetText(T목표X, 좌표_현재선택, 4)
+											LV_GetText(T목표Y, 좌표_현재선택, 5)
+											LV_GetText(T목표Z, 좌표_현재선택, 6)
+										}
+										좌표입력(T목표X,T목표Y,T목표Z)
+										TMLS_delay := 0
+										T시작X := 좌표X
+										T시작Y := 좌표Y
+										T시작Z := 좌표Z
 										continue
 									}
-									else if (좌표X != 시작X && 좌표Y != 시작Y)
+									else if (좌표X != T시작X && 좌표Y != T시작Y)
 									{
 										SB_SetText(좌표_현재선택 "번 좌표에 가는중",2)
-										MLS_delay := 0
-										시작X := 좌표X
-										시작Y := 좌표Y
-										시작Z := 좌표Z
+										TMLS_delay := 0
+										T시작X := 좌표X
+										T시작Y := 좌표Y
+										T시작Z := 좌표Z
 										continue
 									}
-									else if (좌표X = 시작X && 좌표Y = 시작Y && MLS_delay < 3) ;만약 2초간 몬스터와 거리 1 초과에 멈춰서있다면
+									else if (좌표X = T시작X && 좌표Y = T시작Y && TMLS_delay < 3) ;만약 2초간 몬스터와 거리 1 초과에 멈춰서있다면
 									{
-										MLS_delay++
-										SB_SetText(좌표_현재선택 "번 좌표에 도달불가 " MLS_delay "/3",2)
-										시작X := 좌표X
-										시작Y := 좌표Y
-										시작Z := 좌표Z
+										TMLS_delay++
+										SB_SetText(좌표_현재선택 "번 좌표에 도달불가 " TMLS_delay "/3",2)
+										T시작X := 좌표X
+										T시작Y := 좌표Y
+										T시작Z := 좌표Z
+										LV_GetText(T목표X, 좌표_현재선택, 4)
+										LV_GetText(T목표Y, 좌표_현재선택, 5)
+										LV_GetText(T목표Z, 좌표_현재선택, 6)
+										좌표입력(T목표X,T목표Y,T목표Z)
 										RunMemory("좌표이동")
 										continue
 									}
-									else if (좌표X = 시작X && 좌표Y = 시작Y && MLS_delay = 3) ;만약 2초간 몬스터와 거리 1 초과에 멈춰서있다면
+									else if (좌표X = T시작X && 좌표Y = T시작Y && TMLS_delay = 3) ;만약 2초간 몬스터와 거리 1 초과에 멈춰서있다면
 									{
-										MLS_delay := 0
+										TMLS_delay := 0
 										keyclick("AltR")
 										sleep,1
 										gui,listview,좌표리스트
-										좌표까지거리X := ABS(좌표X - 목표X)
-										좌표까지거리Y := ABS(좌표Y - 목표Y)
+										좌표까지거리X := ABS(좌표X - T목표X)
+										좌표까지거리Y := ABS(좌표Y - T목표Y)
 										if (좌표까지거리X < 16 && 좌표까지거리Y < 8)
 										{
-											SB_SetText(좌표_현재선택 "번 좌표에 도달불가 " MLS_delay "/3",2)
+											SB_SetText(좌표_현재선택 "번 좌표에 도달불가 " TMLS_delay "/3",2)
 											LV_Modify(0,"-Select")
 											LV_Modify(다음좌표,"Select")
+											LV_GetText(T목표X, 좌표_현재선택, 4)
+											LV_GetText(T목표Y, 좌표_현재선택, 5)
+											LV_GetText(T목표Z, 좌표_현재선택, 6)
+											좌표입력(T목표X,T목표Y,T목표Z)
 										}
 										RunMemory("좌표이동")
 										continue
 									}
 									else
 									{
-										시작X := 좌표X
-										시작Y := 좌표Y
-										시작Z := 좌표Z
+										T시작X := 좌표X
+										T시작Y := 좌표Y
+										T시작Z := 좌표Z
 									}
 									continue
 								}
@@ -15510,8 +15581,78 @@ Return
 								GALRID := mem.read(0x0058DAD4, "UInt", 0x178, 0x6F)
 								GuiControl,, GALRID, % GALRID
 								AttackStartCounter := A_TickCount
-								if (자사_현재선택 != 0  && 자동사냥여부 = 1)
+								if ((무기수리필요 && 무기자동수리여부) || (식빵구매필요 && 식빵구매여부) || 라깃구매필요 || (그레이드필요 && 자동그레이드 = True))
 								{
+									if !(IsDataInList(맵번호, 설정된마을))
+									{
+										if (IsDataInList(맵번호, 나가기가능맵)) ;마을의 베이커리 ; 마법상점 ; 안이라면
+										{
+											gosub, 상점나가기
+											continue
+										}
+										else
+										{
+											마을 := "포프레스네"
+											목적차원 := "베타"
+											if (오란의깃사용여부 = 1 && 오란의깃마을 = 마을 )
+											{
+												keyclick(오란의깃단축키)
+												sleep, 1000
+												맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
+												if (IsDataInList(맵번호, 설정된마을))
+													continue
+											}
+											라깃사용하기(마을,목적차원)
+											continue
+										}
+									}
+									else if (골드바판매여부 && GALRID < 1000000 && 아이템갯수["골드바"] > 0)
+									{
+										gosub, 골드바팔기
+										continue
+									}
+									else if (골드바구매여부 && GALRID > 9600000 )
+									{
+										gosub, 골드바사기
+										continue
+									}
+									else if (무기수리필요 || 식빵구매필요 || 라깃구매필요) && (GALRID < 100000)
+									{
+										gosub, CurrentMode_대기모드
+										SB_SetText("갈리드가 부족합니다.",2)
+										break
+									}
+									else if (무기수리필요)
+									{
+										목적마을 := "포프레스네"
+										목적지 := "무기상점"
+										동작방법 := "Repair"
+										gosub, 무기수리
+										continue
+									}
+									else if (식빵구매필요)
+									{
+										gosub, 식빵구매
+										continue
+									}
+									else if (라깃구매필요)
+									{
+										gosub, 라깃구매
+										continue
+									}
+									else if (그레이드필요 && GALRID > 1000000 && 아이템갯수["정령의보석"] >= 10)
+									{
+										gosub, 그레이드하기
+										continue
+									}
+
+								}
+								else if (사냥터자동복귀여부 = 1 && 맵번호 != 사냥터맵번호)
+								{
+								}
+								else if (자사_현재선택 != 0  && 자동사냥여부 = 1)
+								{
+									IMLS_delay := 0
 									현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
 									if (일무기 == 1 && 현재무기 == 0)
 									{
@@ -15520,6 +15661,7 @@ Return
 									gui,listview,몬스터리스트
 									lv_gettext(현재타겟이름,자사_현재선택,5)
 									lv_gettext(현재타겟OID,자사_현재선택,6)
+									lv_gettext(현재타겟Y,자사_현재선택,8)
 									lv_gettext(근접체크,자사_현재선택,12)
 									공격여부 := mem.read(0x0058DAD4, "UInt", 0x178, 0xEB)
 									if ( 마지막타겟OID != 현재타겟OID ) ; 그 선택된 몬스터가 새로운 몬스터라면
@@ -15529,6 +15671,12 @@ Return
 										{
 											Keyclick("Tab")
 											sleep, 100
+											continue
+										}
+										거리Y := abs(현재타겟Y - 좌표Y)
+										if (현재무기 = 45057 || 현재무기 = 45058) && (거리Y>7) ;활
+										{
+											RunMemory("무기탈거")
 											continue
 										}
 										SB_SetText("새로운 공격목표: " 현재타겟이름,2)
@@ -15753,81 +15901,92 @@ Return
 									;if (현재무기 != 0 && 현재무기 != 49153)
 									;	RunMemory("무기탈거")
 									gui,listview,아이템리스트
-									lv_gettext(현재타겟이름,아템_현재선택,5)
-									lv_gettext(현재타겟OID,아템_현재선택,6)
-									lv_gettext(근접체크,아템_현재선택,12)
-									LV_GetText(목표X, 아템_현재선택, 7)
-									LV_GetText(목표Y, 아템_현재선택, 8)
-									LV_GetText(목표Z, 아템_현재선택, 9)
-									mem.write(0x00590770, 현재타겟OID, "UInt", aOffsets*)
-									거리X := ABS(목표X - 좌표X)
-									거리Y := ABS(목표Y - 좌표Y)
-									좌표입력(목표X,목표Y,목표Z)
-									if ( 마지막타겟OID != 현재타겟OID ) ; 그 선택된 몬스터가 새로운 몬스터라면
+									lv_gettext(I현재타겟이름,아템_현재선택,5)
+									lv_gettext(I현재타겟OID,아템_현재선택,6)
+									lv_gettext(I근접체크,아템_현재선택,12)
+									LV_GetText(I목표X, 아템_현재선택, 7)
+									LV_GetText(I목표Y, 아템_현재선택, 8)
+									LV_GetText(I목표Z, 아템_현재선택, 9)
+									mem.write(0x00590770, I현재타겟OID, "UInt", aOffsets*)
+									T목표X := I목표X
+									T목표Y := I목표Y
+									T목표Z := I목표Z
+									거리X := ABS(I목표X - 좌표X)
+									거리Y := ABS(I목표Y - 좌표Y)
+									좌표입력(I목표X,I목표Y,I목표Z)
+									if ( I마지막타겟OID != I현재타겟OID ) ; 그 선택된 몬스터가 새로운 몬스터라면
 									{
-										SB_SetText("새로운 먹자목표: " 현재타겟이름,2)
-										마지막타겟OID := 현재타겟OID
+										IsMoving := mem.read(0x0058EB1C, "UInt", 0x174)
+										if (IsMoving != 0)
+										{
+											Keyclick("Tab")
+											sleep, 100
+											continue
+										}
+										SB_SetText("새로운 먹자목표: " I현재타겟이름,2)
+										I마지막타겟OID := I현재타겟OID
 
-										mem.writeString(0x005901E5, 현재타겟이름, "UTF-16", aOffsets*)
-										시작X := 좌표X
-										시작Y := 좌표Y
-										시작Z := 좌표Z
+										mem.writeString(0x005901E5, I현재타겟이름, "UTF-16", aOffsets*)
+										I시작X := 좌표X
+										I시작Y := 좌표Y
+										I시작Z := 좌표Z
 										;if(거리X < 16 && 거리Y < 8)
 										RunMemory("좌표이동")
 										continue
 									}
 									else ; 그 선택된 몬스터가 새로운 몬스터가 아니라면 ;블랙리스트에 등록할지 말지 결정
 									{
-										if (근접체크 < 3)
- ;도착했다면
+										if (I근접체크 < 3) ;도착했다면
 										{
-											SB_SetText( 현재타겟이름 " 근처에 도착완료",2)
+											IMLS_delay := 0
+											SB_SetText(I현재타겟이름 " 근처에 도착완료",2)
 											MLS_delay := 0
-											LV_GetText(대기카운트, 아템_현재선택, 12)
-											대기카운트 := 대기카운트 + 1
-											LV_Modify(아템_현재선택, "col11", 대기카운트)
+											LV_GetText(I대기카운트, 아템_현재선택, 12)
+											I대기카운트 := I대기카운트 + 1
+											LV_Modify(아템_현재선택, "col11", I대기카운트)
+											KeyClick("AltR")
 											continue
 										}
-										else if (좌표X != 시작X && 좌표Y != 시작Y)
+										else if (좌표X != I시작X && 좌표Y != I시작Y)
 										{
-											SB_SetText(현재타겟이름 "근처에 가는중",2)
-											MLS_delay := 0
-											시작X := 좌표X
-											시작Y := 좌표Y
-											시작Z := 좌표Z
+											SB_SetText(I현재타겟이름 "근처에 가는중",2)
+											IMLS_delay := 0
+											I시작X := 좌표X
+											I시작Y := 좌표Y
+											I시작Z := 좌표Z
 											continue
 										}
-										else if (좌표X = 시작X && 좌표Y = 시작Y && MLS_delay < 2) ;만약 2초간 몬스터와 거리 1 초과에 멈춰서있다면
+										else if (좌표X = I시작X && 좌표Y = I시작Y && IMLS_delay < 2) ;만약 2초간 몬스터와 거리 1 초과에 멈춰서있다면
 										{
-											SB_SetText(현재타겟이름 "에 도달불가 " MLS_delay "/1",2)
-											시작X := 좌표X
-											시작Y := 좌표Y
-											시작Z := 좌표Z
-											MLS_delay++
+											SB_SetText(현재타겟이름 "에 도달불가 " IMLS_delay "/1",2)
+											I시작X := 좌표X
+											I시작Y := 좌표Y
+											I시작Z := 좌표Z
+											IMLS_delay++
 											RunMemory("좌표이동")
 											continue
 										}
-										else if (좌표X = 시작X && 좌표Y = 시작Y && MLS_delay = 2) ;만약 2초간 몬스터와 거리 1 초과에 멈춰서있다면
+										else if (좌표X = I시작X && 좌표Y = I시작Y && IMLS_delay = 2) ;만약 2초간 몬스터와 거리 1 초과에 멈춰서있다면
 										{
 											keyclick("AltR")
 											sleep,1
-											SB_SetText(현재타겟이름 "에 도달불가 블랙리스트 등록",2)
-											data := 현재타겟OID
+											SB_SetText(I현재타겟이름 "에 도달불가 블랙리스트 등록",2)
+											data := I현재타겟OID
 											if (!IsDataInList(data, MonsterList))
 												blacklist.Push(data)
 											gui,listview,블랙리스트
-											LV_add("",현재타겟OID)
+											LV_add("",I현재타겟OID)
 											sleep, 50
 											gui,listview,아이템리스트
 											LV_Modify(0, "-Select")
-											MLS_delay := 0
+											IMLS_delay := 0
 											continue
 										}
 										else
 										{
-											시작X := 좌표X
-											시작Y := 좌표Y
-											시작Z := 좌표Z
+											I시작X := 좌표X
+											I시작Y := 좌표Y
+											I시작Z := 좌표Z
 										}
 									}
 									continue
@@ -15869,73 +16028,92 @@ Return
 								}
 								else if (좌표갯수 > 0 && 자동이동여부 = 1)
 								{
-									현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
-									;if (현재무기 != 0 && 현재무기 != 49153)
-									;	RunMemory("무기탈거")
+									IsMoving := mem.read(0x0058EB1C, "UInt", 0x174)
+									if (IsMoving != 0)
+									{
+										continue
+									}
 									gui,listview,좌표리스트
-									LV_GetText(목표X, 좌표_현재선택, 4)
-									LV_GetText(목표Y, 좌표_현재선택, 5)
-									LV_GetText(목표Z, 좌표_현재선택, 6)
-									좌표입력(목표X,목표Y,목표Z)
-									거리X := ABS(목표X - 좌표X)
-									거리Y := ABS(목표Y - 좌표Y)
+
+									T거리X := ABS(T목표X - 좌표X)
+									T거리Y := ABS(T목표Y - 좌표Y)
 									다음좌표 := 좌표_현재선택 + 1
 									if (다음좌표 > 좌표갯수)
 									{
 										다음좌표 := 1
 									}
-									if (거리X <= 2 && 거리Y <= 2)
+									if (T거리X <= 2 && T거리Y <= 2)
 									{
-										SB_SetText(좌표_현재선택 "번 좌표에 도착, 다음좌표 선택",2)
-										LV_Modify(0,"-Select")
-										LV_Modify(다음좌표,"Select")
-										MLS_delay := 0
-										시작X := 좌표X
-										시작Y := 좌표Y
-										시작Z := 좌표Z
+										LV_GetText(T목표X, 좌표_현재선택, 4)
+										LV_GetText(T목표Y, 좌표_현재선택, 5)
+										LV_GetText(T목표Z, 좌표_현재선택, 6)
+										T거리X := ABS(T목표X - 좌표X)
+										T거리Y := ABS(T목표Y - 좌표Y)
+										if (T거리X <= 2 && T거리Y <= 2)
+										{
+											SB_SetText(좌표_현재선택 "번 좌표에 도착, 다음좌표 선택",2)
+											LV_Modify(0,"-Select")
+											LV_Modify(다음좌표,"Select")
+											LV_GetText(T목표X, 좌표_현재선택, 4)
+											LV_GetText(T목표Y, 좌표_현재선택, 5)
+											LV_GetText(T목표Z, 좌표_현재선택, 6)
+										}
+										좌표입력(T목표X,T목표Y,T목표Z)
+										TMLS_delay := 0
+										T시작X := 좌표X
+										T시작Y := 좌표Y
+										T시작Z := 좌표Z
 										continue
 									}
-									else if (좌표X != 시작X && 좌표Y != 시작Y)
+									else if (좌표X != T시작X && 좌표Y != T시작Y)
 									{
 										SB_SetText(좌표_현재선택 "번 좌표에 가는중",2)
-										MLS_delay := 0
-										시작X := 좌표X
-										시작Y := 좌표Y
-										시작Z := 좌표Z
+										TMLS_delay := 0
+										T시작X := 좌표X
+										T시작Y := 좌표Y
+										T시작Z := 좌표Z
 										continue
 									}
-									else if (좌표X = 시작X && 좌표Y = 시작Y && MLS_delay < 3) ;만약 2초간 몬스터와 거리 1 초과에 멈춰서있다면
+									else if (좌표X = T시작X && 좌표Y = T시작Y && TMLS_delay < 3) ;만약 2초간 몬스터와 거리 1 초과에 멈춰서있다면
 									{
-										MLS_delay++
-										SB_SetText(좌표_현재선택 "번 좌표에 도달불가 " MLS_delay "/3",2)
-										시작X := 좌표X
-										시작Y := 좌표Y
-										시작Z := 좌표Z
+										TMLS_delay++
+										SB_SetText(좌표_현재선택 "번 좌표에 도달불가 " TMLS_delay "/3",2)
+										T시작X := 좌표X
+										T시작Y := 좌표Y
+										T시작Z := 좌표Z
+										LV_GetText(T목표X, 좌표_현재선택, 4)
+										LV_GetText(T목표Y, 좌표_현재선택, 5)
+										LV_GetText(T목표Z, 좌표_현재선택, 6)
+										좌표입력(T목표X,T목표Y,T목표Z)
 										RunMemory("좌표이동")
 										continue
 									}
-									else if (좌표X = 시작X && 좌표Y = 시작Y && MLS_delay = 3) ;만약 2초간 몬스터와 거리 1 초과에 멈춰서있다면
+									else if (좌표X = T시작X && 좌표Y = T시작Y && TMLS_delay = 3) ;만약 2초간 몬스터와 거리 1 초과에 멈춰서있다면
 									{
-										MLS_delay := 0
+										TMLS_delay := 0
 										keyclick("AltR")
 										sleep,1
 										gui,listview,좌표리스트
-										좌표까지거리X := ABS(좌표X - 목표X)
-										좌표까지거리Y := ABS(좌표Y - 목표Y)
+										좌표까지거리X := ABS(좌표X - T목표X)
+										좌표까지거리Y := ABS(좌표Y - T목표Y)
 										if (좌표까지거리X < 16 && 좌표까지거리Y < 8)
 										{
-											SB_SetText(좌표_현재선택 "번 좌표에 도달불가 " MLS_delay "/3",2)
+											SB_SetText(좌표_현재선택 "번 좌표에 도달불가 " TMLS_delay "/3",2)
 											LV_Modify(0,"-Select")
 											LV_Modify(다음좌표,"Select")
+											LV_GetText(T목표X, 좌표_현재선택, 4)
+											LV_GetText(T목표Y, 좌표_현재선택, 5)
+											LV_GetText(T목표Z, 좌표_현재선택, 6)
+											좌표입력(T목표X,T목표Y,T목표Z)
 										}
 										RunMemory("좌표이동")
 										continue
 									}
 									else
 									{
-										시작X := 좌표X
-										시작Y := 좌표Y
-										시작Z := 좌표Z
+										T시작X := 좌표X
+										T시작Y := 좌표Y
+										T시작Z := 좌표Z
 									}
 									continue
 								}
