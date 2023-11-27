@@ -40,6 +40,28 @@ gosub, 메인루프
 return
 
 ;-------------------------------------------------------
+;-------텔레그램 연동------------------------------------
+;-------------------------------------------------------
+;{
+텔레그램메시지보내기:
+텔레그램메시지보내기()
+return
+
+텔레그램메시지보내기(Message := "")
+{
+	if (Message = "")
+		Message := "자동으로보내지는메시지"
+	BotToken := "1111111111:AAAAAAAAAAAAAAAAAAAAAAAAAAaaaaaaaaa" ; API토큰
+	ChatID := "1111111111" ;메시지 받을 ID
+
+	Url := "https://api.telegram.org/bot" . BotToken . "/sendMessage?chat_id=" . ChatID . "&text=" . URLEncode(Message)
+	WinHttp := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+	WinHttp.Open("GET", Url)
+	WinHttp.Send()
+}
+;}
+
+;-------------------------------------------------------
 ;-------초기값 설정부(변수설정)---------------------------
 ;-------------------------------------------------------
 ;{
@@ -13493,6 +13515,7 @@ gui, tab, 6
 gui, add, button, x400 y35 g마하디움링교환, 마하디움링교환
 gui, add, button, x400 y60 v부캐게임섬루프 g부캐게임섬, 부캐게임섬돌기
 gui, add, button, x400 y85 g부캐게임섬세팅, 부캐게임섬세팅
+gui, add, button, x400 y110 g텔레그램메시지보내기,  텔레그램메시지보내기
 x_coord := 15
 Y_coord := 50
 loop, 10
@@ -13760,6 +13783,7 @@ Menu, EMenu, Add,
 ;}
 Fill:
 ;{
+Gui, Submit, Nohide
 if (TargetTitle != "")
 {
 	types := ["보관할아이템리스트", "원하는아이템리스트", "은행넣을아이템리스트", "소각할아이템리스트","원하는몬스터리스트","원하지않는몬스터리스트","NPC리스트", "좌표리스트","고용상인리스트"]
@@ -13771,35 +13795,28 @@ if (TargetTitle != "")
 		Setting_Reload(ListName)
 	}
 	sleep, 1
-	Gui,Listview,원하는아이템리스트
-	sleep, 1
+	Gui, ListView, 원하는아이템리스트
 	RowCount := LV_GetCount()
-	sleep, 1
 	WantedItems := []
-	sleep, 1
 	Loop, %RowCount%
 	{
 		LV_GetText(row,A_Index,1)
 		WantedItems.Push(row)  ; Add the current row's array to the main ListViewItems array
 	}
+	WantedItemlength := WantedItems.MaxIndex()
 
 	Gui,Listview,원하는몬스터리스트
-	sleep, 1
 	RowCount := LV_GetCount()
-	sleep, 1
 	WantedMonsters := []
 	Loop, %RowCount%
 	{
 		LV_GetText(row,A_Index,1)
 		WantedMonsters.Push(row)  ; Add the current row's array to the main ListViewItems array
 	}
-	WantedItemlength := WantedItems.MaxIndex()
 	WantedMonsterlength := WantedMonsters.MaxIndex()
 
 	Gui,Listview,원하지않는몬스터리스트
-	sleep, 1
 	RowCount := LV_GetCount()
-	sleep, 1
 	DisWantedMonsters := []
 	Loop, %RowCount%
 	{
@@ -15674,7 +15691,7 @@ Return
 											continue
 										}
 										거리Y := abs(현재타겟Y - 좌표Y)
-										if (현재무기 = 45057 || 현재무기 = 45058) && (거리Y>7) ;활
+										if (현재무기 = 45057 || 현재무기 = 45058) && (거리Y>9) ;활
 										{
 											RunMemory("무기탈거")
 											continue
@@ -16135,6 +16152,8 @@ Return
 		;{ 게임이 비정상이라면
 		else if !(서버상태) && (자동재접속사용여부 = 1)
 		{
+			TMessage := ElanciaTitle . "팅김, 자동재접속"
+			텔레그램메시지보내기(TMessage)
 			SB_SetText("자동재접속시작",2)
 			인벤토리 := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
 			if !(Coin)
