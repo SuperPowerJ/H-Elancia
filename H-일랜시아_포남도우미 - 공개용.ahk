@@ -64,7 +64,7 @@ return
 
 	gui, submit, nohide
 	GuiControlGet, ChatID
-	if (ChatID = 0 || ChatID = "")
+	if (!IsNumber(ChatID) || ChatID == 0 || ChatID = "")
 		return
 	Url := "https://script.google.com/macros/s/AKfycbztWCnhTweHZyRtDltONV7bjhSGNq7m0OUUO4z9uN8-F-R-EOK4Puyw00JgNvmihgPs/exec"
 	Url := Url . "?chat_id=" . ChatID . "&text=" . URLEncode(Message)
@@ -87,7 +87,7 @@ Global MoveCoin := False
 ;옵션 리스트 구분
 Lists := [ "CheckBoxList", "DropDownList", "EditList", "RadioButton" ]
 ;사용된 옵션들
-CheckBoxList := ["수련길탐딜레이","이동속도사용","게임배속사용","길탐색책사용","원거리타겟","리메듐타겟","오란의깃사용여부","길탐색1번사용여부","길탐색2번사용여부","길탐색3번사용여부","길탐색4번사용여부","길탐색5번사용여부","자동재접속사용여부","힐링포션사용여부", "HP마을귀환사용여부", "리메듐사용여부", "마나포션사용여부", "MP마을귀환사용여부", "브렐사용여부", "식빵사용여부", "식빵구매여부", "골드바판매여부", "골드바구매여부", "대화사용", "명상사용", "더블어택사용", "체력향상사용", "민첩향상사용", "활방어사용", "마력향상사용", "마법방어향상사용", "3번", "4번", "5번", "6번", "7번", "8번", "은행넣기활성화", "소각활성화","아템먹기여부","자동이동여부", "훔치기사용", "훔쳐보기사용", "Sense사용", "자동사냥여부", "무기사용여부","특오자동교환여부","행깃구매여부","라깃구매여부","독침사용","현혹사용","폭검사용","무기공격사용","집중사용","회피사용","몸통찌르기사용","리메듐사용","라리메듐사용","엘리메듐사용","쿠로사용","빛의갑옷사용","공포보호사용","다라사용","브렐사용","브레마사용","물의갑옷사용","감속사용","마스사용","라크사용","번개사용","브리스사용","파스티사용","슈키사용","클리드사용","스톤스킨사용","파라스사용","베네피쿠스사용","저주사용","자동파티여부", "포레스트네자동대화","RemoveArmor사용","좀비몹감지", "위치고정", "배경제거", "캐릭제거","버스기사모드","나프사용","제작이동","자동그레이드","무기자동수리여부","사냥터자동복귀여부"]
+CheckBoxList := ["수련길탐딜레이","이동속도사용","게임배속사용","길탐색책사용","원거리타겟","리메듐타겟","오란의깃사용여부","길탐색1번사용여부","길탐색2번사용여부","길탐색3번사용여부","길탐색4번사용여부","길탐색5번사용여부","자동재접속사용여부","힐링포션사용여부", "HP마을귀환사용여부", "리메듐사용여부", "마나포션사용여부", "MP마을귀환사용여부", "브렐사용여부", "식빵사용여부", "식빵구매여부", "골드바판매여부", "골드바구매여부", "대화사용", "명상사용", "더블어택사용", "체력향상사용", "민첩향상사용", "활방어사용", "마력향상사용", "마법방어향상사용", "3번", "4번", "5번", "6번", "7번", "8번", "은행넣기활성화", "소각활성화","아템먹기여부","자동이동여부", "훔치기사용", "훔쳐보기사용", "Sense사용", "자동사냥여부", "무기사용여부","특오자동교환여부","행깃구매여부","라깃구매여부","독침사용","현혹사용","폭검사용","무기공격사용","집중사용","회피사용","몸통찌르기사용","리메듐사용","라리메듐사용","엘리메듐사용","쿠로사용","빛의갑옷사용","공포보호사용","다라사용","브렐사용","브레마사용","물의갑옷사용","감속사용","마스사용","라크사용","번개사용","브리스사용","파스티사용","슈키사용","클리드사용","스톤스킨사용","파라스사용","베네피쿠스사용","저주사용","자동파티여부", "포레스트네자동대화","RemoveArmor사용","좀비몹감지", "위치고정", "배경제거", "캐릭제거","버스기사모드","나프사용","제작이동","자동그레이드","무기자동수리여부","사냥터자동복귀여부","재접속알림설정","인벤꽉참알림설정","체력저하알림설정","마을귀환알림설정","그레이드알림설정","상인어빌알림설정"]
 SpellList := ["나프", "마스","리메듐","라리메듐","엘리메듐","쿠로","빛의갑옷","공포보호","다라","브렐","브레마","물의갑옷","감속","라크","번개","브리스","파스티","슈키","클리드","스톤스킨","파라스","베네피쿠스","저주"]
 DropDownList := ["오란의깃마을","길탐색1번목적지", "길탐색2번목적지", "길탐색3번목적지", "길탐색4번목적지", "길탐색5번목적지", "오란의깃단축키", "길탐색책단축키", "메인캐릭터서버", "메인캐릭터순서", "힐링포션사용단축키", "마나포션사용단축키", "식빵사용단축키", "식빵구매마을" ,"지침서", "오란의깃사용단축키", "포레스트네자동대화딜레이","CurrentMode","링단축키"]
 EditList := ["원거리타겟아이디","리메듐타겟아이디","힐링포션사용제한", "HP마을귀환사용제한", "MP마을귀환사용제한", "리메듐사용제한", "마나포션사용제한", "브렐사용제한", "식빵사용제한", "MP마을귀환사용여부", "넣을아이템","Multiplyer","NPC_MSG_ADR" ,"마지막사냥장소", "수련용길탐색딜레이", "NPC대화딜레이", "MoveSpeed", "게임배속", "특수리메듐타겟OID","수동레벨기입","수리소야이름","수리소야아이템순서","수리소야아이템갯수", "ChatID"]
@@ -1007,6 +1007,10 @@ return this.SizeOfStructure
 ;{
 	;{ 미분류
 
+	IsNumber(value) {
+    return RegExMatch(value, "^\d+$") > 0
+	}
+
 	미니맵클릭하여좌표이동(input_x,input_y)
 	{
 		미니맵x := mem.read(0x0058EB48, "UInt", 0x80)
@@ -1061,9 +1065,9 @@ return this.SizeOfStructure
 		MouseClick(output_x, output_y)
 	}
 
-	GameIslandMouseClickEvent(TargetTitle)
+	GameIslandMouseClickEvent(TT)
 	{
-		WinGet,sub_jPID,PID,%TargetTitle%
+		WinGet,sub_jPID,PID,%TT%
 		sub_mem := new _ClassMemory("ahk_pid " sub_jPID, "", hProcessCopy)
 		MinimapCheck := sub_mem.read(0x0058EB6C, "UInt", aOffsets*)
 		if (MinimapCheck = 0)
@@ -1073,7 +1077,7 @@ return this.SizeOfStructure
 		MapNumber := sub_mem.read(0x0058EB1C, "UInt", 0x10E)
 		CurrentMiniMapPosX := sub_mem.read(0x0058EB48, "UInt", 0x80)
 		CurrentMiniMapPosY := sub_mem.read(0x0058EB48, "UInt", 0x84)
-
+		sub_mem.write(0x0058DAD4, 180, "UInt", 0x178, 0x9C)
 		PosX := sub_mem.read(0x0058DAd4, "UInt", 0x10)
 		PosY := sub_mem.read(0x0058DAd4, "UInt", 0x14)
 
@@ -1094,7 +1098,17 @@ return this.SizeOfStructure
 				continue
 			Sub아이템갯수[Subinvenitem] := (Sub아이템갯수[Subinvenitem] ? Sub아이템갯수[Subinvenitem] + SubItemCount : SubItemCount)
 		}
-
+		임시이름 := TT . "보고완료"
+		if (Sub인벤토리 = 50 && %임시이름% = False  && 인벤꽉참알림설정)
+		{
+			%임시이름% := True
+			TMessage := TT . "의 인벤토리가 가득참"
+			텔레그램메시지보내기(TMessage)
+		}
+		else if (Sub인벤토리 < 50 && Sub인벤토리 > 0)
+		{
+			%임시이름% := False
+		}
 		if IsMoving != 0
 			return
 		else if (MapNumber == 3600)
@@ -1201,10 +1215,10 @@ return this.SizeOfStructure
 		}
 	}
 
-	GameIslandMacroText(TargetTitle){
+	GameIslandMacroText(TT){
 		sleep,1000
-		WinActivate,%TargetTitle%
-		WinWaitActive,%TargetTitle%
+		WinActivate,%TT%
+		WinWaitActive,%TT%
 		send, !2
 		sleep,500
 		Send, !m
@@ -9121,12 +9135,22 @@ if (그레이드종류 = "" || 그레이드할어빌 = "")
 else if !(GALRID > 1000000) ; && 아이템갯수["정령의보석"] > 10)
 {
 	그레이드필요 := False
+	if (그레이드알림설정)
+	{
+		TMessage := TargetTitle . "의 그레이드실패: 소지갈리드 부족"
+		텔레그램메시지보내기(TMessage)
+	}
 	SB_SetText("소지갈리드 부족, 그레이드 취소",2)
 	return
 }
 else if !(아이템갯수["정령의보석"] >= 10)
 {
 	그레이드필요 := False
+	if (그레이드알림설정)
+	{
+		TMessage := TargetTitle . "의 그레이드실패: 정령의보석 부족"
+		텔레그램메시지보내기(TMessage)
+	}
 	SB_SetText("정령의보석 부족, 그레이드 취소",2)
 	return
 }
@@ -9189,6 +9213,11 @@ loop,
 	IfInString,NPCMsg,올랐습니다
 	{
 		SB_SetText("그레이드중완료",2)
+		if (그레이드알림설정)
+		{
+			TMessage := TargetTitle . "의 " . 그레이드할어빌 . " 그레이드진행완료"
+			텔레그램메시지보내기(TMessage)
+		}
 		mem.writeString(NPC_MSG_ADR, "", "UTF-16", aOffsets*)
 		keyClick("K6")
 		sleep,10
@@ -11250,6 +11279,11 @@ return
 				미용어빌 := abillity
 				if (미용어빌 >= 미용제한)
 				{
+					if(상인어빌알림설정)
+					{
+						TMessage := TargetTitle . "의 " . abillity_name "어빌" 미용제한 "달성, 대기"
+						텔레그램메시지보내기(TMessage)
+					}
 					SB_SetText(abillity_name "어빌" 미용제한 "달성, 대기" ,2)
 					gosub,CurrentMode_대기모드
 				}
@@ -11259,6 +11293,11 @@ return
 				요리어빌 := abillity
 				if (요리어빌 >= 요리제한)
 				{
+					if(상인어빌알림설정)
+					{
+						TMessage := TargetTitle . "의 " . abillity_name "어빌" 요리제한 "달성, 대기"
+						텔레그램메시지보내기(TMessage)
+					}
 					SB_SetText(abillity_name "어빌" 요리제한 "달성, 대기" ,2)
 					gosub,CurrentMode_대기모드
 				}
@@ -11268,6 +11307,11 @@ return
 				재단어빌 := abillity
 				if (재단어빌 >= 재단제한)
 				{
+					if(상인어빌알림설정)
+					{
+						TMessage := TargetTitle . "의 " . abillity_name "어빌" 재단제한 "달성, 대기"
+						텔레그램메시지보내기(TMessage)
+					}
 					SB_SetText(abillity_name "어빌" 재단제한 "달성, 대기" ,2)
 					gosub,CurrentMode_대기모드
 				}
@@ -11277,6 +11321,11 @@ return
 				세공어빌 := abillity
 				if (세공어빌 >= 세공제한)
 				{
+					if(상인어빌알림설정)
+					{
+						TMessage := TargetTitle . "의 " . abillity_name "어빌" 세공제한 "달성, 대기"
+						텔레그램메시지보내기(TMessage)
+					}
 					SB_SetText(abillity_name "어빌" 세공제한 "달성, 대기" ,2)
 					gosub,CurrentMode_대기모드
 				}
@@ -11286,6 +11335,11 @@ return
 				스미스어빌 := abillity
 				if (스미스어빌 >= 스미스제한)
 				{
+					if(상인어빌알림설정)
+					{
+						TMessage := TargetTitle . "의 " . abillity_name "어빌" 스미스제한 "달성, 대기"
+						텔레그램메시지보내기(TMessage)
+					}
 					SB_SetText(abillity_name "어빌" 스미스제한 "달성, 대기" ,2)
 					gosub,CurrentMode_대기모드
 				}
@@ -11295,6 +11349,11 @@ return
 				목공어빌 := abillity
 				if (목공어빌 >= 목공제한)
 				{
+					if(상인어빌알림설정)
+					{
+						TMessage := TargetTitle . "의 " . abillity_name "어빌" 목공제한 "달성, 대기"
+						텔레그램메시지보내기(TMessage)
+					}
 					SB_SetText(abillity_name "어빌" 목공제한 "달성, 대기" ,2)
 					gosub,CurrentMode_대기모드
 				}
@@ -11304,6 +11363,11 @@ return
 				연금술어빌 := abillity
 				if (연금술어빌 >= 연금술제한)
 				{
+					if(상인어빌알림설정)
+					{
+						TMessage := TargetTitle . "의 " . abillity_name "어빌" 연금술제한 "달성, 대기"
+						텔레그램메시지보내기(TMessage)
+					}
 					SB_SetText(abillity_name "어빌" 연금술제한 "달성, 대기" ,2)
 					gosub,CurrentMode_대기모드
 				}
@@ -12764,6 +12828,11 @@ return
 		설정된마을 := [4002,2002,3002]
 		if (오란의깃사용여부 = 1)
 		{
+			if(체력저하알림설정)
+			{
+				TMessage := TargetTitle . "의 HP가 부족합니다"
+				텔레그램메시지보내기(TMessage)
+			}
 			keyclick(오란의깃단축키)
 			sleep, 1000
 			맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
@@ -13525,30 +13594,43 @@ LV_ModifyCol(9,30)
 LV_ModifyCol(10,0)
 
 gui, tab, 6
-gui, add, button, x400 y35 g마하디움링교환, 마하디움링교환
-gui, add, button, x400 y60 v부캐게임섬루프 g부캐게임섬, 부캐게임섬돌기
-gui, add, button, x400 y85 g부캐게임섬세팅, 부캐게임섬세팅
-gui, add, button, x400 y110 g텔레그램메시지보내기,  텔레그램보내기
-gui, add, Edit, x400 y130 w100 h20 vChatID,
-x_coord := 15
+Gui, Add, GroupBox, x170 y30 w140 h350, 편의기능
+gui, add, button, x180 y55 w120 h20 g마하디움링교환, 마하디움링교환
+gui, add, button, x180 y80 w120 h20 v부캐게임섬루프 g부캐게임섬, 부캐게임섬돌기
+gui, add, button, x180 y105 w120 h20 g부캐게임섬세팅, 부캐게임섬세팅
+
+Gui, Add, GroupBox, x325 y30 w140 h350, 텔레그램알리기
+Gui, Add, Text, x335 y55 w120, @HelanciaBot 친추`n임시 아이디 입력필요
+gui, add, Edit, x335 y80 w120 h20 vChatID,임시아이디
+gui, add, button, x335 y105 w120 g텔레그램메시지보내기, 보내기테스트
+
+gui, add, checkBox, x335 y140 w120 v재접속알림설정, 재접속알림
+gui, add, checkBox, x335 y165 w120 v인벤꽉참알림설정, 인벤꽉참알림
+gui, add, checkBox, x335 y190 w120 v체력저하알림설정, 체력저하알림
+gui, add, checkBox, x335 y215 w120 v마을귀환알림설정, 마을귀환알림
+gui, add, checkBox, x335 y240 w120 v그레이드알림설정, 그레이드알림
+gui, add, checkBox, x335 y265 w120 v상인어빌알림설정, 상인어빌알림
+
+Gui, Add, GroupBox, x15 y30 w140 h350, 원격파티하기
+x_coord := 25
 Y_coord := 50
 loop, 10
 {
 	Gui, Add, Checkbox, x%x_coord% y%y_coord% w20 h20 v%A_Index%번캐릭터사용여부,
-	Y_coord += 20
+	Y_coord += 25
 }
-x_coord := 35
+x_coord := 45
 Y_coord := 50
 loop, 10
 {
 	Gui, Add, Edit, x%x_coord% y%y_coord% w100 h20 v%A_Index%번캐릭터명,
-	Y_coord += 20
+	Y_coord += 25
 }
 Gui, Add, Button, x%x_coord% y%y_coord% w100 h20 g파티캐릭터재확인, 새로고침
-Y_coord += 20
+Y_coord += 25
 Gui, Add, Button, x%x_coord% y%y_coord% w100 h20 g원격파티하기, 파티하기
-Y_coord += 20
-Gui, Add, Checkbox, x15 y%y_coord% w120 h20 v자동파티여부, 1분마다다시파티
+Y_coord += 25
+Gui, Add, Checkbox, x25 y%y_coord% w120 h20 v자동파티여부, 1분마다 파티시도
 gui, tab, 7  ;기본|설정|아템|좌표|검색|기타|번외
 x_coord := 15
 y_coord := 30
@@ -14372,6 +14454,17 @@ Return
 								gui,listview,좌표리스트
 								좌표_현재선택 := LV_GetNext(0)
 								좌표갯수 := LV_GetCount()
+								인벤토리 := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
+								if (인벤토리 = 50 && !보고완료 && 인벤꽉참알림설정)
+								{
+									보고완료 := True
+									TMessage := TargetTitle . "의 인벤토리가 가득참"
+									텔레그램메시지보내기(TMessage)
+								}
+								else if (인벤토리 < 50 && 인벤토리 > 0)
+								{
+									보고완료 := False
+								}
 								if ( 자사_현재선택 != 0 )
 								{
 									현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
@@ -15032,6 +15125,20 @@ Return
 											목적차원 := "베타"
 											if (오란의깃사용여부 = 1 && 오란의깃마을 = 마을 )
 											{
+												if(마을귀환알림설정)
+												{
+													귀환사유 := ""
+													if 무기수리필요
+														귀환사유 .= "무기수리필요"
+													if 식빵구매필요
+														귀환사유 .= "식빵구매필요"
+													if 라깃구매필요
+														귀환사유 .= "라깃구매필요"
+													if (그레이드필요 && 자동그레이드)
+														귀환사유 .= "그레이드필요"
+													TMessage := TargetTitle . "마을귀환 사유:" . 귀환사유
+													텔레그램메시지보내기(TMessage)
+												}
 												keyclick(오란의깃단축키)
 												sleep, 1000
 												맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
@@ -15590,6 +15697,17 @@ Return
 								좌표Y := mem.read(0x0058DAD4, "UInt", 0x14)
 								좌표Z := mem.read(0x0058DAD4, "UInt", 0x18)
 								gosub, 아이템읽어오기
+								인벤토리 := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
+								if (인벤토리 = 50 && !보고완료 && 인벤꽉참알림설정)
+								{
+									보고완료 := True
+									TMessage := TargetTitle . "의 인벤토리가 가득참"
+									텔레그램메시지보내기(TMessage)
+								}
+								else if (인벤토리 < 50 && 인벤토리 > 0)
+								{
+									보고완료 := False
+								}
 								if (아이템갯수["라스의깃"] < 2 || 아이템갯수["오란의깃"] < 2)
 								{
 									SB_SetText("라깃구매필요",2)
@@ -15612,7 +15730,7 @@ Return
 								GALRID := mem.read(0x0058DAD4, "UInt", 0x178, 0x6F)
 								GuiControl,, GALRID, % GALRID
 								AttackStartCounter := A_TickCount
-								if ((무기수리필요 && 무기자동수리여부) || (식빵구매필요 && 식빵구매여부) || 라깃구매필요 || (그레이드필요 && 자동그레이드 = True))
+								if ((무기수리필요 && 무기자동수리여부) || (식빵구매필요 && 식빵구매여부) || 라깃구매필요 || (그레이드필요 && 자동그레이드))
 								{
 									if !(IsDataInList(맵번호, 설정된마을))
 									{
@@ -15627,6 +15745,20 @@ Return
 											목적차원 := "베타"
 											if (오란의깃사용여부 = 1 && 오란의깃마을 = 마을 )
 											{
+												if(마을귀환알림설정)
+												{
+													귀환사유 := ""
+													if (무기수리필요 && 무기자동수리여부)
+														귀환사유 .= "무기수리필요"
+													if (식빵구매필요 && 식빵구매여부)
+														귀환사유 .= "식빵구매필요"
+													if 라깃구매필요
+														귀환사유 .= "라깃구매필요"
+													if (그레이드필요 && 자동그레이드)
+														귀환사유 .= "그레이드필요"
+													TMessage := TargetTitle . "마을귀환 사유:" . 귀환사유
+													텔레그램메시지보내기(TMessage)
+												}
 												keyclick(오란의깃단축키)
 												sleep, 1000
 												맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
@@ -15684,6 +15816,7 @@ Return
 								else if (자사_현재선택 != 0  && 자동사냥여부 = 1)
 								{
 									IMLS_delay := 0
+									TMLS_delay := 0
 									현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
 									if (일무기 == 1 && 현재무기 == 0)
 									{
@@ -15726,12 +15859,38 @@ Return
 									}
 									else ; 그 선택된 몬스터가 새로운 몬스터가 아니라면 ;블랙리스트에 등록할지 말지 결정
 									{
+										공격번호 := mem.read(0x0058DAD4, "UInt", 0x1A5)
 										현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
 										if (현재무기 = 45057 || 현재무기 = 45058) ;활
 										{
 											if (공격여부 = 0)
 											{
 												RunMemory("공격하기")
+												좀비몹카운트 := 0
+											}
+											else if (공격번호 == 기존공격번호)
+											{
+												if (좀비몹카운트 >= 7)
+												{
+													blacklist.push(마지막타겟OID)
+													gui,listview,몬스터리스트
+													Lv_modify(0,"-select")
+													Keyclick("Tab")
+													sleep,100
+													keyclick("AltR")
+													sleep,100
+													keyclick("AltR")
+
+													좀비몹카운트 := 0
+													continue
+												}
+												좀비몹카운트++
+												SB_SetText("좀비몹여부확인" 좀비몹카운트 "/7", 2)
+											}
+											else if  (공격번호 != 기존공격번호)
+											{
+												기존공격번호 := mem.read(0x0058DAD4, "UInt", 0x1A5)
+												좀비몹카운트 := 0
 											}
 											continue
 										}
@@ -15812,7 +15971,7 @@ Return
 															sleep,1
 															keyclick("AltR")
 															gui,listview,몬스터리스트
-															;Lv_modify(0,"-select")
+															Lv_modify(0,"-select")
 															sleep,1
 														}
 														공격여부 := mem.read(0x0058DAD4, "UInt", 0x178, 0xEB)
@@ -15928,6 +16087,7 @@ Return
 								}
 								else if (아템_현재선택 != 0  && 아템먹기여부 = 1)
 								{
+									TMLS_delay := 0
 									현재무기 := mem.read(0x0058DAD4, "UInt", 0x121)
 									;if (현재무기 != 0 && 현재무기 != 49153)
 									;	RunMemory("무기탈거")
@@ -16145,6 +16305,7 @@ Return
 										T시작X := 좌표X
 										T시작Y := 좌표Y
 										T시작Z := 좌표Z
+										RunMemory("좌표이동")
 									}
 									continue
 								}
@@ -16166,8 +16327,11 @@ Return
 		;{ 게임이 비정상이라면
 		else if !(서버상태) && (자동재접속사용여부 = 1)
 		{
-			TMessage := ElanciaTitle . "팅김, 자동재접속"
-			텔레그램메시지보내기(TMessage)
+			if (재접속알림설정 = True)
+			{
+				TMessage := ElanciaTitle . "팅김, 자동재접속"
+				텔레그램메시지보내기(TMessage)
+			}
 			SB_SetText("자동재접속시작",2)
 			인벤토리 := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
 			if !(Coin)
