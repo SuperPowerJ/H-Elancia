@@ -87,7 +87,7 @@ Global MoveCoin := False
 ;옵션 리스트 구분
 Lists := [ "CheckBoxList", "DropDownList", "EditList", "RadioButton" ]
 ;사용된 옵션들
-CheckBoxList := ["수련길탐딜레이","이동속도사용","게임배속사용","길탐색책사용","원거리타겟","리메듐타겟","오란의깃사용여부","길탐색1번사용여부","길탐색2번사용여부","길탐색3번사용여부","길탐색4번사용여부","길탐색5번사용여부","자동재접속사용여부","힐링포션사용여부", "HP마을귀환사용여부", "리메듐사용여부", "마나포션사용여부", "MP마을귀환사용여부", "브렐사용여부", "식빵사용여부", "식빵구매여부", "골드바판매여부", "골드바구매여부", "대화사용", "명상사용", "더블어택사용", "체력향상사용", "민첩향상사용", "활방어사용", "마력향상사용", "마법방어향상사용", "3번", "4번", "5번", "6번", "7번", "8번", "은행넣기활성화", "소각활성화","아템먹기여부","자동이동여부", "훔치기사용", "훔쳐보기사용", "Sense사용", "자동사냥여부", "무기사용여부","특오자동교환여부","행깃구매여부","라깃구매여부","독침사용","현혹사용","폭검사용","무기공격사용","집중사용","회피사용","몸통찌르기사용","리메듐사용","라리메듐사용","엘리메듐사용","쿠로사용","빛의갑옷사용","공포보호사용","다라사용","브렐사용","브레마사용","물의갑옷사용","감속사용","마스사용","라크사용","번개사용","브리스사용","파스티사용","슈키사용","클리드사용","스톤스킨사용","파라스사용","베네피쿠스사용","저주사용","자동파티여부", "포레스트네자동대화","RemoveArmor사용","좀비몹감지", "위치고정", "배경제거", "캐릭제거","버스기사모드","나프사용","제작이동","자동그레이드","무기자동수리여부","사냥터자동복귀여부","재접속알림설정","인벤꽉참알림설정","체력저하알림설정","마을귀환알림설정","그레이드알림설정","상인어빌알림설정"]
+CheckBoxList := ["수련길탐딜레이","이동속도사용","게임배속사용","길탐색책사용","원거리타겟","리메듐타겟","오란의깃사용여부","길탐색1번사용여부","길탐색2번사용여부","길탐색3번사용여부","길탐색4번사용여부","길탐색5번사용여부","자동재접속사용여부","힐링포션사용여부", "HP마을귀환사용여부", "리메듐사용여부", "마나포션사용여부", "MP마을귀환사용여부", "브렐사용여부", "식빵사용여부", "식빵구매여부", "골드바판매여부", "골드바구매여부", "대화사용", "명상사용", "더블어택사용", "체력향상사용", "민첩향상사용", "활방어사용", "마력향상사용", "마법방어향상사용", "3번", "4번", "5번", "6번", "7번", "8번", "은행넣기활성화", "소각활성화","아템먹기여부","자동이동여부", "훔치기사용", "훔쳐보기사용", "Sense사용", "자동사냥여부", "무기사용여부","특오자동교환여부","행깃구매여부","라깃구매여부","독침사용","현혹사용","폭검사용","무기공격사용","집중사용","회피사용","몸통찌르기사용","리메듐사용","라리메듐사용","엘리메듐사용","쿠로사용","빛의갑옷사용","공포보호사용","다라사용","브렐사용","브레마사용","물의갑옷사용","감속사용","마스사용","라크사용","번개사용","브리스사용","파스티사용","슈키사용","클리드사용","스톤스킨사용","파라스사용","베네피쿠스사용","저주사용","자동파티여부", "포레스트네자동대화","RemoveArmor사용","좀비몹감지", "위치고정", "배경제거", "캐릭제거","버스기사모드","나프사용","제작이동","자동그레이드","무기자동수리여부","사냥터자동복귀여부","재접속알림설정","인벤꽉참알림설정","체력저하알림설정","마을귀환알림설정","그레이드알림설정","상인어빌알림설정","맵변경알림설정"]
 SpellList := ["나프", "마스","리메듐","라리메듐","엘리메듐","쿠로","빛의갑옷","공포보호","다라","브렐","브레마","물의갑옷","감속","라크","번개","브리스","파스티","슈키","클리드","스톤스킨","파라스","베네피쿠스","저주"]
 DropDownList := ["오란의깃마을","길탐색1번목적지", "길탐색2번목적지", "길탐색3번목적지", "길탐색4번목적지", "길탐색5번목적지", "오란의깃단축키", "길탐색책단축키", "메인캐릭터서버", "메인캐릭터순서", "힐링포션사용단축키", "마나포션사용단축키", "식빵사용단축키", "식빵구매마을" ,"지침서", "오란의깃사용단축키", "포레스트네자동대화딜레이","CurrentMode","링단축키"]
 EditList := ["원거리타겟아이디","리메듐타겟아이디","힐링포션사용제한", "HP마을귀환사용제한", "MP마을귀환사용제한", "리메듐사용제한", "마나포션사용제한", "브렐사용제한", "식빵사용제한", "MP마을귀환사용여부", "넣을아이템","Multiplyer","NPC_MSG_ADR" ,"마지막사냥장소", "수련용길탐색딜레이", "NPC대화딜레이", "MoveSpeed", "게임배속", "특수리메듐타겟OID","수동레벨기입","수리소야이름","수리소야아이템순서","수리소야아이템갯수", "ChatID"]
@@ -149,7 +149,14 @@ Global 나가기가능맵 := [2,1002,2002,3002,4002,229,1229,2229,3229,4229,208,
 Global CurrentMode
 Global 서버상태
 
+Global B맵번호
+Global BX
+Global BY
+Global BZ
+Global 마지막보고된맵번호
+
 ;자동사냥용
+Global 사냥터번호
 Global 몬스터소탕 := {}
 Global 무바여부 := 0
 Global 무기수리필요여부확인 := 0
@@ -1118,26 +1125,75 @@ return this.SizeOfStructure
 			{
 				교환가능수량 := 0
 				교환가능수량 += min(floor(Sub아이템갯수["행운의보석"]/100),Sub아이템갯수["정령의눈물"],50-Sub인벤토리)
-				KeyClick("CTRL9",sub_jPID)
-				sleep, 500
-				NpcMenuSelection := sub_mem.read(0x0058F0A4, "UInt", aOffset*)
-				if NpcMenuSelection = 0
+				if (PosY <= 19)
 				{
+					KeyClick("CTRL9",sub_jPID)
+				}
+				else if (PosX != 24 || PosY != 19)
+				{
+					KeyClick("AltR",sub_jPID)
+					sleep, 1
+					TempX := CurrentMiniMapPosX - 12 + 10
+					TempY := CurrentMiniMapPosY - 29 + 18
+					MouseClick(TempX,TempY,sub_jPID)
+					return
+				}
+				loop, 5
+				{
+					NpcMenuSelection := sub_mem.read(0x0058F0A4, "UInt", aOffset*)
+					if (NpcMenuSelection != 0)
+					{
+						break
+					}
+					else
+						sleep, 100
+				}
+				if (NpcMenuSelection = 0)
+				{
+					return
 				}
 				else
 				{
 					X := sub_mem.read(0x0058F0A4, "UInt", 0x9A) +76
 					Y := sub_mem.read(0x0058F0A4, "UInt", 0x9E) +15
 					MouseClick(X,Y,sub_jPID)
-					sleep, 500
+					loop, 8
+					{
+						FormNumber := sub_mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
+						if (FormNumber = 83)
+							break
+						else
+							sleep, 100
+					}
 					MouseClick(400,334,sub_jPID)
-					sleep, 200
+					loop, 8
+					{
+						FormNumber := sub_mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
+						if (FormNumber = 79)
+							break
+						else
+							sleep, 100
+					}
 					keyclick("K6",sub_jPID)
-					sleep, 200
+					loop, 8
+					{
+						FormNumber := sub_mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
+						if (FormNumber = 83)
+							break
+						else
+							sleep, 100
+					}
 					x := sub_mem.read(0x0058EB48, "UInt", 0xC8) - 17
 					y := sub_mem.read(0x0058EB48, "UInt", 0xCC) + 15
 					MouseClick(x,y,sub_jPID)
-					sleep, 200
+					loop, 8
+					{
+						FormNumber := sub_mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
+						if (FormNumber = 99)
+							break
+						else
+							sleep, 100
+					}
 					IfWinNotActive,ahk_pid %jPID%
 					{
 						WinActivate, ahk_pid %jPID%
@@ -1156,7 +1212,14 @@ return this.SizeOfStructure
 						keyclick("w"교환가능수량,sub_jPID)
 						keyclick("Enter",sub_jPID)
 					}
-					sleep, 200
+					loop, 8
+					{
+						FormNumber := sub_mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
+						if (FormNumber = 79)
+							break
+						else
+							sleep, 100
+					}
 					keyclick("K6",sub_jPID)
 					return
 				}
@@ -10243,6 +10306,10 @@ guicontrol,enable,중지
 guicontrol,Disabled,실행
 guicontrol,Hide,실행
 guicontrol,Show,중지
+B맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
+BX := mem.read(0x0058DAD4, "UInt", 0x10)
+BY := mem.read(0x0058DAD4, "UInt", 0x14)
+BZ := mem.read(0x0058DAD4, "UInt", 0x18)
 Coin := True
 return
 ;}
@@ -11105,7 +11172,8 @@ return
 	{
 		CheatEngine_DoNotMove()
 	}
-
+	gosub, 아이템읽어오기
+	InitialInven := 아이템갯수
 	처음시작 := 0
 	RepairCount := 1
 	상승어빌 := mem.readString(상승어빌주소 + 0x64, 20, "UTF-16", aOffsets*)
@@ -11162,6 +11230,7 @@ return
 			sleep, 10
 			settimer, 스킬사용하기, 1000
 		}
+
 		if (Result_Msg_Addr>0)
 		{
 			goodtogo := 1
@@ -11224,14 +11293,12 @@ return
 		}
 	}
 	cookdelay := 2800
-	sleep, % cookdelay
 	loop,
 	{
 		if (CurrentMode != "상인어빌수련" || Coin = False)
 			break
-		sleep, 100
 		Keyclick(0) ;수련키트 장착
-		sleep, 100
+		sleep, 200
 		책좌표X := mem.read(0x0058EB48, "UInt", 0xBC)
 		책좌표Y := mem.read(0x0058EB48, "UInt", 0xC0)
 		수련좌표X := 책좌표X + 80
@@ -11248,7 +11315,17 @@ return
 			if (CurrentMode != "상인어빌수련" || Coin = False)
 				break
 			Read_Result_MSG := mem.readString(Result_Msg_Addr, 50, "UTF-16", aOffsets*)
-			ifinstring, Read_Result_MSG, 실패했습니다주세요.
+			ifinstring, Read_Result_MSG, 실패했습니다필요
+			{
+				Write_Result_MSG := mem.writeString(Result_Msg_Addr, "", "UTF-16", aOffsets*)
+				RepairCount := 1
+			}
+			else ifinstring, Read_Result_MSG, 실패했습니다 필
+			{
+				Write_Result_MSG := mem.writeString(Result_Msg_Addr, "", "UTF-16", aOffsets*)
+				RepairCount := 1
+			}
+			else ifinstring, Read_Result_MSG, 실패했습니다주세요.
 			{
 				delay := delay + 100
 				RunMemory("은행빼기")
@@ -11420,15 +11497,11 @@ return
 		if (RepairCount == 1)
 		{
 			settimer, 스킬사용하기, off
-
-			SetTimer, 마법잠수, off
 			gosub, 수리하기
 			RepairCount := 300
 			SB_SetText("수리완료"  ,1)
 			sleep, 500
 			settimer, 스킬사용하기, 1000
-			if (나프사용 = 1)
-				SetTimer, 마법잠수, 300
 		}
 		RepairCount -= 1
 		sleep, %cookdelay%
@@ -11763,7 +11836,9 @@ return
 {
 
 Gui, Submit, nohide
-
+맵번호맵핑 := {"세르니카 입구 필드":2001, "세르니카 입구 다리":2003, "세르니카 마을":2002}
+GuiControlGet, 사냥터이름
+사냥터번호 := 맵번호맵핑[사냥터이름]
 if (이동속도사용 = 1)
 {
 	CheatEngine_MoveSpeedTo(MoveSpeed)
@@ -13424,7 +13499,10 @@ Y_coord += 22
 Y_coord_ := Y_coord - 3
 Gui, Add, checkbox, x15 y%Y_coord% w100 h20 g사용자선택 v게임배속사용, 게임배속
 Gui, Add, EDIT, x125 y%Y_coord_% w70 h20 v게임배속,
-Gui, Add, checkbox, x215 y%Y_coord% h20 v사냥터자동복귀여부, 사냥터자동복귀
+Gui, Add, checkbox, x215 y%Y_coord% h20 v사냥터자동복귀여부, 설정된맵 자동복귀
+Gui, Add, DropDownList, x345 y%Y_coord% w140 v사냥터이름 g사용자선택,세르니카 입구 필드|세르니카 입구 다리|세르니카 마을
+Y_coord += 22
+Gui, Add, button, x215 y%Y_coord% h20 g네비게이션, 사냥터가기테스트
 
 Y_coord := 35
 Gui, Add, Text, x215 y%Y_coord% h20 w70, 목적지가기
@@ -13598,6 +13676,7 @@ Gui, Add, GroupBox, x170 y30 w140 h350, 편의기능
 gui, add, button, x180 y55 w120 h20 g마하디움링교환, 마하디움링교환
 gui, add, button, x180 y80 w120 h20 v부캐게임섬루프 g부캐게임섬, 부캐게임섬돌기
 gui, add, button, x180 y105 w120 h20 g부캐게임섬세팅, 부캐게임섬세팅
+Gui, Add, Button, x180 y130 w120 h20 g게시판열기, 일랜게시판열기
 
 Gui, Add, GroupBox, x325 y30 w140 h350, 텔레그램알리기
 Gui, Add, Text, x335 y55 w120, @HelanciaBot 친추`n임시 아이디 입력필요
@@ -13610,6 +13689,7 @@ gui, add, checkBox, x335 y190 w120 v체력저하알림설정, 체력저하알림
 gui, add, checkBox, x335 y215 w120 v마을귀환알림설정, 마을귀환알림
 gui, add, checkBox, x335 y240 w120 v그레이드알림설정, 그레이드알림
 gui, add, checkBox, x335 y265 w120 v상인어빌알림설정, 상인어빌알림
+gui, add, checkBox, x335 y290 w120 v맵변경알림설정, 맵변경알림
 
 Gui, Add, GroupBox, x15 y30 w140 h350, 원격파티하기
 x_coord := 25
@@ -14294,21 +14374,19 @@ Return
 								}
 								if (그레이드필요 && 자동그레이드 = True)
 								{
-									B맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
-									BX := mem.read(0x0058DAD4, "UInt", 0x10)
-									BY := mem.read(0x0058DAD4, "UInt", 0x14)
-									BZ := mem.read(0x0058DAD4, "UInt", 0x18)
 									gosub, 그레이드하기
+								}
+								else
+								{
 									맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
 									좌표X := mem.read(0x0058DAD4, "UInt", 0x10)
 									좌표Y := mem.read(0x0058DAD4, "UInt", 0x14)
 									좌표Z := mem.read(0x0058DAD4, "UInt", 0x18)
-									if (B맵번호 = 맵번호 && 좌표X != BX  && 좌표Y != BY)
+									if (B맵번호 = 맵번호 && !(좌표X = BX  && 좌표Y = BY))
 									{
 										좌표입력(BX,BY,BZ)
 										RunMemory("좌표이동")
 									}
-
 								}
 							}
 							else
@@ -15812,6 +15890,7 @@ Return
 								}
 								else if (사냥터자동복귀여부 = 1 && 맵번호 != 사냥터맵번호)
 								{
+
 								}
 								else if (자사_현재선택 != 0  && 자동사냥여부 = 1)
 								{
@@ -16572,6 +16651,7 @@ return
 
 메모리검색_기본: ;아이템먹는 자사용
 ;{
+gui, submit, nohide
 gosub, 기본정보읽기
 sleep,1
 if ((기존맵번호 != 맵번호 || 기존차원 != 차원) && (맵번호 != "" && 맵번호 != 0))
@@ -16579,8 +16659,25 @@ if ((기존맵번호 != 맵번호 || 기존차원 != 차원) && (맵번호 != ""
 	;SB_SETtext("기존맵번호" 기존맵번호 "현재맵번호" 맵번호 ,2)
 	기존맵번호 := 맵번호
 	기존차원 := 차원
-	SB_SetText("맵변경 감지",2)
 	SB_SetText("맵변경 감지",4)
+	GuiControlGet, 맵변경알림설정
+	if (맵변경알림설정 = 1 && 맵번호 != 마지막보고된맵번호 && 맵번호 != B맵번호)
+	{
+		맵이름 := mem.readString(mem.getModuleBaseAddress("jelancia_core.dll")+0x44A28, 50, "UTF-16", 0xC)
+		Dimension := mem.read(0x0058EB1C, "UInt", 0x10A)
+		if(Dimension>20000)
+			현재차원 := "감마"
+		else if(Dimension>10000)
+			현재차원 := "베타"
+		else if(Dimension<10000)
+			현재차원 := "알파"
+		좌표X := mem.read(0x0058DAD4, "UInt", 0x10)
+		좌표Y := mem.read(0x0058DAD4, "UInt", 0x14)
+		좌표Z := mem.read(0x0058DAD4, "UInt", 0x18)
+		TMessage := TargetTitle . " 위치보고: " . "(" . 현재차원 . ")" 맵이름 . ", 좌표: (" . 좌표X . "," . 좌표Y . "," . 좌표Z . ")"
+		텔레그램메시지보내기(TMessage)
+		마지막보고된맵번호 := 맵번호
+	}
 	Gui, listview, 좌표리스트
 	LV_Delete()
 	PlayerList := []
@@ -17600,6 +17697,7 @@ return
 	{
 		return
 	}
+
 	스킬마법재사용딜레이 := 10
 	gui,submit,nohide
 	스킬사용상태RunCount++
@@ -17786,4 +17884,247 @@ return
 
 OpenLink:
     Run, https://github.com/SuperPowerJ/H-Elancia
+return
+
+; BFS를 사용하여 경로 찾기 함수
+FindPath(graph, start, end) {
+    queue := []
+    visited := {}
+    path := {}
+    queue.Push(start)
+    visited[start] := true
+
+    while (queue.MaxIndex() > 0) {
+        node := queue.RemoveAt(1)
+        neighbours := graph[node]
+
+        if (node = end) {
+            return ReconstructPath(path, start, end)
+        }
+
+        Loop, % neighbours.MaxIndex() {
+            neighbour := neighbours[A_Index]
+            if (!visited.HasKey(neighbour)) {
+                visited[neighbour] := true
+                path[neighbour] := node
+                queue.Push(neighbour)
+            }
+        }
+    }
+    return "No Path Found"
+}
+
+; 경로 재구성 함수
+ReconstructPath(path, start, end) {
+    reversePath := []
+    node := end
+
+    while (node != start) {
+        reversePath.Push(node)
+        node := path[node]
+    }
+
+    ; 경로를 역순으로 뒤집어 정상 순서로 만듬
+    finalPath := []
+    Loop, % reversePath.MaxIndex() {
+        finalPath.Push(reversePath[reversePath.MaxIndex() - A_Index + 1])
+    }
+
+    ; 다음 맵 번호 출력 (경로의 첫 번째 요소)
+    return finalPath[1]
+}
+
+; 좌표 출력 함수
+GetCoordinates(start, end, currentX, currentY) {
+    pathKey := start . "," . end
+    if (coordinates.HasKey(pathKey)) {
+        parts := StrSplit(coordinates[pathKey], ",")
+        xRange := StrSplit(parts[1], ";")
+        closestX := GetClosestInRange(xRange, currentX)
+        yRange := StrSplit(parts[2], ";")
+        closestY := GetClosestInRange(yRange, currentY)
+        z := parts[3]
+		result := {"DX": closestX , "DY": closestY , "DZ": z}
+        return result
+    } else {
+        return "No coordinates found for this path"
+    }
+}
+
+; 범위 내에서 가장 가까운 값을 찾는 함수
+GetClosestInRange(ranges, currentValue) {
+    closestValue := ""
+    smallestDifference := 1000000  ; 충분히 큰 수로 초기화
+
+    Loop, % ranges.MaxIndex() {
+        range := ranges[A_Index]
+        rangeParts := StrSplit(range, "~")
+        start := rangeParts[1]
+        end := (rangeParts.MaxIndex() > 1) ? rangeParts[2] : rangeParts[1]
+
+        if (currentValue >= start && currentValue <= end) {
+            return currentValue  ; 값이 범위 내에 있으면 해당 값을 반환
+        }
+
+        Loop, % (end - start + 1) {
+            value := start + A_Index - 1
+            difference := Abs(value - currentValue)
+            if (difference < smallestDifference) {
+                smallestDifference := difference
+                closestValue := value
+            }
+        }
+    }
+    return closestValue
+}
+
+네비게이션:
+	Global ElanciaMap := {2001: [2003],2002: [2003],2003: [2001,2002] }
+	Global coordinates := {"2002,2003": "4,98,0", "2003,2002": "53,26,2", "2003,2001": "15,22~39,2", "2001,2003": "149,55~71,0" }
+
+	startLocation := mem.read(0x0058EB1C, "UInt", 0x10E)
+	endLocation := 사냥터번호
+	if (startLocation = endLocation)
+		return
+	NextRoot := FindPath(ElanciaMap,startLocation,endLocation)
+	NextRoot += 0
+	SB_SetText("다음맵:" NextRoot,5)
+
+	currentX := mem.read(0x0058DAD4, "UInt", 0x10)
+	currentY := mem.read(0x0058DAD4, "UInt", 0x14)
+	currentZ := mem.read(0x0058DAD4, "UInt", 0x18)
+	IsMoving := mem.read(0x0058EB1C, "UInt", 0x174)
+	if (startLocation = 2002 && NextRoot = 2003 ) ;세르니카 서쪽으로 나가기
+	{
+		test := CallNPC("보초병")
+		if test
+		{
+			loop, 8
+			{
+				FormNumber := mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
+				if(FormNumber = 81)
+				{
+					break
+				}
+				else
+					sleep, 100
+			}
+			sleep, 500
+			loop, 8
+			{
+				if ((NPC_MSG_ADR = "없음") || (NPC_MSG_ADR < 1))
+				{
+					sleep, 500
+					SetFormat, Integer, H
+					startAddress := 0x00100000
+					endAddress := 0x00200000
+					NPC_MSG_ADR := mem.processPatternScan(startAddress, endAddress, 0x38, 0xC1, 0x74, 0xB9, 0xC8, 0xB2, 0x74, 0xCE, 0x20, 0x00, 0xC8, 0xB9, 0x44, 0xC7) ; "세르니카 마을" 검색
+					SetFormat, Integer, D
+					SB_SetText("NPC대화주소검색중" NPC_MSG_ADR,2)
+					GuiControl,, NPC_MSG_ADR, %NPC_MSG_ADR%
+					sleep, 100
+				}
+				else
+					break
+			}
+			sleep, 500
+			loop, 8
+			{
+				NPCMsg := mem.readString(NPC_MSG_ADR, 52, "UTF-16", aOffsets*)
+				if(InStr(NPCMsg,"세르니카 마을에"))
+				{
+					mem.writeString(NPC_MSG_ADR, "", "UTF-16", aOffsets*)
+					temp:=get_NPCTalk_cordi()
+					x:=temp.x - 15
+					y:=temp.y + 10
+					MouseClick(x,y)
+					break
+				}
+				else
+					sleep, 100
+			}
+			return
+		}
+
+	}
+	else if (startLocation = 2003 && NextRoot = 2002 ) ;세르니카 서쪽에서 들어오기
+	{
+		test := CallNPC("경비병")
+		if test
+		{
+			loop, 8
+			{
+				FormNumber := mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
+				if (FormNumber = 77)
+				{
+					mem.writeString(NPC_MSG_ADR, "", "UTF-16", aOffsets*)
+					KeyClick("K6")
+					break
+				}
+				else
+					sleep, 100
+			}
+			sleep, 500
+			loop, 8
+			{
+				if ((NPC_MSG_ADR = "없음") || (NPC_MSG_ADR < 1))
+				{
+					sleep, 500
+					SetFormat, Integer, H
+					startAddress := 0x00100000
+					endAddress := 0x00200000
+					NPC_MSG_ADR := mem.processPatternScan(startAddress, endAddress, 0x00, 0xC8, 0x6C, 0xD7, 0x20, 0x00, 0x38, 0xC1, 0x74, 0xB9, 0xC8, 0xB2, 0x74, 0xCE) ; "저희 세르니카" 검색
+					SetFormat, Integer, D
+					SB_SetText("NPC대화주소검색중" NPC_MSG_ADR,2)
+					GuiControl,, NPC_MSG_ADR, %NPC_MSG_ADR%
+					sleep, 100
+				}
+				else
+					break
+			}
+			sleep, 500
+			loop, 8
+			{
+				NPCMsg := mem.readString(NPC_MSG_ADR, 52, "UTF-16", aOffsets*)
+				if(InStr(NPCMsg,"저희 세르니카"))
+				{
+					mem.writeString(NPC_MSG_ADR, "", "UTF-16", aOffsets*)
+					KeyClick("K6")
+					break
+				}
+				else
+					sleep, 100
+			}
+			sleep, 500
+			loop, 8
+			{
+				if(InStr(NPCMsg,"세르니카 마을에"))
+				{
+					mem.writeString(NPC_MSG_ADR, "", "UTF-16", aOffsets*)
+					temp:=get_NPCTalk_cordi()
+					x:=temp.x - 15
+					y:=temp.y + 15
+					MouseClick(x,y)
+					break
+				}
+				else
+					sleep, 100
+			}
+			return
+		}
+	}
+	이동할좌표 := GetCoordinates(startLocation, NextRoot, currentX, currentY)
+	if !(IsMoving)
+	{
+		DX := 이동할좌표.DX
+		DY := 이동할좌표.DY
+		DZ := 이동할좌표.DZ
+		if (currentX = DX && currentY = DY && currentZ = DZ )
+		{
+			keyclick("AltR")
+			sleep, 500
+		}
+		좌표입력(DX,DY,DZ)
+		RunMemory("좌표이동")
+	}
 return
