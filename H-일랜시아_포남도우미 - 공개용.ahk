@@ -6640,6 +6640,8 @@ return 0
 		{
 			if (isMoving = 0)
 			{
+				if (좌표X = 목적지X && 좌표Y = 목적지Y)
+					KeyClick("AltR")
 				좌표입력(목적지X,목적지Y,목적지Z)
 				sleep, 1
 				RunMemory("좌표이동")
@@ -6839,6 +6841,8 @@ return
 		{
 			if (isMoving = 0)
 			{
+				if (좌표X = 목적지X && 좌표Y = 목적지Y)
+					KeyClick("AltR")
 				좌표입력(목적지X,목적지Y,목적지Z)
 				sleep, 1
 				RunMemory("좌표이동")
@@ -7042,6 +7046,8 @@ return
 		{
 			if (isMoving = 0)
 			{
+				if (좌표X = 목적지X && 좌표Y = 목적지Y)
+					KeyClick("AltR")
 				좌표입력(목적지X,목적지Y,목적지Z)
 				sleep, 1
 				RunMemory("좌표이동")
@@ -7267,6 +7273,8 @@ return
 		{
 			if (isMoving = 0)
 			{
+				if (좌표X = 목적지X && 좌표Y = 목적지Y)
+					KeyClick("AltR")
 				좌표입력(목적지X,목적지Y,목적지Z)
 				sleep, 1
 				RunMemory("좌표이동")
@@ -8909,6 +8917,8 @@ return
 		{
 			if (isMoving = 0)
 			{
+				if (좌표X = 목적지X && 좌표Y = 목적지Y)
+					KeyClick("AltR")
 				좌표입력(목적지X,목적지Y,목적지Z)
 				sleep, 1
 				RunMemory("좌표이동")
@@ -9115,6 +9125,8 @@ return
 		{
 			if (isMoving = 0)
 			{
+				if (좌표X = 목적지X && 좌표Y = 목적지Y)
+					KeyClick("AltR")
 				좌표입력(목적지X,목적지Y,목적지Z)
 				sleep, 1
 				RunMemory("좌표이동")
@@ -14940,6 +14952,7 @@ Return
 											continue
 									}
 									SB_SetText(목적마을 " " 목적지 "이동중",2)
+									Dimension := mem.read(0x0058EB1C, "UInt", 0x10A)
 									if(Dimension>20000)
 										차원:="감마"
 									else if(Dimension>10000)
@@ -15351,6 +15364,17 @@ Return
 									if (일무기 == 1 && 현재무기 == 0)
 									{
 										keyclick(1)
+										무기수리필요여부확인++
+									}
+									else  if (일무기 == 1 && 현재무기 != 0)
+									{
+										무기수리필요여부확인 := 0
+									}
+									if (무기수리필요여부확인 > 10 && 주먹 = 0)
+									{
+										무기수리필요 := True
+										guicontrol,,무기수리필요상태,%무기수리필요%
+										continue
 									}
 									if ( CurrentMode = "포북자사" )
 										mem.writeString(0x005901E5, "빛나는가루", "UTF-16", aOffsets*)
@@ -15384,7 +15408,6 @@ Return
 									}
 									else ; 그 선택된 몬스터가 새로운 몬스터가 아니라면 ;블랙리스트에 등록할지 말지 결정
 									{
-
 										if (근접체크 = 1 && 공격여부 = 0) ;도착했다면
 										{
 											RunMemory("공격하기")
@@ -15908,6 +15931,18 @@ Return
 									if (일무기 == 1 && 현재무기 == 0)
 									{
 										keyclick(1)
+										무기수리필요여부확인++
+										SB_SetText("무기교체시도:" 무기수리필요여부확인 "회", 2)
+									}
+									else if (일무기 == 1 && 현재무기 != 0)
+									{
+										무기수리필요여부확인 := 0
+									}
+									if (무기수리필요여부확인 > 10 && 주먹 = 0)
+									{
+										무기수리필요 := True
+										guicontrol,,무기수리필요상태,%무기수리필요%
+										continue
 									}
 									gui,listview,몬스터리스트
 									lv_gettext(현재타겟이름,자사_현재선택,5)
@@ -17995,7 +18030,8 @@ GetClosestInRange(ranges, currentValue) {
 }
 
 네비게이션:
-	Global ElanciaMap := { 2001: [2003],2002: [2003],2003: [2001,2002] }
+	gui, submit, nohide
+	Global ElanciaMap := {2001: [2003],2002: [2003],2003: [2001,2002] }
 	Global coordinates := {"2002,2003": "4,98,0", "2003,2002": "53,26,2", "2003,2001": "15,22~39,2", "2001,2003": "149,55~71,0" }
 
 	startLocation := mem.read(0x0058EB1C, "UInt", 0x10E)
@@ -18003,7 +18039,38 @@ GetClosestInRange(ranges, currentValue) {
 	if (startLocation = endLocation)
 		return
 	NextRoot := FindPath(ElanciaMap,startLocation,endLocation)
-	NextRoot += 0
+	if (NextRoot = "No Path Found")
+	{
+		세르니카맵 := [2001,2002,2003]
+		if (IsDataInList(endLocation,세르니카맵))
+		{
+			목적마을 := "세르니카"
+			Dimension := mem.read(0x0058EB1C, "UInt", 0x10A)
+			if(Dimension>20000)
+				차원:="감마"
+			else if(Dimension>10000)
+				차원:="베타"
+			else if(Dimension<10000)
+				차원:="알파"
+			sleep, 1
+			맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
+			sleep, 1
+			if (오란의깃사용여부 = 1 && 오란의깃마을 = 목적마을) ;갈리드 아끼기 모드
+			{
+				keyclick(오란의깃단축키)
+				sleep, 100
+			}
+			맵번호 := mem.read(0x0058EB1C, "UInt", 0x10E)
+			if (맵번호 = 2002)
+				return
+			else
+				라깃사용하기(목적마을,차원)
+			return
+		}
+		return
+	}
+	else
+		NextRoot += 0
 	SB_SetText("다음맵:" NextRoot,5)
 
 	currentX := mem.read(0x0058DAD4, "UInt", 0x10)
