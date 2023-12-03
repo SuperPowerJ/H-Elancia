@@ -13159,7 +13159,7 @@ ExitApp
 ShowGui:
 ;{
 ;600x400
-Gui, Add, Tab2, vTab1 x2 y2 w496 h426 AltSubmit cBlack gTab, 기본|설정|아템|이동|검색|파티|기타|그레이드 ;|개발용|스킬
+Gui, Add, Tab2, vTab1 x2 y2 w496 h426 AltSubmit cBlack gTab, 기본|설정|아템|이동|검색|편의|기타|그레이드 ;|개발용|스킬
 Gui, Font, S9 Arial ,
 Gui, Color, FFFFFF
 gui, tab, 1
@@ -14153,7 +14153,7 @@ Return
 								IsMoving := mem.read(0x0058EB1C, "UInt", 0x174)
 								if (IsMoving != 0)
 								{
-									return
+									continue
 								}
 								gosub, 마법잠수
 								MZ_Delay := A_TickCount - AttackStartCounter
