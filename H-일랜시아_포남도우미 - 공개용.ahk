@@ -10271,7 +10271,8 @@ mem.writeString(0x00590500, "물", "UTF-16", aOffsets*) ;은행에 넣을 아이
 sleep,1
 mem.writeString(0x005901E5, "물", "UTF-16", aOffsets*) ;줍줍할 아이템
 sleep,1
-WriteExecutableMemory("아이템줍기실행")
+if (아템먹기여부 = 1)
+	WriteExecutableMemory("아이템줍기실행")
 sleep,1
 SetFormat, Integer, H
 상승어빌주소 := mem.processPatternScan(0x00000000, 0x7FFFFFFF, 0xB0, 0x62, 0x53, 0x00, 0x01, 0x03, 0x00)
@@ -13192,7 +13193,7 @@ Gui, Add, Text, +Right x410 y138 w60 h18 vFRAME,
 Gui, Add, Text, x345 y156 w130 h18 v좌표,
 Gui, Add, Text, x345 y174 w130 h30 v맵,
 
-Gui, Add, CheckBox, x15 y220 v아템먹기여부, 먹자(+채광)
+Gui, Add, CheckBox, x15 y220 v아템먹기여부 g아템먹기키고끄기, 먹자(+채광)
 Gui, Add, CheckBox, x105 y220 v자동사냥여부, 자동사냥
 Gui, Add, CheckBox, x195 y220 v자동이동여부, 자동이동
 Gui, Add, DropDownList, x280 y215 w80 vCurrentMode,대기모드||자동감응|일반자사|포남자사|포북자사|광물캐기|배달하기|마법잠수
@@ -17504,6 +17505,14 @@ return
 ;}
 
 ;}
+
+아템먹기키고끄기:
+gui, submit, nohide
+if (아템먹기여부 = 1)
+	WriteExecutableMemory("아이템줍기실행")
+else if (아템먹기여부 = 0)
+	WriteExecutableMemory("아이템줍기정지")
+return
 
 접속여부확인: ; 2번 스레드
 ;{
