@@ -129,7 +129,7 @@ SkillListA := ["훔치기","훔쳐보기","Sense","현혹","폭검","독침","�
 
 오란의깃마을_DDLOptions := ["로랜시아","에필로리아","세르니카","크로노시스","포프레스네"]
 길탐색5번목적지_DDLOptions := 길탐색4번목적지_DDLOptions := 길탐색3번목적지_DDLOptions := 길탐색2번목적지_DDLOptions := 길탐색1번목적지_DDLOptions := ["로랜시아 목공소","로랜시아 퍼브","로랜시아 우체국","로랜시아 퍼브 우체국","에필로리아 목공소","에필로리아 퍼브","에필로리아 우체국","에필로리아 퍼브 우체국","세르니카 퍼브","세르니카 우체국","세르니카 목공소","포프레스네 무기상점"]
-CurrentMode_DDLOptions := ["대기모드","자동감응","일반자사","포남자사","포북자사","마법잠수","광물캐기","배달하기"] ;,"행깃구매","리스무기구매"]
+CurrentMode_DDLOptions := ["대기모드","자동감응","일반자사","포남자사","포북자사","마법잠수","광물캐기","배달하기"] ; ,"행깃구매","리스무기구매"]
 사냥터이름_DDLOptions := ["세르니카 입구 필드","세르니카 입구 다리","세르니카 마을"]
 메인캐릭터서버_DDLOptions := ["엘","테스"]
 메인캐릭터순서_DDLOptions := [1,2,3,4,5,6,7,8,9,10] ;,11,12,13,14,15,16,17,18,19,20]
@@ -6582,13 +6582,12 @@ return 0
 
 라깃구매강제:
 라깃구매필요 := true
-
+목적마을 := "포프레스네"
 라깃구매:
 ;{
-	목적마을 := "포프레스네"
 	목적지 := "마법상점"
 	동작방법 := "Buy"
-	gosub, 포프레스네상점이동세팅
+	gosub, 배달상점이동세팅
 	settimer, 스킬사용하기, off
 	loop,
 	{
@@ -6706,48 +6705,54 @@ return 0
 			target := %target%
 			if (target = "오란의깃")
 			{
-				count := 100 - 아이템갯수["오란의깃"]
+				if (아이템갯수["오란의깃"] > 0)
+					count := 100 - 아이템갯수["오란의깃"]
+				else
+					count := 100
 				if (count = 100)
 				{
-					keyclick("K1")
-					keyclick("K0")
-					keyclick("K0")
+					keyclick("W1")
+					keyclick("W0")
+					keyclick("W0")
 				}
 				else if (count < 10)
 				{
-					key := "K"count
+					key := "W"count
 					keyclick(key)
 				}
 				else if (10 < count < 100)
 				{
 					TensDigit := Floor(count / 10)
 					OnesDigit := count - TensDigit * 10
-					key1 := "K"TensDigit
-					key2 := "K"OnesDigit
+					key1 := "W"TensDigit
+					key2 := "W"OnesDigit
 					keyclick(key1)
 					keyclick(key2)
 				}
 			}
 			else if (target = "라스의깃")
 			{
-				count := 20 - 아이템갯수["라스의깃"]
+				if (아이템갯수["라스의깃"] > 0)
+					count := 20 - 아이템갯수["라스의깃"]
+				else
+					count := 20
 				if (count = 100)
 				{
-					keyclick("K1")
-					keyclick("K0")
-					keyclick("K0")
+					keyclick("W1")
+					keyclick("W0")
+					keyclick("W0")
 				}
 				else if (count < 10)
 				{
-					key := "K"count
+					key := "W"count
 					keyclick(key)
 				}
 				else if (10 < count < 100)
 				{
 					TensDigit := Floor(count / 10)
 					OnesDigit := count - TensDigit * 10
-					key1 := "K"TensDigit
-					key2 := "K"OnesDigit
+					key1 := "W"TensDigit
+					key2 := "W"OnesDigit
 					keyclick(key1)
 					keyclick(key2)
 				}
@@ -6906,24 +6911,27 @@ return
 			target := %target%
 			if (target = "오란의깃")
 			{
-				count := 100 - 아이템갯수["오란의깃"]
+				if (아이템갯수["오란의깃"] > 0)
+					count := 100 - 아이템갯수["오란의깃"]
+				else
+					count := 100
 				if (count = 100)
 				{
-					keyclick("K1")
-					keyclick("K0")
-					keyclick("K0")
+					keyclick("W1")
+					keyclick("W0")
+					keyclick("W0")
 				}
 				else if (count < 10)
 				{
-					key := "K"count
+					key := "W"count
 					keyclick(key)
 				}
 				else if (10 < count < 100)
 				{
 					TensDigit := Floor(count / 10)
 					OnesDigit := count - TensDigit * 10
-					key1 := "K"TensDigit
-					key2 := "K"OnesDigit
+					key1 := "W"TensDigit
+					key2 := "W"OnesDigit
 					keyclick(key1)
 					keyclick(key2)
 				}
@@ -6933,21 +6941,21 @@ return
 				count := 100 ;- 아이템갯수["라스의깃"]
 				if (count = 100)
 				{
-					keyclick("K1")
-					keyclick("K0")
-					keyclick("K0")
+					keyclick("W1")
+					keyclick("W0")
+					keyclick("W0")
 				}
 				else if (count < 10)
 				{
-					key := "K"count
+					key := "W"count
 					keyclick(key)
 				}
 				else if (10 < count < 100)
 				{
 					TensDigit := Floor(count / 10)
 					OnesDigit := count - TensDigit * 10
-					key1 := "K"TensDigit
-					key2 := "K"OnesDigit
+					key1 := "W"TensDigit
+					key2 := "W"OnesDigit
 					keyclick(key1)
 					keyclick(key2)
 				}
@@ -7134,21 +7142,24 @@ return
 					count := 100
 				if (count = 100)
 				{
-					keyclick("K1")
-					keyclick("K0")
-					keyclick("K0")
+					keyclick("W1")
+					sleep,1
+					keyclick("W0")
+					sleep,1
+					keyclick("W0")
+					sleep,1
 				}
 				else if (count < 10)
 				{
-					key := "K"count
+					key := "W"count
 					keyclick(key)
 				}
 				else if (10 < count < 100)
 				{
 					TensDigit := Floor(count / 10)
 					OnesDigit := count - TensDigit * 10
-					key1 := "K"TensDigit
-					key2 := "K"OnesDigit
+					key1 := "W"TensDigit
+					key2 := "W"OnesDigit
 					keyclick(key1)
 					keyclick(key2)
 				}
@@ -7161,16 +7172,17 @@ return
 					count := 20
 				if (count < 10)
 				{
-					key := "K"count
+					key := "W"count
 					keyclick(key)
 				}
 				else if (10 < count <= 20)
 				{
 					TensDigit := Floor(count / 10)
 					OnesDigit := count - TensDigit * 10
-					key1 := "K"TensDigit
-					key2 := "K"OnesDigit
+					key1 := "W"TensDigit
+					key2 := "W"OnesDigit
 					keyclick(key1)
+					sleep,1
 					keyclick(key2)
 				}
 			}
@@ -7331,9 +7343,9 @@ return
 			target := %target%
 			if (target = "식빵")
 			{
-				keyclick("K1")
-				keyclick("K0")
-				keyclick("K0")
+				keyclick("W1")
+				keyclick("W0")
+				keyclick("W0")
 				break
 			}
 			keyclick("DownArrow")
@@ -9195,6 +9207,7 @@ return
 
 그레이드하기:
 ;{
+그레이드필요 := False
 그레이드종류 := "" ; "어빌" || "마법"
 그레이드할어빌 := ""
 gosub, 어빌리티읽어오기
@@ -11650,9 +11663,9 @@ return
 				target := %target%
 				if (target = "식빵") || (target = "치즈")
 				{
-					keyclick("K1")
-					keyclick("K0")
-					keyclick("K0")
+					keyclick("W1")
+					keyclick("W0")
+					keyclick("W0")
 					break
 				}
 				keyclick("DownArrow")
@@ -12914,7 +12927,7 @@ return
 		SB_setText(HP마을귀환사용제한 "/" 현재HP "HP부족",1)
 		마을 := "포프레스네"
 		목적차원 := "감마"
-		설정된마을 := [4002,2002,3002]
+		설정된마을 := [2,1002,2002,3002,4002]
 		if (오란의깃사용여부 = 1)
 		{
 			if(체력저하알림설정)
@@ -12948,7 +12961,7 @@ return
 		SB_setText(MP마을귀환사용제한 "/" 현재MP "HP부족",1)
 		마을 := "포프레스네"
 		목적차원 := "감마"
-		설정된마을 := [4002,2002,3002]
+		설정된마을 := [2,1002,2002,3002,4002]
 		if (오란의깃사용여부 = 1)
 		{
 			keyclick(오란의깃단축키)
@@ -13691,6 +13704,7 @@ gui, add, button, x180 y55 w120 h20 g마하디움링교환, 마하디움링교�
 gui, add, button, x180 y80 w120 h20 v부캐게임섬루프 g부캐게임섬, 부캐게임섬돌기
 gui, add, button, x180 y105 w120 h20 g부캐게임섬세팅, 부캐게임섬세팅
 Gui, Add, Button, x180 y130 w120 h20 g게시판열기, 일랜게시판열기
+Gui, Add, Button, x180 y155 w120 h20 g교환창확인, 교환창확인
 
 Gui, Add, GroupBox, x325 y30 w140 h350, 텔레그램알리기
 Gui, Add, Text, x335 y55 w120, @HelanciaBot 친추`n임시 아이디 입력필요
@@ -14826,7 +14840,7 @@ Return
 									SB_SetText("라깃구매필요",2)
 									라깃구매필요 := True
 								}
-								if (아이템갯수["식빵"] < 1 && 식빵구매여부 = 1 && 식빵사용제한 > 현재FP)
+								if (!(아이템갯수["식빵"] > 0) && 식빵구매여부 = 1 && 식빵사용제한 > 현재FP)
 								{
 									SB_SetText("식빵구매필요",2)
 									식빵구매필요 := True
@@ -15175,6 +15189,7 @@ Return
 					}
 					else if (CurrentMode = "포남자사" || CurrentMode = "포북자사") ;만약 특별한 "자사" 모드라면
 					{
+						KeyClick("AltR")
 						loop,
 						{
 							if (CurrentMode = "포남자사" || CurrentMode = "포북자사") && (서버상태) && (Coin)
@@ -15191,7 +15206,7 @@ Return
 									SB_SetText("라깃구매필요",2)
 									라깃구매필요 := True
 								}
-								if (아이템갯수["식빵"] < 1 && 식빵구매여부 = 1 && 식빵사용제한 > 현재FP)
+								if (!(아이템갯수["식빵"] > 0) && 식빵구매여부 = 1 && 식빵사용제한 > 현재FP)
 								{
 									SB_SetText("식빵구매필요",2)
 									식빵구매필요 := True
@@ -15204,7 +15219,7 @@ Return
 								좌표_현재선택 := LV_GetNext(0)
 								좌표갯수 := LV_GetCount()
 								NPC_TALK_DELAY := A_TickCount - NPC_TALK_DELAYCOUNT
-								설정된마을 := [4002]
+								설정된마을 := [2,1002,2002,3002,4002]
 								GALRID := mem.read(0x0058DAD4, "UInt", 0x178, 0x6F)
 								GuiControl,, GALRID, % GALRID
 								AttackStartCounter := A_TickCount
@@ -15794,6 +15809,7 @@ Return
 					}
 					else if (CurrentMode = "일반자사" )
 					{
+						KeyClick("AltR")
 						loop,
 						{
 							if (CurrentMode = "일반자사") && (서버상태) && (Coin)
@@ -15805,6 +15821,7 @@ Return
 								좌표Y := mem.read(0x0058DAD4, "UInt", 0x14)
 								좌표Z := mem.read(0x0058DAD4, "UInt", 0x18)
 								gosub, 아이템읽어오기
+								오깃갯수 := 아이템갯수["오란의깃"]
 								인벤토리 := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
 								if (인벤토리 = 50 && !보고완료 && 인벤꽉참알림설정)
 								{
@@ -15816,12 +15833,23 @@ Return
 								{
 									보고완료 := False
 								}
-								if (아이템갯수["라스의깃"] < 2 || 아이템갯수["오란의깃"] < 2)
+								if (아이템갯수["라스의깃"] < 2) ;|| 아이템갯수["오란의깃"] < 2)
 								{
 									SB_SetText("라깃구매필요",2)
 									라깃구매필요 := True
+									가까운마을 := Floor(맵번호/1000)
+									if (가까운마을 = 0 )
+										목적마을 := "로랜시아"
+									else if (가까운마을 = 1 )
+										목적마을 := "에필로리아"
+									else if (가까운마을 = 2 )
+										목적마을 := "세르니카"
+									else if (가까운마을 = 3 )
+										목적마을 := "크로노시스"
+									else if (가까운마을 = 4 )
+										목적마을 := "포프레스네"
 								}
-								if (아이템갯수["식빵"] < 1 && 식빵구매여부 = 1 && 식빵사용제한 > 현재FP)
+								if (!(아이템갯수["식빵"] > 0) && 식빵구매여부 = 1 && 식빵사용제한 > 현재FP)
 								{
 									SB_SetText("식빵구매필요",2)
 									식빵구매필요 := True
@@ -15834,7 +15862,7 @@ Return
 								좌표_현재선택 := LV_GetNext(0)
 								좌표갯수 := LV_GetCount()
 								NPC_TALK_DELAY := A_TickCount - NPC_TALK_DELAYCOUNT
-								설정된마을 := [4002]
+								설정된마을 := [2,1002,2002,3002,4002]
 								GALRID := mem.read(0x0058DAD4, "UInt", 0x178, 0x6F)
 								GuiControl,, GALRID, % GALRID
 								AttackStartCounter := A_TickCount
@@ -15851,7 +15879,7 @@ Return
 										{
 											마을 := "포프레스네"
 											목적차원 := "베타"
-											if (오란의깃사용여부 = 1 && 오란의깃마을 = 마을 )
+											if (오란의깃사용여부 = 1 && 오란의깃마을 = 마을 && 오깃갯수 >1)
 											{
 												if(마을귀환알림설정)
 												{
@@ -15908,6 +15936,8 @@ Return
 									}
 									else if (라깃구매필요)
 									{
+
+										SB_SetText(가까운마을 "," 목적마을,2)
 										gosub, 라깃구매
 										continue
 									}
@@ -16747,11 +16777,11 @@ if (RM_Delay > 5000) || (자동사냥여부 = 1)
 {
 	Read_Memory_Count := A_TickCount
 	gosub, 메모리검색_몬스터
-		if (자동사냥여부 = 1)
-		{
-			gosub, 몬스터_선택
-			sleep, 1
-		}
+	if (자동사냥여부 = 1)
+	{
+		gosub, 몬스터_선택
+		sleep, 1
+	}
 	gosub, 메모리검색_플레이어
 }
 sleep, 1
@@ -18082,6 +18112,7 @@ GetClosestInRange(ranges, currentValue) {
 		test := CallNPC("보초병")
 		if test
 		{
+			거래창사용중 := True
 			loop, 8
 			{
 				FormNumber := mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
@@ -18126,6 +18157,7 @@ GetClosestInRange(ranges, currentValue) {
 				else
 					sleep, 100
 			}
+			거래창사용중 := False
 			return
 		}
 
@@ -18135,10 +18167,18 @@ GetClosestInRange(ranges, currentValue) {
 		test := CallNPC("경비병")
 		if test
 		{
+			거래창사용중 := True
 			loop, 8
 			{
 				FormNumber := mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
-				if (FormNumber = 77)
+				NPCMsg := mem.readString(NPC_MSG_ADR, 52, "UTF-16", aOffsets*)
+				if(InStr(NPCMsg,"용사님"))
+				{
+					mem.writeString(NPC_MSG_ADR, "", "UTF-16", aOffsets*)
+					KeyClick("K6")
+					break
+				}
+				if (FormNumber = 77 && !(NPC_MSG_ADR > 1))
 				{
 					mem.writeString(NPC_MSG_ADR, "", "UTF-16", aOffsets*)
 					KeyClick("K6")
@@ -18181,7 +18221,7 @@ GetClosestInRange(ranges, currentValue) {
 			sleep, 500
 			loop, 8
 			{
-				if(InStr(NPCMsg,"세르니카 마을에"))
+				if(InStr(NPCMsg,"들어가시"))
 				{
 					mem.writeString(NPC_MSG_ADR, "", "UTF-16", aOffsets*)
 					temp:=get_NPCTalk_cordi()
@@ -18193,6 +18233,7 @@ GetClosestInRange(ranges, currentValue) {
 				else
 					sleep, 100
 			}
+			거래창사용중 := False
 			return
 		}
 	}
@@ -18210,4 +18251,20 @@ GetClosestInRange(ranges, currentValue) {
 		좌표입력(DX,DY,DZ)
 		RunMemory("좌표이동")
 	}
+return
+
+교환창확인:
+struct := mem.read(0x0058F058,"UInt",0x125,0x1C,0x122,0x08)
+Loop,
+{
+	var := struct + A_Index * 4
+	text := mem.readString(mem.read(var,"UInt",0x8,0x8),,"UTF-16")
+	count := mem.read(var,"UInt",0x8,0x20)
+	if ( text = "" )
+		break
+	oper .= text . " " . count . "개" . "`r`n"
+}
+name := mem.readString(mem.read(0x0058F058)+0x184,,"UTF-16")
+msgbox, % "[" . name . " 이 올린 아이템 목록]" . "`r`n`r`n" . oper
+
 return
