@@ -13700,7 +13700,8 @@ gui, add, button, x180 y55 w120 h20 g마하디움링교환, 마하디움링교�
 gui, add, button, x180 y80 w120 h20 v부캐게임섬루프 g부캐게임섬, 부캐게임섬돌기
 gui, add, button, x180 y105 w120 h20 g부캐게임섬세팅, 부캐게임섬세팅
 Gui, Add, Button, x180 y130 w120 h20 g게시판열기, 일랜게시판열기
-Gui, Add, Button, x180 y155 w120 h20 g교환창확인, 교환창확인
+Gui, Add, Button, x180 y155 w120 h20 g원터치정눈모으기세팅, (뉴비)정눈자사세팅
+Gui, Add, Button, x180 y180 w120 h20 g교환창확인, 교환창확인
 
 Gui, Add, GroupBox, x325 y30 w140 h350, 텔레그램알리기
 Gui, Add, Text, x335 y55 w120, @HelanciaBot 친추`n임시 아이디 입력필요
@@ -18398,3 +18399,37 @@ GetOSVersion() {
 	RegRead, ProductName, %Path%, ProductName
 	return ProductName
 }
+원터치정눈모으기세팅:
+guicontrol,,아템먹기여부,1
+guicontrol,,자동사냥여부,1
+guicontrol,,자동이동여부,1
+guicontrol,,HP마을귀환사용여부,1
+guicontrol,,사냥터자동복귀여부,1
+guicontrol,,일무기,1
+CurrentMode := "일반자사"
+Item := "CurrentMode"
+temp_variable := CurrentMode
+Control, ChooseString, %Item%, %temp_variable%
+GuiControl,, %Item%, |
+GuiControl,, %Item%, %temp_variable%||
+Temp_list := Item . "_DDLOptions"
+for Index, option in %Temp_list%
+{
+	if (temp_variable != option)
+		GuiControl,, %Item%, %option%
+}
+사냥터이름 := "세르니카 입구 필드"
+Item := "사냥터이름"
+temp_variable := 사냥터이름
+Control, ChooseString, %Item%, %temp_variable%
+GuiControl,, %Item%, |
+GuiControl,, %Item%, %temp_variable%||
+Temp_list := Item . "_DDLOptions"
+for Index, option in %Temp_list%
+{
+	if (temp_variable != option)
+		GuiControl,, %Item%, %option%
+}
+gosub, 사용자선택
+
+return
