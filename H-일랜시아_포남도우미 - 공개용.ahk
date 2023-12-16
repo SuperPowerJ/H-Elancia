@@ -11315,6 +11315,11 @@ return
 	{
 		if (CurrentMode != "상인어빌수련" || Coin = False || !(서버상태))
 			break
+		현재FP := mem.read(0x0058DAD4, "UInt", 0x178, 0x63)
+		if (현재FP == 0)
+		{
+			gosub, 회복하기
+		}
 		Keyclick(0) ;수련키트 장착
 		sleep, 200
 		책좌표X := mem.read(0x0058EB48, "UInt", 0xBC)
