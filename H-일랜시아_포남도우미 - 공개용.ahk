@@ -5,6 +5,30 @@
 
 
 Global ThisWindowTitle := "H 매크로 - 잠수시 엘의축복은 필수입니다."
+/*
+Global ThisProgramVersion :=
+Global NewVersion := GetVersion()
+http := new CHttp()
+url :=
+response := JSON.Load(http.Get(url name "/version"))
+version := response.version
+if (ThisProgramVersion < NewVersion && AskUpdate = True)
+{
+	MsgBox, 4,, 최신버전이 존재합니다. `n다운로드 하시겠습니까?
+    IfMsgBox Yes
+	{
+		name := this.name
+		ahk_src := A_ScriptDir "\" name ".ahk"
+		url :=
+		Urldownloadtofile,%url%,%ahk_src%
+		MsgBox, 4,, 최신버전을 다운로드 하였습니다. `n다시 실행하시겠습니까?
+		IfMsgBox Yes
+			Run *RunAs "%A_ScriptFullPath%"
+		ExitApp
+	}
+    ExitApp
+}
+*/
 
 if not A_IsAdmin {
     MsgBox, 4,, 이 스크립트는 관리자 권한으로 실행되어야 합니다. `n관리자 권한으로 다시 실행하시겠습니까?
@@ -84,7 +108,16 @@ return
 	Url := Url . "?chat_id=" . ChatID . "&text=" . URLEncode(Message)
 	WinHttp := ComObjCreate("WinHttp.WinHttpRequest.5.1")
 	WinHttp.Open("GET", Url)
-	WinHttp.Send()
+	try
+    {
+        WinHttp.Send()
+    }
+    catch e
+    {
+        ; Handle the error, e.g., by logging or displaying a message
+        ; This block is executed if there's an error in sending the request, which might indicate no internet connection
+        return
+    }
 }
 ;}
 
@@ -143,7 +176,7 @@ SkillListA := ["훔치기","훔쳐보기","Sense","현혹","폭검","독침","�
 
 오란의깃마을_DDLOptions := ["로랜시아","에필로리아","세르니카","크로노시스","포프레스네"]
 길탐색5번목적지_DDLOptions := 길탐색4번목적지_DDLOptions := 길탐색3번목적지_DDLOptions := 길탐색2번목적지_DDLOptions := 길탐색1번목적지_DDLOptions := ["로랜시아 목공소","로랜시아 퍼브","로랜시아 우체국","로랜시아 퍼브 우체국","에필로리아 목공소","에필로리아 퍼브","에필로리아 우체국","에필로리아 퍼브 우체국","세르니카 퍼브","세르니카 우체국","세르니카 목공소","포프레스네 무기상점"]
-CurrentMode_DDLOptions := ["대기모드","자동감응","일반자사","포남자사","포북자사","마법잠수","광물캐기","배달하기"] ;,"행깃구매","리스무기구매"]
+CurrentMode_DDLOptions := ["대기모드","자동감응","일반자사","포남자사","포북자사","마법잠수","광물캐기","배달하기"] ;,"보물지도교환","낚시먹자","행깃구매","리스무기구매"]
 사냥터이름_DDLOptions := ["세르니카 입구 필드","세르니카 입구 다리","세르니카 마을"]
 메인캐릭터서버_DDLOptions := ["엘","테스"]
 메인캐릭터순서_DDLOptions := [1,2,3,4,5,6,7,8,9,10] ;,11,12,13,14,15,16,17,18,19,20]
@@ -199,6 +232,7 @@ Global abilityStates := []
 Global RecentWeapons := []
 Global 그레이드종류
 Global 그레이드할어빌
+Global 그레이드할어빌의그레이드
 Global GALRID
 ;메모리검색용
 Global WantedItemlength := 0
@@ -1301,6 +1335,7 @@ return this.SizeOfStructure
 		sleep,500
 		Send, !m
 		Sleep,500
+		Macro := mem.read(0x0058EB64, "UInt", aOffsets*)
 		ime_status := % IME_CHECK("A")
 		if (ime_status = "0")
 		{
@@ -1914,24 +1949,24 @@ return this.SizeOfStructure
 
 	NPC거래창전체수리클릭()
 	{
-	tempx := mem.read(0x0058EB48, "UInt",0xA4) + 130
-	tempy := mem.read(0x0058EB48, "UInt",0xA8) + 149
+		tempx := mem.read(0x0058EB48, "UInt",0xA4) + 130
+		tempy := mem.read(0x0058EB48, "UInt",0xA8) + 149
 
-	MouseClick(tempx,tempy)
+		MouseClick(tempx,tempy)
 	}
 
 	NPC거래창OK클릭()
 	{
-	tempx := mem.read(0x0058EB48, "UInt",0x8C) + 423 - 233
-	tempy := mem.read(0x0058EB48, "UInt",0x90) + 322 - 173
-	MouseClick(tempx,tempy)
+		tempx := mem.read(0x0058EB48, "UInt",0x8C) + 423 - 233
+		tempy := mem.read(0x0058EB48, "UInt",0x90) + 322 - 173
+		MouseClick(tempx,tempy)
 	}
 
 	NPC거래창닫기()
 	{
-	tempx := mem.read(0x0058EB48, "UInt",0x8C) + 205 - 233
-	tempy := mem.read(0x0058EB48, "UInt",0x90) + 57 - 173
-	MouseClickRightButton(tempx,tempy)
+		tempx := mem.read(0x0058EB48, "UInt",0x8C) + 205 - 233
+		tempy := mem.read(0x0058EB48, "UInt",0x90) + 57 - 173
+		MouseClickRightButton(tempx,tempy)
 	}
 
 	NPC거래창첫번째메뉴클릭()
@@ -1941,6 +1976,19 @@ return this.SizeOfStructure
 		MouseClick(tempx,tempy)
 	}
 
+	NPC거래창첫번째메뉴클릭_판매()
+	{
+		tempx := mem.read(0x0058EB48, "UInt",0x98) + 205 - 233
+		tempy := mem.read(0x0058EB48, "UInt",0x9C) + 57 - 173
+		MouseClick(tempx,tempy)
+	}
+
+	NPC거래창닫기_판매()
+	{
+		tempx := mem.read(0x0058EB48, "UInt",0x98) + 205 - 233
+		tempy := mem.read(0x0058EB48, "UInt",0x9C) + 57 - 173
+		MouseClickRightButton(tempx,tempy)
+	}
 	;}
 
 	;{ ; 좀비몹 혹은 렉으로 인한 헛공격 확인
@@ -2050,10 +2098,10 @@ return this.SizeOfStructure
 			if (PID = "")
 				PID := TargetPID
 			;sb_settext(TargetPID "," key ,2)
-			if (mem.read(0x0058EBC8,"Uint",0x140,0x0) != 0 && instr(WinVersion,"Windows 7"))
-			{
-				PostMessage, 0x100, 13, 1835009,, ahk_pid %PID% ; Enter Lock
-			}
+			;if (mem.read(0x0058EBC8,"Uint",0x140,0x0) != 0 && instr(WinVersion,"Windows 7"))
+			;{
+		;		PostMessage, 0x100, 13, 1835009,, ahk_pid %PID% ; Enter Lock
+		;	}
 			if(Key = "Enter"){
 			loop, 1 {
 			PostMessage, 0x100, 13, 1835009,, ahk_pid %PID% ; Enter Lock
@@ -3066,6 +3114,16 @@ return this.SizeOfStructure
 			return false
 		}
 
+		IsDataInList_Multi(data, list)
+		{
+			for _, item in list
+			{
+				if instr(item,data)
+				return true
+			}
+			return false
+		}
+
 		add_은행넣을아이템대기리스트(아이템)
 		{
 			gui, listview, 은행넣을아이템대기리스트
@@ -3126,8 +3184,8 @@ return this.SizeOfStructure
 			VIT := mem.read(0x0058DAD4, "UInt", 0x178, 0x3B)
 			GuiControl,, VIT, % VIT
 
-			FRAME := mem.read(0x0058DAD4, "UInt", 0x178, 0x47)
-			GuiControl,, FRAME, % FRAME
+			FAME := mem.read(0x0058DAD4, "UInt", 0x178, 0x47)
+			GuiControl,, FAME, % FAME
 
 			GALRID := mem.read(0x0058DAD4, "UInt", 0x178, 0x6F)
 			GuiControl,, GALRID, % GALRID
@@ -3608,1552 +3666,1552 @@ return this.SizeOfStructure
 			;Below is a generated code via python.
 
 			else if (코드 = "요리지침서 1-1 달걀 요리(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AB2ECFFEA82DBE9ACC6940020AC400076004C0028B90000000029003100000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 1-1 달걀 요리(Lv1) 쓰기", 1)
-}
-else if (코드 = "요리지침서 1-2 식빵 요리(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AC2DDFFEA82DBE9ACC6940020BE750076004C0028B90000000029003100000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 1-2 식빵 요리(Lv1) 쓰기", 1)
-}
-else if (코드 = "요리지침서 1-3 스프 요리(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AC2A4FFEA82DBE9ACC6940020D5040076004C0028B90000000029003100000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 1-3 스프 요리(Lv1) 쓰기", 1)
-}
-else if (코드 = "요리지침서 1-4 샌드위치 요리(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC0CCFFEA82DBE920CE58C704B4DC0028B9ACC694002900310076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 1-4 샌드위치 요리(Lv1) 쓰기", 1)
-}
-else if (코드 = "요리지침서 1-5 초컬릿(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2AB86850E8D100590AE8458D00590A1ACD08FFEA82DBE94C0028B9BFCEEC0029003100760000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 1-5 초컬릿(Lv1) 쓰기", 1)
-}
-else if (코드 = "요리지침서 1-6 송편(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A28B86850E8D100590AE8458D00590A1AC1A1FFEA82DBE976004C0028D3B8000000290031000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 1-6 송편(Lv1) 쓰기", 1)
-}
-else if (코드 = "요리지침서 2-1 주먹밥 요리(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AC8FCFFEA82DBE9940020BC25BA39004C0028B9ACC600002900320076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 2-1 주먹밥 요리(Lv2) 쓰기", 1)
-}
-else if (코드 = "요리지침서 2-2 오믈렛 요리(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AC624FFEA82DBE9940020B81BBBC8004C0028B9ACC600002900320076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 2-2 오믈렛 요리(Lv2) 쓰기", 1)
-}
-else if (코드 = "요리지침서 2-3 파이 요리(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AD30CFFEA82DBE9ACC6940020C7740076004C0028B90000000029003200000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 2-3 파이 요리(Lv2) 쓰기", 1)
-}
-else if (코드 = "요리지침서 2-4 케익 요리(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1ACF00FFEA82DBE9ACC6940020C7750076004C0028B90000000029003200000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 2-4 케익 요리(Lv2) 쓰기", 1)
-}
-else if (코드 = "요리지침서 2-5 쥬스 요리(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AC96CFFEA82DBE9ACC6940020C2A40076004C0028B90000000029003200000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 2-5 쥬스 요리(Lv2) 쓰기", 1)
-}
-else if (코드 = "요리지침서 3-1 카레 요리(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1ACE74FFEA82DBE9ACC6940020B8080076004C0028B90000000029003300000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 3-1 카레 요리(Lv3) 쓰기", 1)
-}
-else if (코드 = "요리지침서 3-2 마늘 요리(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AB9C8FFEA82DBE9ACC6940020B2980076004C0028B90000000029003300000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 3-2 마늘 요리(Lv3) 쓰기", 1)
-}
-else if (코드 = "요리지침서 4-1 비스킷 요리(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1ABE44FFEA82DBE9940020D0B7C2A4004C0028B9ACC600002900340076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 4-1 비스킷 요리(Lv4) 쓰기", 1)
-}
-else if (코드 = "요리지침서 4-2 닭고기 요리(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AB2EDFFEA82DBE9940020AE30ACE0004C0028B9ACC600002900340076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 4-2 닭고기 요리(Lv4) 쓰기", 1)
-}
-else if (코드 = "요리지침서 4-3 돼지고기 요리(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB3FCFFEA82DBE920AE30ACE0C9C00028B9ACC694002900340076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 4-3 돼지고기 요리(Lv4) 쓰기", 1)
-}
-else if (코드 = "요리지침서 4-4 생선 요리(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AC0DDFFEA82DBE9ACC6940020C1200076004C0028B90000000029003400000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 4-4 생선 요리(Lv4) 쓰기", 1)
-}
-else if (코드 = "요리지침서 4-5 초밥 요리(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1ACD08FFEA82DBE9ACC6940020BC250076004C0028B90000000029003400000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 4-5 초밥 요리(Lv4) 쓰기", 1)
-}
-else if (코드 = "요리지침서 5-1 팥빙수 요리(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AD325FFEA82DBE9940020C218BE59004C0028B9ACC600002900350076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 5-1 팥빙수 요리(Lv5) 쓰기", 1)
-}
-else if (코드 = "요리지침서 5-2 스파게티 요리(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC2A4FFEA82DBE920D2F0AC8CD30C0028B9ACC694002900350076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 5-2 스파게티 요리(Lv5) 쓰기", 1)
-}
-else if (코드 = "요리지침서 5-3 김치 요리(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AAE40FFEA82DBE9ACC6940020CE580076004C0028B90000000029003500000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 5-3 김치 요리(Lv5) 쓰기", 1)
-}
-else if (코드 = "요리지침서 5-4 볶음밥 요리(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1ABCF6FFEA82DBE9940020BC25C74C004C0028B9ACC600002900350076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("요리지침서 5-4 볶음밥 요리(Lv5) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 1-1 툴 수리(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2CB86850E8D100590AE8458D00590A1AD234FFEA82DBE928B9ACC218002000310076004C00000000000000290000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 1-1 툴 수리(Lv1) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 1-2 검 수리(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2CB86850E8D100590AE8458D00590A1AAC80FFEA82DBE928B9ACC218002000310076004C00000000000000290000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 1-2 검 수리(Lv1) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 1-3 창 수리(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2CB86850E8D100590AE8458D00590A1ACC3DFFEA82DBE928B9ACC218002000310076004C00000000000000290000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 1-3 창 수리(Lv1) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 1-4 기타 수리(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AAE30FFEA82DBE9ACC2180020D0C00076004C0028B90000000029003100000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 1-4 기타 수리(Lv1) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 2-1 낚시대 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AB09AFFEA82DBE91C0020B300C2DC004C0028C791C800002900320076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 2-1 낚시대 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 2-2 픽액스 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AD53DFFEA82DBE91C0020C2A4C561004C0028C791C800002900320076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 2-2 픽액스 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 2-3 요리키트 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC694FFEA82DBE920D2B8D0A4B9AC0028C791C81C002900320076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 2-3 요리키트 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 2-4 미리온스캐너 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1ABBF8FFEA82DBE990C2A4C628B9ACC81C0020B108CE76004C0028C791000000290032000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 2-4 미리온스캐너 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 2-5 스미스키트 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC2A4FFEA82DBE9B8D0A4C2A4BBF8C791C81C0020D2320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 2-5 스미스키트 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 2-6 재단키트 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC7ACFFEA82DBE920D2B8D0A4B2E80028C791C81C002900320076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 2-6 재단키트 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 2-7 세공키트 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC138FFEA82DBE920D2B8D0A4ACF50028C791C81C002900320076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 2-7 세공키트 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 2-8 관측키트 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AAD00FFEA82DBE920D2B8D0A4CE210028C791C81C002900320076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 2-8 관측키트 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 3-1 롱소드 제작(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AB871FFEA82DBE91C0020B4DCC18C004C0028C791C800002900330076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 3-1 롱소드 제작(Lv3) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 3-2 바스타드소드 제작(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1ABC14FFEA82DBE98CB4DCD0C0C2A4C81C0020B4DCC176004C0028C791000000290033000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 3-2 바스타드소드 제작(Lv3) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 3-3 그레이트소드 제작(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1AADF8FFEA82DBE98CD2B8C774B808C81C0020B4DCC176004C0028C791000000290033000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 3-3 그레이트소드 제작(Lv3) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 3-4 대거 제작(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AB300FFEA82DBE991C81C0020AC700076004C0028C70000000029003300000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 3-4 대거 제작(Lv3) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 3-5 고태도 제작(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AACE0FFEA82DBE91C0020B3C4D0DC004C0028C791C800002900330076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 3-5 고태도 제작(Lv3) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 3-6 롱스피어 제작(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB871FFEA82DBE920C5B4D53CC2A40028C791C81C002900330076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 3-6 롱스피어 제작(Lv3) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 3-7 반월도 제작(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1ABC18FFEA82DBE91C0020B3C4C6D4004C0028C791C800002900330076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 3-7 반월도 제작(Lv3) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 3-8 액스 제작(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AC561FFEA82DBE991C81C0020C2A40076004C0028C70000000029003300000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 3-8 액스 제작(Lv3) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 3-9 햄머 제작(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AD584FFEA82DBE991C81C0020BA380076004C0028C70000000029003300000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 3-9 햄머 제작(Lv3) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 3-10 우든보우 제작(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC6B0FFEA82DBE920C6B0BCF4B4E00028C791C81C002900330076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 3-10 우든보우 제작(Lv3) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 3-11 우든하프 제작(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC6B0FFEA82DBE920D504D558B4E00028C791C81C002900330076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 3-11 우든하프 제작(Lv3) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 3-12 시미터 제작(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AC2DCFFEA82DBE91C0020D130BBF8004C0028C791C800002900330076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 3-12 시미터 제작(Lv3) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 4-1 아이언아머 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC544FFEA82DBE938C544C5B8C774C791C81C0020BA340076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 4-1 아이언아머 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 4-2 폴드아머 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AD3F4FFEA82DBE920BA38C544B4DC0028C791C81C002900340076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 4-2 폴드아머 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 4-3 스탠다드 아머 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A38B86850E8D100590AE8458D00590A1AC2A4FFEA82DBE920B4DCB2E4D0E00020BA38C544004C0028C791C81C0029003400760000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 4-3 스탠다드 아머 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 4-4 터틀아머 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AD130FFEA82DBE920BA38C544D2C00028C791C81C002900340076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 4-4 터틀아머 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 4-5 트로져아머 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AD2B8FFEA82DBE938C544C838B85CC791C81C0020BA340076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 4-5 트로져아머 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 4-6 숄드레더 아머 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A38B86850E8D100590AE8458D00590A1AC204FFEA82DBE920B354B808B4DC0020BA38C544004C0028C791C81C0029003400760000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 4-6 숄드레더 아머 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 4-7 밴디드레더 아머 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3AB86850E8D100590AE8458D00590A1ABC34FFEA82DBE954B808B4DCB514BA38C5440020B328C791C81C002000340076004C00000000000000290000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 4-7 밴디드레더 아머 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 4-8 밴디드아이언 아머 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3CB86850E8D100590AE8458D00590A1ABC34FFEA82DBE974C544B4DCB514C5440020C5B8C791C81C0020BA380076004C0028C70000000029003400000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 4-8 밴디드아이언 아머 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 4-9 밴디드실버 아머 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3AB86850E8D100590AE8458D00590A1ABC34FFEA82DBE984C2E4B4DCB514BA38C5440020BC28C791C81C002000340076004C00000000000000290000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 4-9 밴디드실버 아머 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 4-10 밴디드골드 아머 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3AB86850E8D100590AE8458D00590A1ABC34FFEA82DBE9DCACE8B4DCB514BA38C5440020B428C791C81C002000340076004C00000000000000290000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 4-10 밴디드골드 아머 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 5-1 우든실드 제작(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC6B0FFEA82DBE920B4DCC2E4B4E00028C791C81C002900350076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 5-1 우든실드 제작(Lv5) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 5-2 실드 제작(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AC2E4FFEA82DBE991C81C0020B4DC0076004C0028C70000000029003500000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 5-2 실드 제작(Lv5) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 5-3 아이언실드 제작(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC544FFEA82DBE9DCC2E4C5B8C774C791C81C0020B4350076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 5-3 아이언실드 제작(Lv5) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 5-4 스톤실드 제작(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC2A4FFEA82DBE920B4DCC2E4D1A40028C791C81C002900350076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 5-4 스톤실드 제작(Lv5) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 5-5 골든실드 제작(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AACE8FFEA82DBE920B4DCC2E4B4E00028C791C81C002900350076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 5-5 골든실드 제작(Lv5) 쓰기", 1)
-}
-else if (코드 = "스미스지침서 6-1 올드헬멧 제작(Lv6)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC62CFFEA82DBE920BA67D5ECB4DC0028C791C81C002900360076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("스미스지침서 6-1 올드헬멧 제작(Lv6) 쓰기", 1)
-}
-else if (코드 = "재단지침서 1-1 반바지 수선(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1ABC18FFEA82DBE9180020C9C0BC14004C0028C120C200002900310076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 1-1 반바지 수선(Lv1) 쓰기", 1)
-}
-else if (코드 = "재단지침서 1-2 바지 수선(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1ABC14FFEA82DBE920C2180020C9C00076004C0028C10000000029003100000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 1-2 바지 수선(Lv1) 쓰기", 1)
-}
-else if (코드 = "재단지침서 1-3 튜닉 수선(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AD29CFFEA82DBE920C2180020B2C90076004C0028C10000000029003100000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 1-3 튜닉 수선(Lv1) 쓰기", 1)
-}
-else if (코드 = "재단지침서 1-4 가니쉬 수선(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AAC00FFEA82DBE9180020C26CB2C8004C0028C120C200002900310076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 1-4 가니쉬 수선(Lv1) 쓰기", 1)
-}
-else if (코드 = "재단지침서 1-5 레더슈즈 수선(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB808FFEA82DBE920C988C288B3540028C120C218002900310076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 1-5 레더슈즈 수선(Lv1) 쓰기", 1)
-}
-else if (코드 = "재단지침서 1-6 레더아머 수선(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB808FFEA82DBE920BA38C544B3540028C120C218002900310076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 1-6 레더아머 수선(Lv1) 쓰기", 1)
-}
-else if (코드 = "재단지침서 2-1 반바지 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1ABC18FFEA82DBE91C0020C9C0BC14004C0028C791C800002900320076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 2-1 반바지 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "재단지침서 2-2 바지 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1ABC14FFEA82DBE991C81C0020C9C00076004C0028C70000000029003200000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 2-2 바지 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "재단지침서 2-3 튜닉 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AD29CFFEA82DBE991C81C0020B2C90076004C0028C70000000029003200000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 2-3 튜닉 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "재단지침서 2-4 가니쉬 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AAC00FFEA82DBE91C0020C26CB2C8004C0028C791C800002900320076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 2-4 가니쉬 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "재단지침서 2-5 레더슈즈 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB808FFEA82DBE920C988C288B3540028C791C81C002900320076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 2-5 레더슈즈 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "재단지침서 2-6 레더아머 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB808FFEA82DBE920BA38C544B3540028C791C81C002900320076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 2-6 레더아머 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "재단지침서 2-7 수영모 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AC218FFEA82DBE91C0020BAA8C601004C0028C791C800002900320076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 2-7 수영모 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "재단지침서 2-8 꽃무늬수영모 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1AAF43FFEA82DBE901C218B2ACBB34C81C0020BAA8C676004C0028C791000000290032000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 2-8 꽃무늬수영모 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "재단지침서 3-1 울슈즈 제작(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AC6B8FFEA82DBE91C0020C988C288004C0028C791C800002900330076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 3-1 울슈즈 제작(Lv3) 쓰기", 1)
-}
-else if (코드 = "재단지침서 3-2 밤슈즈 제작(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1ABC24FFEA82DBE91C0020C988C288004C0028C791C800002900330076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 3-2 밤슈즈 제작(Lv3) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-1 밧줄 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1ABC27FFEA82DBE991C81C0020C9040076004C0028C70000000029003400000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-1 밧줄 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-2 꽃무늬반바지 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1AAF43FFEA82DBE914BC18B2ACBB34C81C0020C9C0BC76004C0028C791000000290034000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-2 꽃무늬반바지 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-3 꽃무늬바지 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AAF43FFEA82DBE9C0BC14B2ACBB34C791C81C0020C9340076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-3 꽃무늬바지 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-4 꽃무늬치마 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AAF43FFEA82DBE9C8CE58B2ACBB34C791C81C0020B9340076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-4 꽃무늬치마 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-5 줄무늬바지 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC904FFEA82DBE9C0BC14B2ACBB34C791C81C0020C9340076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-5 줄무늬바지 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-6 나팔바지 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB098FFEA82DBE920C9C0BC14D3140028C791C81C002900340076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-6 나팔바지 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-7 칠부바지 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1ACE60FFEA82DBE920C9C0BC14BD800028C791C81C002900340076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-7 칠부바지 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-8 꽃무늬튜닉 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AAF43FFEA82DBE9C9D29CB2ACBB34C791C81C0020B2340076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-8 꽃무늬튜닉 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-9 줄무늬튜닉 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC904FFEA82DBE9C9D29CB2ACBB34C791C81C0020B2340076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-9 줄무늬튜닉 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-10 터번 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AD130FFEA82DBE991C81C0020BC880076004C0028C70000000029003400000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-10 터번 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-11 볼륨업브라 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABCFCFFEA82DBE97CBE0CC5C5B968C791C81C0020B7340076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-11 볼륨업브라 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-12 탑 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2CB86850E8D100590AE8458D00590A1AD0D1FFEA82DBE928C791C81C002000340076004C00000000000000290000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-12 탑 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-13 미니스커트 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABBF8FFEA82DBE9B8CEE4C2A4B2C8C791C81C0020D2340076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-13 미니스커트 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-14 햅번민소매 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AD585FFEA82DBE9E4C18CBBFCBC88C791C81C0020B9340076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-14 햅번민소매 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-15 햅번긴소매 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AD585FFEA82DBE9E4C18CAE34BC88C791C81C0020B9340076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-15 햅번긴소매 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-16 땡땡브라 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB561FFEA82DBE920B77CBE0CB5610028C791C81C002900340076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-16 땡땡브라 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 4-17 니혼모자 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB2C8FFEA82DBE920C790BAA8D63C0028C791C81C002900340076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 4-17 니혼모자 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "재단지침서 5-1 튜닉 제작2(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AD29CFFEA82DBE991C81C0020B2C9004C00280032C700002900350076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 5-1 튜닉 제작2(Lv5) 쓰기", 1)
-}
-else if (코드 = "재단지침서 5-2 반바지 제작2(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1ABC18FFEA82DBE91C0020C9C0BC1400280032C791C82900350076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 5-2 반바지 제작2(Lv5) 쓰기", 1)
-}
-else if (코드 = "재단지침서 5-3 바지 제작2(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1ABC14FFEA82DBE991C81C0020C9C0004C00280032C700002900350076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 5-3 바지 제작2(Lv5) 쓰기", 1)
-}
-else if (코드 = "재단지침서 5-4 가니쉬 제작2(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AAC00FFEA82DBE91C0020C26CB2C800280032C791C82900350076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 5-4 가니쉬 제작2(Lv5) 쓰기", 1)
-}
-else if (코드 = "재단지침서 5-5 레더아머 제작2(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AB808FFEA82DBE920BA38C544B3540032C791C81C00350076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 5-5 레더아머 제작2(Lv5) 쓰기", 1)
-}
-else if (코드 = "재단지침서 5-6 레더슈즈 제작2(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AB808FFEA82DBE920C988C288B3540032C791C81C00350076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 5-6 레더슈즈 제작2(Lv5) 쓰기", 1)
-}
-else if (코드 = "재단지침서 5-7 울슈즈 제작2(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC6B8FFEA82DBE91C0020C988C28800280032C791C82900350076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 5-7 울슈즈 제작2(Lv5) 쓰기", 1)
-}
-else if (코드 = "재단지침서 5-8 밤슈즈 제작2(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1ABC24FFEA82DBE91C0020C988C28800280032C791C82900350076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 5-8 밤슈즈 제작2(Lv5) 쓰기", 1)
-}
-else if (코드 = "재단지침서 5-9 수영모 제작2(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC218FFEA82DBE91C0020BAA8C60100280032C791C82900350076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 5-9 수영모 제작2(Lv5) 쓰기", 1)
-}
-else if (코드 = "재단지침서 5-10 꽃무늬수영모 제작2(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A38B86850E8D100590AE8458D00590A1AAF43FFEA82DBE901C218B2ACBB34C81C0020BAA8C64C00280032C7910029003500760000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("재단지침서 5-10 꽃무늬수영모 제작2(Lv5) 쓰기", 1)
-}
-else if (코드 = "세공지침서 1-1 기초 세공(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AAE30FFEA82DBE9F5C1380020CD080076004C0028AC0000000029003100000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 1-1 기초 세공(Lv1) 쓰기", 1)
-}
-else if (코드 = "세공지침서 1-2 링 수리(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2CB86850E8D100590AE8458D00590A1AB9C1FFEA82DBE928B9ACC218002000310076004C00000000000000290000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 1-2 링 수리(Lv1) 쓰기", 1)
-}
-else if (코드 = "세공지침서 1-3 네클리스 수리(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB124FFEA82DBE920C2A4B9ACD0740028B9ACC218002900310076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 1-3 네클리스 수리(Lv1) 쓰기", 1)
-}
-else if (코드 = "세공지침서 2-1 브리디온 가공(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1ABE0CFFEA82DBE920C628B514B9AC0028ACF5AC00002900320076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 2-1 브리디온 가공(Lv2) 쓰기", 1)
-}
-else if (코드 = "세공지침서 2-2 다니온 가공(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AB2E4FFEA82DBE9000020C628B2C8004C0028ACF5AC00002900320076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 2-2 다니온 가공(Lv2) 쓰기", 1)
-}
-else if (코드 = "세공지침서 2-3 마하디온 가공(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB9C8FFEA82DBE920C628B514D5580028ACF5AC00002900320076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 2-3 마하디온 가공(Lv2) 쓰기", 1)
-}
-else if (코드 = "세공지침서 2-4 브라키디온 가공(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABE0CFFEA82DBE928B514D0A4B77CACF5AC000020C6320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 2-4 브라키디온 가공(Lv2) 쓰기", 1)
-}
-else if (코드 = "세공지침서 2-5 브라키디온 가공(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABE0CFFEA82DBE928B514D0A4B77CACF5AC000020C6320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 2-5 브라키디온 가공(Lv2) 쓰기", 1)
-}
-else if (코드 = "세공지침서 2-6 테사랏티온 가공(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AD14CFFEA82DBE928D2F0B78FC0ACACF5AC000020C6320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 2-6 테사랏티온 가공(Lv2) 쓰기", 1)
-}
-else if (코드 = "세공지침서 3-1 알티브리디온 가공(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1AC54CFFEA82DBE914B9ACBE0CD2F0AC000020C628B576004C0028ACF5000000290033000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 3-1 알티브리디온 가공(Lv3) 쓰기", 1)
-}
-else if (코드 = "세공지침서 3-2 알티다니온 가공(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC54CFFEA82DBE928B2C8B2E4D2F0ACF5AC000020C6330076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 3-2 알티다니온 가공(Lv3) 쓰기", 1)
-}
-else if (코드 = "세공지침서 3-3 알티마하디온 가공(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1AC54CFFEA82DBE914D558B9C8D2F0AC000020C628B576004C0028ACF5000000290033000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 3-3 알티마하디온 가공(Lv3) 쓰기", 1)
-}
-else if (코드 = "세공지침서 3-4 알티브라키디온 가공(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A38B86850E8D100590AE8458D00590A1AC54CFFEA82DBE9A4B77CBE0CD2F00020C628B514D04C0028ACF5AC000029003300760000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 3-4 알티브라키디온 가공(Lv3) 쓰기", 1)
-}
-else if (코드 = "세공지침서 3-5 볼바디온 가공(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1ABCFCFFEA82DBE920C628B514BC140028ACF5AC00002900330076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 3-5 볼바디온 가공(Lv3) 쓰기", 1)
-}
-else if (코드 = "세공지침서 3-6 테사리온 가공(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AD14CFFEA82DBE920C628B9ACC0AC0028ACF5AC00002900330076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 3-6 테사리온 가공(Lv3) 쓰기", 1)
-}
-else if (코드 = "세공지침서 4-1 브리시온(원석) 가공(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3AB86850E8D100590AE8458D00590A1ABE0CFFEA82DBE928C628C2DCB9AC0029C11DC6D00028ACF5AC00002000340076004C00000000000000290000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 4-1 브리시온(원석) 가공(Lv4) 쓰기", 1)
-}
-else if (코드 = "세공지침서 4-2 다니시온(원석) 가공(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3AB86850E8D100590AE8458D00590A1AB2E4FFEA82DBE928C628C2DCB2C80029C11DC6D00028ACF5AC00002000340076004C00000000000000290000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 4-2 다니시온(원석) 가공(Lv4) 쓰기", 1)
-}
-else if (코드 = "세공지침서 4-3 마흐시온(원석) 가공(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3AB86850E8D100590AE8458D00590A1AB9C8FFEA82DBE928C628C2DCD7500029C11DC6D00028ACF5AC00002000340076004C00000000000000290000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 4-3 마흐시온(원석) 가공(Lv4) 쓰기", 1)
-}
-else if (코드 = "세공지침서 4-4 브라키시온(원석) 가공(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3CB86850E8D100590AE8458D00590A1ABE0CFFEA82DBE928C2DCD0A4B77CC11DC6D00028C6F5AC00002000290076004C0028AC0000000002900340000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 4-4 브라키시온(원석) 가공(Lv4) 쓰기", 1)
-}
-else if (코드 = "세공지침서 4-5 엘리시온(원석) 가공(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3AB86850E8D100590AE8458D00590A1AC5D8FFEA82DBE928C628C2DCB9AC0029C11DC6D00028ACF5AC00002000340076004C00000000000000290000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 4-5 엘리시온(원석) 가공(Lv4) 쓰기", 1)
-}
-else if (코드 = "세공지침서 4-6 테스시온(원석) 가공(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3AB86850E8D100590AE8458D00590A1AD14CFFEA82DBE928C628C2DCC2A40029C11DC6D00028ACF5AC00002000340076004C00000000000000290000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 4-6 테스시온(원석) 가공(Lv4) 쓰기", 1)
-}
-else if (코드 = "세공지침서 5-1 브리시온 가공(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1ABE0CFFEA82DBE920C628C2DCB9AC0028ACF5AC00002900350076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 5-1 브리시온 가공(Lv5) 쓰기", 1)
-}
-else if (코드 = "세공지침서 5-2 다니시온 가공(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB2E4FFEA82DBE920C628C2DCB2C80028ACF5AC00002900350076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 5-2 다니시온 가공(Lv5) 쓰기", 1)
-}
-else if (코드 = "세공지침서 5-3 마흐시온 가공(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB9C8FFEA82DBE920C628C2DCD7500028ACF5AC00002900350076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 5-3 마흐시온 가공(Lv5) 쓰기", 1)
-}
-else if (코드 = "세공지침서 5-4 브라키시온 가공(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABE0CFFEA82DBE928C2DCD0A4B77CACF5AC000020C6350076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 5-4 브라키시온 가공(Lv5) 쓰기", 1)
-}
-else if (코드 = "세공지침서 5-5 엘리시온 가공(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC5D8FFEA82DBE920C628C2DCB9AC0028ACF5AC00002900350076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 5-5 엘리시온 가공(Lv5) 쓰기", 1)
-}
-else if (코드 = "세공지침서 5-6 테스시온 가공(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AD14CFFEA82DBE920C628C2DCC2A40028ACF5AC00002900350076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 5-6 테스시온 가공(Lv5) 쓰기", 1)
-}
-else if (코드 = "세공지침서 6-1 아이언링 제작1(Lv6)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC544FFEA82DBE920B9C1C5B8C7740031C791C81C00360076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 6-1 아이언링 제작1(Lv6) 쓰기", 1)
-}
-else if (코드 = "세공지침서 6-2 실버링 제작1(Lv6)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC2E4FFEA82DBE91C0020B9C1BC8400280031C791C82900360076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 6-2 실버링 제작1(Lv6) 쓰기", 1)
-}
-else if (코드 = "세공지침서 6-3 골드링 제작1(Lv6)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AACE8FFEA82DBE91C0020B9C1B4DC00280031C791C82900360076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 6-3 골드링 제작1(Lv6) 쓰기", 1)
-}
-else if (코드 = "세공지침서 6-4 에메랄드링 제작1(Lv6)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1AC5D0FFEA82DBE9C1B4DCB784BA54C791C81C0020B976004C00280031000000290036000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 6-4 에메랄드링 제작1(Lv6) 쓰기", 1)
-}
-else if (코드 = "세공지침서 6-5 사파이어링 제작1(Lv6)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1AC0ACFFEA82DBE9C1C5B4C774D30CC791C81C0020B976004C00280031000000290036000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 6-5 사파이어링 제작1(Lv6) 쓰기", 1)
-}
-else if (코드 = "세공지침서 6-6 투어마린링 제작1(Lv6)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1AD22CFFEA82DBE9C1B9B0B9C8C5B4C791C81C0020B976004C00280031000000290036000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 6-6 투어마린링 제작1(Lv6) 쓰기", 1)
-}
-else if (코드 = "세공지침서 6-7 브리디온링 제작1(Lv6)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1ABE0CFFEA82DBE9C1C628B514B9ACC791C81C0020B976004C00280031000000290036000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 6-7 브리디온링 제작1(Lv6) 쓰기", 1)
-}
-else if (코드 = "세공지침서 6-8 다니온링 제작1(Lv6)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AB2E4FFEA82DBE920B9C1C628B2C80031C791C81C00360076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 6-8 다니온링 제작1(Lv6) 쓰기", 1)
-}
-else if (코드 = "세공지침서 6-9 마하디온링 제작1(Lv6)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1AB9C8FFEA82DBE9C1C628B514D558C791C81C0020B976004C00280031000000290036000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 6-9 마하디온링 제작1(Lv6) 쓰기", 1)
-}
-else if (코드 = "세공지침서 6-10 브라키디온링 제작1(Lv6)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A38B86850E8D100590AE8458D00590A1ABE0CFFEA82DBE928B514D0A4B77CC81C0020B9C1C64C00280031C7910029003600760000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 6-10 브라키디온링 제작1(Lv6) 쓰기", 1)
-}
-else if (코드 = "세공지침서 6-11 엘사리온링 제작1(Lv6)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1AC5D8FFEA82DBE9C1C628B9ACC0ACC791C81C0020B976004C00280031000000290036000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 6-11 엘사리온링 제작1(Lv6) 쓰기", 1)
-}
-else if (코드 = "세공지침서 6-12 테사리온링 제작1(Lv6)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1AD14CFFEA82DBE9C1C628B9ACC0ACC791C81C0020B976004C00280031000000290036000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 6-12 테사리온링 제작1(Lv6) 쓰기", 1)
-}
-else if (코드 = "세공지침서 7-1 아이언네클리스 제작1(Lv7)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3AB86850E8D100590AE8458D00590A1AC544FFEA82DBE974B124C5B8C7740020C2A4B9ACD0280031C791C81C00370076004C00000000000000290000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 7-1 아이언네클리스 제작1(Lv7) 쓰기", 1)
-}
-else if (코드 = "세공지침서 7-2 실버네클리스 제작1(Lv7)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A38B86850E8D100590AE8458D00590A1AC2E4FFEA82DBE9ACD074B124BC84C81C0020C2A4B94C00280031C7910029003700760000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 7-2 실버네클리스 제작1(Lv7) 쓰기", 1)
-}
-else if (코드 = "세공지침서 7-3 골드네클리스 제작1(Lv7)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A38B86850E8D100590AE8458D00590A1AACE8FFEA82DBE9ACD074B124B4DCC81C0020C2A4B94C00280031C7910029003700760000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 7-3 골드네클리스 제작1(Lv7) 쓰기", 1)
-}
-else if (코드 = "세공지침서 7-4 루비네클리스 제작1(Lv7)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A38B86850E8D100590AE8458D00590A1AB8E8FFEA82DBE9ACD074B124BE44C81C0020C2A4B94C00280031C7910029003700760000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 7-4 루비네클리스 제작1(Lv7) 쓰기", 1)
-}
-else if (코드 = "세공지침서 7-5 상아네클리스 제작1(Lv7)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A38B86850E8D100590AE8458D00590A1AC0C1FFEA82DBE9ACD074B124C544C81C0020C2A4B94C00280031C7910029003700760000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 7-5 상아네클리스 제작1(Lv7) 쓰기", 1)
-}
-else if (코드 = "세공지침서 7-6 사파이어네클리스 제작1(Lv7)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3CB86850E8D100590AE8458D00590A1AC0ACFFEA82DBE924C5B4C774D30CC2A4B9ACD074B131C791C81C00200076004C0028000000000029003700000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 7-6 사파이어네클리스 제작1(Lv7) 쓰기", 1)
-}
-else if (코드 = "세공지침서 7-7 펄네클리스 제작1(Lv7)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1AD384FFEA82DBE9A4B9ACD074B124C791C81C0020C276004C00280031000000290037000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 7-7 펄네클리스 제작1(Lv7) 쓰기", 1)
-}
-else if (코드 = "세공지침서 7-8 블랙펄네클리스 제작1(Lv7)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3AB86850E8D100590AE8458D00590A1ABE14FFEA82DBE974B124D384B7990020C2A4B9ACD0280031C791C81C00370076004C00000000000000290000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 7-8 블랙펄네클리스 제작1(Lv7) 쓰기", 1)
-}
-else if (코드 = "세공지침서 7-9 오레온 제작(Lv7)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AC624FFEA82DBE91C0020C628B808004C0028C791C800002900370076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 7-9 오레온 제작(Lv7) 쓰기", 1)
-}
-else if (코드 = "세공지침서 7-10 세레온 제작(Lv7)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AC138FFEA82DBE91C0020C628B808004C0028C791C800002900370076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 7-10 세레온 제작(Lv7) 쓰기", 1)
-}
-else if (코드 = "세공지침서 8-1 기초 가공1(Lv8)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AAE30FFEA82DBE9F5AC000020CD08004C00280031AC00002900380076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 8-1 기초 가공1(Lv8) 쓰기", 1)
-}
-else if (코드 = "세공지침서 8-2 기초 가공2(Lv8)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AAE30FFEA82DBE9F5AC000020CD08004C00280032AC00002900380076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 8-2 기초 가공2(Lv8) 쓰기", 1)
-}
-else if (코드 = "세공지침서 8-3 케이온 제작(Lv8)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1ACF00FFEA82DBE91C0020C628C774004C0028C791C800002900380076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 8-3 케이온 제작(Lv8) 쓰기", 1)
-}
-else if (코드 = "세공지침서 9-1 초급 가공1(Lv9)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1ACD08FFEA82DBE9F5AC000020AE09004C00280031AC00002900390076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 9-1 초급 가공1(Lv9) 쓰기", 1)
-}
-else if (코드 = "세공지침서 10-1 중급 가공1(Lv10)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC911FFEA82DBE9F5AC000020AE09004C00280031AC290030003100760000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 10-1 중급 가공1(Lv10) 쓰기", 1)
-}
-else if (코드 = "세공지침서 11-1 고급 가공1(Lv11)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AACE0FFEA82DBE9F5AC000020AE09004C00280031AC290031003100760000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("세공지침서 11-1 고급 가공1(Lv11) 쓰기", 1)
-}
-else if (코드 = "미용지침서 1-1 기초 염색(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AAE30FFEA82DBE9C9C5FC0020CD080076004C0028C00000000029003100000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 1-1 기초 염색(Lv1) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-1 삭발스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC0ADFFEA82DBE97CD0C0C2A4BC1CD615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-1 삭발스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-2 기본스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AAE30FFEA82DBE97CD0C0C2A4BCF8D615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-2 기본스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-3 펑크스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AD391FFEA82DBE97CD0C0C2A4D06CD615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-3 펑크스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-4 레게스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AB808FFEA82DBE97CD0C0C2A4AC8CD615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-4 레게스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-5 변형스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABCC0FFEA82DBE97CD0C0C2A4D615D615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-5 변형스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-6 더벅스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AB354FFEA82DBE97CD0C0C2A4BC85D615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-6 더벅스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-7 바람스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABC14FFEA82DBE97CD0C0C2A4B78CD615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-7 바람스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-8 복고스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABCF5FFEA82DBE97CD0C0C2A4ACE0D615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-8 복고스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-9 자연스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC790FFEA82DBE97CD0C0C2A4C5F0D615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-9 자연스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-10 웨이브스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1AC6E8FFEA82DBE9C0C2A4BE0CC774BCC00020C77CD076004C0028D615000000290032000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-10 웨이브스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-11 세팅스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC138FFEA82DBE97CD0C0C2A4D305D615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-11 세팅스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-12 폭탄스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AD3EDFFEA82DBE97CD0C0C2A4D0C4D615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-12 폭탄스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-13 야자수스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1AC57CFFEA82DBE9C0C2A4C218C790BCC00020C77CD076004C0028D615000000290032000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-13 야자수스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-14 발랄한스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1ABC1CFFEA82DBE9C0C2A4D55CB784BCC00020C77CD076004C0028D615000000290032000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-14 발랄한스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-15 변형레게스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A38B86850E8D100590AE8458D00590A1ABCC0FFEA82DBE9A4AC8CB808D6150020C77CD0C0C24C0028D615BCC00029003200760000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-15 변형레게스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-16 올림스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC62CFFEA82DBE97CD0C0C2A4B9BCD615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-16 올림스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-17 곱슬스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AACF1FFEA82DBE97CD0C0C2A4C2ACD615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-17 곱슬스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-18 미남스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABBF8FFEA82DBE97CD0C0C2A4B0A8D615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-18 미남스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-19 바가지스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1ABC14FFEA82DBE9C0C2A4C9C0AC00BCC00020C77CD076004C0028D615000000290032000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-19 바가지스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-20 선녀스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC120FFEA82DBE97CD0C0C2A4B140D615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-20 선녀스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-21 밤톨스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABC24FFEA82DBE97CD0C0C2A4D1A8D615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-21 밤톨스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-22 귀족스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AADC0FFEA82DBE97CD0C0C2A4C871D615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-22 귀족스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-23 드라마스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A36B86850E8D100590AE8458D00590A1AB4DCFFEA82DBE9C0C2A4B9C8B77CBCC00020C77CD076004C0028D615000000290032000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-23 드라마스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-24 앙증스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC559FFEA82DBE97CD0C0C2A4C99DD615BCC00020C7320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-24 앙증스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 2-25 트윈테일스타일 변형(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A38B86850E8D100590AE8458D00590A1AD2B8FFEA82DBE9A4C77CD14CC7080020C77CD0C0C24C0028D615BCC00029003200760000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 2-25 트윈테일스타일 변형(Lv2) 쓰기", 1)
-}
-else if (코드 = "미용지침서 3-1 까만눈 성형(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AAE4CFFEA82DBE9310020B208B9CC004C0028D615C100002900330076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 3-1 까만눈 성형(Lv3) 쓰기", 1)
-}
-else if (코드 = "미용지침서 3-2 파란눈 성형(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AD30CFFEA82DBE9310020B208B780004C0028D615C100002900330076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 3-2 파란눈 성형(Lv3) 쓰기", 1)
-}
-else if (코드 = "미용지침서 3-3 찢어진눈 성형(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1ACC22FFEA82DBE920B208C9C4C5B40028D615C131002900330076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("미용지침서 3-3 찢어진눈 성형(Lv3) 쓰기", 1)
-}
-else if (코드 = "목공지침서 1-1 소나무 가공(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AC18CFFEA82DBE9000020BB34B098004C0028ACF5AC00002900310076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("목공지침서 1-1 소나무 가공(Lv1) 쓰기", 1)
-}
-else if (코드 = "목공지침서 1-2 단풍나무 가공(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB2E8FFEA82DBE920BB34B098D48D0028ACF5AC00002900310076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("목공지침서 1-2 단풍나무 가공(Lv1) 쓰기", 1)
-}
-else if (코드 = "목공지침서 1-3 참나무 가공(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1ACC38FFEA82DBE9000020BB34B098004C0028ACF5AC00002900310076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("목공지침서 1-3 참나무 가공(Lv1) 쓰기", 1)
-}
-else if (코드 = "목공지침서 1-4 대나무 가공(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A30B86850E8D100590AE8458D00590A1AB300FFEA82DBE9000020BB34B098004C0028ACF5AC00002900310076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("목공지침서 1-4 대나무 가공(Lv1) 쓰기", 1)
-}
-else if (코드 = "목공지침서 2-1 토끼조각상 조각(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AD1A0FFEA82DBE9C1AC01C870B07CAC01C8700020C0320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("목공지침서 2-1 토끼조각상 조각(Lv2) 쓰기", 1)
-}
-else if (코드 = "목공지침서 2-2 암탉조각상 조각(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC554FFEA82DBE9C1AC01C870D0C9AC01C8700020C0320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("목공지침서 2-2 암탉조각상 조각(Lv2) 쓰기", 1)
-}
-else if (코드 = "목공지침서 2-3 수탉조각상 조각(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC218FFEA82DBE9C1AC01C870D0C9AC01C8700020C0320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("목공지침서 2-3 수탉조각상 조각(Lv2) 쓰기", 1)
-}
-else if (코드 = "목공지침서 2-4 푸푸조각상 조각(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AD478FFEA82DBE9C1AC01C870D478AC01C8700020C0320076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("목공지침서 2-4 푸푸조각상 조각(Lv2) 쓰기", 1)
-}
-else if (코드 = "목공지침서 3-1 토끼상자 조각(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AD1A0FFEA82DBE920C790C0C1B07C0028AC01C870002900330076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("목공지침서 3-1 토끼상자 조각(Lv3) 쓰기", 1)
-}
-else if (코드 = "목공지침서 3-2 푸푸상자 조각(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AD478FFEA82DBE920C790C0C1D4780028AC01C870002900330076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("목공지침서 3-2 푸푸상자 조각(Lv3) 쓰기", 1)
-}
-else if (코드 = "목공지침서 3-3 오크상자 조각(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC624FFEA82DBE920C790C0C1D06C0028AC01C870002900330076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("목공지침서 3-3 오크상자 조각(Lv3) 쓰기", 1)
-}
-else if (코드 = "목공지침서 3-4 고블린상자 조각(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AACE0FFEA82DBE990C0C1B9B0BE14AC01C8700020C7330076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("목공지침서 3-4 고블린상자 조각(Lv3) 쓰기", 1)
-}
-else if (코드 = "목공지침서 4-1 뗏목 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AB5CFFFEA82DBE991C81C0020BAA90076004C0028C70000000029003400000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("목공지침서 4-1 뗏목 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "목공지침서 4-2 나무보트 제작(Lv4)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB098FFEA82DBE920D2B8BCF4BB340028C791C81C002900340076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("목공지침서 4-2 나무보트 제작(Lv4) 쓰기", 1)
-}
-else if (코드 = "목공지침서 5-1 스노우보드 제작(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC2A4FFEA82DBE9DCBCF4C6B0B178C791C81C0020B4350076004C002800000000002900000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("목공지침서 5-1 스노우보드 제작(Lv5) 쓰기", 1)
-}
-else if (코드 = "목공지침서 5-2 썰매 제작(Lv5)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AC370FFEA82DBE991C81C0020B9E40076004C0028C70000000029003500000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("목공지침서 5-2 썰매 제작(Lv5) 쓰기", 1)
-}
-else if (코드 = "연금술지침서 1-1 힐링포션 제작(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AD790FFEA82DBE920C158D3ECB9C10028C791C81C002900310076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("연금술지침서 1-1 힐링포션 제작(Lv1) 쓰기", 1)
-}
-else if (코드 = "연금술지침서 1-2 마나포션 제작(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB9C8FFEA82DBE920C158D3ECB0980028C791C81C002900310076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("연금술지침서 1-2 마나포션 제작(Lv1) 쓰기", 1)
-}
-else if (코드 = "연금술지침서 1-3 단검용독 제작(Lv1)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB2E8FFEA82DBE920B3C5C6A9AC800028C791C81C002900310076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("연금술지침서 1-3 단검용독 제작(Lv1) 쓰기", 1)
-}
-else if (코드 = "연금술지침서 2-1 스피드포션(1ml) 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3EB86850E8D100590AE8458D00590A1AC2A4FFEA82DBE958D3ECB4DCD53C006D00310028C11C00200029006C004C0028C791C800002900320076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("연금술지침서 2-1 스피드포션(1ml) 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "연금술지침서 2-2 스피드포션(2ml) 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3EB86850E8D100590AE8458D00590A1AC2A4FFEA82DBE958D3ECB4DCD53C006D00320028C11C00200029006C004C0028C791C800002900320076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("연금술지침서 2-2 스피드포션(2ml) 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "연금술지침서 2-3 스피드포션(3ml) 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3EB86850E8D100590AE8458D00590A1AC2A4FFEA82DBE958D3ECB4DCD53C006D00330028C11C00200029006C004C0028C791C800002900320076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("연금술지침서 2-3 스피드포션(3ml) 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "연금술지침서 2-4 스피드포션(4ml) 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3EB86850E8D100590AE8458D00590A1AC2A4FFEA82DBE958D3ECB4DCD53C006D00340028C11C00200029006C004C0028C791C800002900320076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("연금술지침서 2-4 스피드포션(4ml) 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "연금술지침서 2-5 스피드포션(5ml) 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3EB86850E8D100590AE8458D00590A1AC2A4FFEA82DBE958D3ECB4DCD53C006D00350028C11C00200029006C004C0028C791C800002900320076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("연금술지침서 2-5 스피드포션(5ml) 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "연금술지침서 2-6 스피드포션(6ml) 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A3EB86850E8D100590AE8458D00590A1AC2A4FFEA82DBE958D3ECB4DCD53C006D00360028C11C00200029006C004C0028C791C800002900320076000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("연금술지침서 2-6 스피드포션(6ml) 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "연금술지침서 2-7 체력향상포션(1ml) 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A40B86850E8D100590AE8458D00590A1ACCB4FFEA82DBE9ECC0C1D5A5B82500310028C158D3200029006C006D0028C791C81C002900320076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("연금술지침서 2-7 체력향상포션(1ml) 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "연금술지침서 2-8 체력향상포션(2ml) 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A40B86850E8D100590AE8458D00590A1ACCB4FFEA82DBE9ECC0C1D5A5B82500320028C158D3200029006C006D0028C791C81C002900320076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("연금술지침서 2-8 체력향상포션(2ml) 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "연금술지침서 2-9 체력향상포션(3ml) 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A40B86850E8D100590AE8458D00590A1ACCB4FFEA82DBE9ECC0C1D5A5B82500330028C158D3200029006C006D0028C791C81C002900320076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("연금술지침서 2-9 체력향상포션(3ml) 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "연금술지침서 2-10 체력향상포션(4ml) 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A40B86850E8D100590AE8458D00590A1ACCB4FFEA82DBE9ECC0C1D5A5B82500340028C158D3200029006C006D0028C791C81C002900320076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("연금술지침서 2-10 체력향상포션(4ml) 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "연금술지침서 2-11 체력향상포션(5ml) 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A40B86850E8D100590AE8458D00590A1ACCB4FFEA82DBE9ECC0C1D5A5B82500350028C158D3200029006C006D0028C791C81C002900320076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("연금술지침서 2-11 체력향상포션(5ml) 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "연금술지침서 2-12 체력향상포션(6ml) 제작(Lv2)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A40B86850E8D100590AE8458D00590A1ACCB4FFEA82DBE9ECC0C1D5A5B82500360028C158D3200029006C006D0028C791C81C002900320076004C0000000000000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("연금술지침서 2-12 체력향상포션(6ml) 제작(Lv2) 쓰기", 1)
-}
-else if (코드 = "연금술지침서 3-1 주괴 제작(Lv3)") {
-    Addrs := 0x00590A00
-    RegionSize := 0x2048
-    target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AC8FCFFEA82DBE991C81C0020AD340076004C0028C70000000029003300000000
-    executable := mem.executable(Addrs, RegionSize)
-    SB_SetText("연금술지침서 3-1 주괴 제작(Lv3) 쓰기", 1)
-}
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AB2ECFFEA82DBE9ACC6940020AC400076004C0028B90000000029003100000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 1-1 달걀 요리(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 1-2 식빵 요리(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AC2DDFFEA82DBE9ACC6940020BE750076004C0028B90000000029003100000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 1-2 식빵 요리(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 1-3 스프 요리(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AC2A4FFEA82DBE9ACC6940020D5040076004C0028B90000000029003100000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 1-3 스프 요리(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 1-4 샌드위치 요리(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC0CCFFEA82DBE920CE58C704B4DC0028B9ACC694002900310076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 1-4 샌드위치 요리(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 1-5 초컬릿(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2AB86850E8D100590AE8458D00590A1ACD08FFEA82DBE94C0028B9BFCEEC0029003100760000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 1-5 초컬릿(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 1-6 송편(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A28B86850E8D100590AE8458D00590A1AC1A1FFEA82DBE976004C0028D3B8000000290031000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 1-6 송편(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 2-1 주먹밥 요리(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AC8FCFFEA82DBE9940020BC25BA39004C0028B9ACC600002900320076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 2-1 주먹밥 요리(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 2-2 오믈렛 요리(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AC624FFEA82DBE9940020B81BBBC8004C0028B9ACC600002900320076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 2-2 오믈렛 요리(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 2-3 파이 요리(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AD30CFFEA82DBE9ACC6940020C7740076004C0028B90000000029003200000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 2-3 파이 요리(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 2-4 케익 요리(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1ACF00FFEA82DBE9ACC6940020C7750076004C0028B90000000029003200000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 2-4 케익 요리(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 2-5 쥬스 요리(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AC96CFFEA82DBE9ACC6940020C2A40076004C0028B90000000029003200000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 2-5 쥬스 요리(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 3-1 카레 요리(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1ACE74FFEA82DBE9ACC6940020B8080076004C0028B90000000029003300000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 3-1 카레 요리(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 3-2 마늘 요리(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AB9C8FFEA82DBE9ACC6940020B2980076004C0028B90000000029003300000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 3-2 마늘 요리(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 4-1 비스킷 요리(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1ABE44FFEA82DBE9940020D0B7C2A4004C0028B9ACC600002900340076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 4-1 비스킷 요리(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 4-2 닭고기 요리(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AB2EDFFEA82DBE9940020AE30ACE0004C0028B9ACC600002900340076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 4-2 닭고기 요리(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 4-3 돼지고기 요리(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB3FCFFEA82DBE920AE30ACE0C9C00028B9ACC694002900340076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 4-3 돼지고기 요리(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 4-4 생선 요리(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AC0DDFFEA82DBE9ACC6940020C1200076004C0028B90000000029003400000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 4-4 생선 요리(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 4-5 초밥 요리(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1ACD08FFEA82DBE9ACC6940020BC250076004C0028B90000000029003400000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 4-5 초밥 요리(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 5-1 팥빙수 요리(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AD325FFEA82DBE9940020C218BE59004C0028B9ACC600002900350076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 5-1 팥빙수 요리(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 5-2 스파게티 요리(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC2A4FFEA82DBE920D2F0AC8CD30C0028B9ACC694002900350076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 5-2 스파게티 요리(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 5-3 김치 요리(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AAE40FFEA82DBE9ACC6940020CE580076004C0028B90000000029003500000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 5-3 김치 요리(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "요리지침서 5-4 볶음밥 요리(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1ABCF6FFEA82DBE9940020BC25C74C004C0028B9ACC600002900350076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("요리지침서 5-4 볶음밥 요리(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 1-1 툴 수리(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2CB86850E8D100590AE8458D00590A1AD234FFEA82DBE928B9ACC218002000310076004C00000000000000290000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 1-1 툴 수리(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 1-2 검 수리(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2CB86850E8D100590AE8458D00590A1AAC80FFEA82DBE928B9ACC218002000310076004C00000000000000290000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 1-2 검 수리(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 1-3 창 수리(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2CB86850E8D100590AE8458D00590A1ACC3DFFEA82DBE928B9ACC218002000310076004C00000000000000290000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 1-3 창 수리(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 1-4 기타 수리(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AAE30FFEA82DBE9ACC2180020D0C00076004C0028B90000000029003100000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 1-4 기타 수리(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 2-1 낚시대 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AB09AFFEA82DBE91C0020B300C2DC004C0028C791C800002900320076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 2-1 낚시대 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 2-2 픽액스 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AD53DFFEA82DBE91C0020C2A4C561004C0028C791C800002900320076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 2-2 픽액스 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 2-3 요리키트 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC694FFEA82DBE920D2B8D0A4B9AC0028C791C81C002900320076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 2-3 요리키트 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 2-4 미리온스캐너 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1ABBF8FFEA82DBE990C2A4C628B9ACC81C0020B108CE76004C0028C791000000290032000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 2-4 미리온스캐너 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 2-5 스미스키트 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC2A4FFEA82DBE9B8D0A4C2A4BBF8C791C81C0020D2320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 2-5 스미스키트 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 2-6 재단키트 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC7ACFFEA82DBE920D2B8D0A4B2E80028C791C81C002900320076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 2-6 재단키트 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 2-7 세공키트 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC138FFEA82DBE920D2B8D0A4ACF50028C791C81C002900320076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 2-7 세공키트 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 2-8 관측키트 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AAD00FFEA82DBE920D2B8D0A4CE210028C791C81C002900320076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 2-8 관측키트 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 3-1 롱소드 제작(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AB871FFEA82DBE91C0020B4DCC18C004C0028C791C800002900330076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 3-1 롱소드 제작(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 3-2 바스타드소드 제작(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1ABC14FFEA82DBE98CB4DCD0C0C2A4C81C0020B4DCC176004C0028C791000000290033000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 3-2 바스타드소드 제작(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 3-3 그레이트소드 제작(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1AADF8FFEA82DBE98CD2B8C774B808C81C0020B4DCC176004C0028C791000000290033000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 3-3 그레이트소드 제작(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 3-4 대거 제작(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AB300FFEA82DBE991C81C0020AC700076004C0028C70000000029003300000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 3-4 대거 제작(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 3-5 고태도 제작(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AACE0FFEA82DBE91C0020B3C4D0DC004C0028C791C800002900330076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 3-5 고태도 제작(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 3-6 롱스피어 제작(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB871FFEA82DBE920C5B4D53CC2A40028C791C81C002900330076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 3-6 롱스피어 제작(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 3-7 반월도 제작(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1ABC18FFEA82DBE91C0020B3C4C6D4004C0028C791C800002900330076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 3-7 반월도 제작(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 3-8 액스 제작(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AC561FFEA82DBE991C81C0020C2A40076004C0028C70000000029003300000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 3-8 액스 제작(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 3-9 햄머 제작(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AD584FFEA82DBE991C81C0020BA380076004C0028C70000000029003300000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 3-9 햄머 제작(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 3-10 우든보우 제작(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC6B0FFEA82DBE920C6B0BCF4B4E00028C791C81C002900330076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 3-10 우든보우 제작(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 3-11 우든하프 제작(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC6B0FFEA82DBE920D504D558B4E00028C791C81C002900330076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 3-11 우든하프 제작(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 3-12 시미터 제작(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AC2DCFFEA82DBE91C0020D130BBF8004C0028C791C800002900330076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 3-12 시미터 제작(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 4-1 아이언아머 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC544FFEA82DBE938C544C5B8C774C791C81C0020BA340076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 4-1 아이언아머 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 4-2 폴드아머 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AD3F4FFEA82DBE920BA38C544B4DC0028C791C81C002900340076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 4-2 폴드아머 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 4-3 스탠다드 아머 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A38B86850E8D100590AE8458D00590A1AC2A4FFEA82DBE920B4DCB2E4D0E00020BA38C544004C0028C791C81C0029003400760000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 4-3 스탠다드 아머 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 4-4 터틀아머 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AD130FFEA82DBE920BA38C544D2C00028C791C81C002900340076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 4-4 터틀아머 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 4-5 트로져아머 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AD2B8FFEA82DBE938C544C838B85CC791C81C0020BA340076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 4-5 트로져아머 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 4-6 숄드레더 아머 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A38B86850E8D100590AE8458D00590A1AC204FFEA82DBE920B354B808B4DC0020BA38C544004C0028C791C81C0029003400760000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 4-6 숄드레더 아머 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 4-7 밴디드레더 아머 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3AB86850E8D100590AE8458D00590A1ABC34FFEA82DBE954B808B4DCB514BA38C5440020B328C791C81C002000340076004C00000000000000290000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 4-7 밴디드레더 아머 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 4-8 밴디드아이언 아머 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3CB86850E8D100590AE8458D00590A1ABC34FFEA82DBE974C544B4DCB514C5440020C5B8C791C81C0020BA380076004C0028C70000000029003400000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 4-8 밴디드아이언 아머 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 4-9 밴디드실버 아머 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3AB86850E8D100590AE8458D00590A1ABC34FFEA82DBE984C2E4B4DCB514BA38C5440020BC28C791C81C002000340076004C00000000000000290000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 4-9 밴디드실버 아머 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 4-10 밴디드골드 아머 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3AB86850E8D100590AE8458D00590A1ABC34FFEA82DBE9DCACE8B4DCB514BA38C5440020B428C791C81C002000340076004C00000000000000290000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 4-10 밴디드골드 아머 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 5-1 우든실드 제작(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC6B0FFEA82DBE920B4DCC2E4B4E00028C791C81C002900350076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 5-1 우든실드 제작(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 5-2 실드 제작(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AC2E4FFEA82DBE991C81C0020B4DC0076004C0028C70000000029003500000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 5-2 실드 제작(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 5-3 아이언실드 제작(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC544FFEA82DBE9DCC2E4C5B8C774C791C81C0020B4350076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 5-3 아이언실드 제작(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 5-4 스톤실드 제작(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC2A4FFEA82DBE920B4DCC2E4D1A40028C791C81C002900350076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 5-4 스톤실드 제작(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 5-5 골든실드 제작(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AACE8FFEA82DBE920B4DCC2E4B4E00028C791C81C002900350076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 5-5 골든실드 제작(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "스미스지침서 6-1 올드헬멧 제작(Lv6)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC62CFFEA82DBE920BA67D5ECB4DC0028C791C81C002900360076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("스미스지침서 6-1 올드헬멧 제작(Lv6) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 1-1 반바지 수선(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1ABC18FFEA82DBE9180020C9C0BC14004C0028C120C200002900310076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 1-1 반바지 수선(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 1-2 바지 수선(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1ABC14FFEA82DBE920C2180020C9C00076004C0028C10000000029003100000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 1-2 바지 수선(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 1-3 튜닉 수선(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AD29CFFEA82DBE920C2180020B2C90076004C0028C10000000029003100000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 1-3 튜닉 수선(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 1-4 가니쉬 수선(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AAC00FFEA82DBE9180020C26CB2C8004C0028C120C200002900310076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 1-4 가니쉬 수선(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 1-5 레더슈즈 수선(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB808FFEA82DBE920C988C288B3540028C120C218002900310076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 1-5 레더슈즈 수선(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 1-6 레더아머 수선(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB808FFEA82DBE920BA38C544B3540028C120C218002900310076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 1-6 레더아머 수선(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 2-1 반바지 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1ABC18FFEA82DBE91C0020C9C0BC14004C0028C791C800002900320076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 2-1 반바지 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 2-2 바지 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1ABC14FFEA82DBE991C81C0020C9C00076004C0028C70000000029003200000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 2-2 바지 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 2-3 튜닉 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AD29CFFEA82DBE991C81C0020B2C90076004C0028C70000000029003200000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 2-3 튜닉 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 2-4 가니쉬 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AAC00FFEA82DBE91C0020C26CB2C8004C0028C791C800002900320076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 2-4 가니쉬 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 2-5 레더슈즈 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB808FFEA82DBE920C988C288B3540028C791C81C002900320076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 2-5 레더슈즈 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 2-6 레더아머 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB808FFEA82DBE920BA38C544B3540028C791C81C002900320076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 2-6 레더아머 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 2-7 수영모 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AC218FFEA82DBE91C0020BAA8C601004C0028C791C800002900320076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 2-7 수영모 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 2-8 꽃무늬수영모 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1AAF43FFEA82DBE901C218B2ACBB34C81C0020BAA8C676004C0028C791000000290032000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 2-8 꽃무늬수영모 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 3-1 울슈즈 제작(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AC6B8FFEA82DBE91C0020C988C288004C0028C791C800002900330076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 3-1 울슈즈 제작(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 3-2 밤슈즈 제작(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1ABC24FFEA82DBE91C0020C988C288004C0028C791C800002900330076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 3-2 밤슈즈 제작(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-1 밧줄 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1ABC27FFEA82DBE991C81C0020C9040076004C0028C70000000029003400000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-1 밧줄 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-2 꽃무늬반바지 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1AAF43FFEA82DBE914BC18B2ACBB34C81C0020C9C0BC76004C0028C791000000290034000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-2 꽃무늬반바지 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-3 꽃무늬바지 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AAF43FFEA82DBE9C0BC14B2ACBB34C791C81C0020C9340076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-3 꽃무늬바지 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-4 꽃무늬치마 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AAF43FFEA82DBE9C8CE58B2ACBB34C791C81C0020B9340076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-4 꽃무늬치마 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-5 줄무늬바지 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC904FFEA82DBE9C0BC14B2ACBB34C791C81C0020C9340076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-5 줄무늬바지 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-6 나팔바지 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB098FFEA82DBE920C9C0BC14D3140028C791C81C002900340076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-6 나팔바지 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-7 칠부바지 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1ACE60FFEA82DBE920C9C0BC14BD800028C791C81C002900340076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-7 칠부바지 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-8 꽃무늬튜닉 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AAF43FFEA82DBE9C9D29CB2ACBB34C791C81C0020B2340076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-8 꽃무늬튜닉 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-9 줄무늬튜닉 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC904FFEA82DBE9C9D29CB2ACBB34C791C81C0020B2340076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-9 줄무늬튜닉 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-10 터번 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AD130FFEA82DBE991C81C0020BC880076004C0028C70000000029003400000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-10 터번 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-11 볼륨업브라 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABCFCFFEA82DBE97CBE0CC5C5B968C791C81C0020B7340076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-11 볼륨업브라 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-12 탑 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2CB86850E8D100590AE8458D00590A1AD0D1FFEA82DBE928C791C81C002000340076004C00000000000000290000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-12 탑 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-13 미니스커트 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABBF8FFEA82DBE9B8CEE4C2A4B2C8C791C81C0020D2340076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-13 미니스커트 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-14 햅번민소매 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AD585FFEA82DBE9E4C18CBBFCBC88C791C81C0020B9340076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-14 햅번민소매 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-15 햅번긴소매 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AD585FFEA82DBE9E4C18CAE34BC88C791C81C0020B9340076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-15 햅번긴소매 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-16 땡땡브라 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB561FFEA82DBE920B77CBE0CB5610028C791C81C002900340076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-16 땡땡브라 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 4-17 니혼모자 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB2C8FFEA82DBE920C790BAA8D63C0028C791C81C002900340076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 4-17 니혼모자 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 5-1 튜닉 제작2(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AD29CFFEA82DBE991C81C0020B2C9004C00280032C700002900350076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 5-1 튜닉 제작2(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 5-2 반바지 제작2(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1ABC18FFEA82DBE91C0020C9C0BC1400280032C791C82900350076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 5-2 반바지 제작2(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 5-3 바지 제작2(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1ABC14FFEA82DBE991C81C0020C9C0004C00280032C700002900350076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 5-3 바지 제작2(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 5-4 가니쉬 제작2(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AAC00FFEA82DBE91C0020C26CB2C800280032C791C82900350076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 5-4 가니쉬 제작2(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 5-5 레더아머 제작2(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AB808FFEA82DBE920BA38C544B3540032C791C81C00350076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 5-5 레더아머 제작2(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 5-6 레더슈즈 제작2(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AB808FFEA82DBE920C988C288B3540032C791C81C00350076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 5-6 레더슈즈 제작2(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 5-7 울슈즈 제작2(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC6B8FFEA82DBE91C0020C988C28800280032C791C82900350076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 5-7 울슈즈 제작2(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 5-8 밤슈즈 제작2(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1ABC24FFEA82DBE91C0020C988C28800280032C791C82900350076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 5-8 밤슈즈 제작2(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 5-9 수영모 제작2(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC218FFEA82DBE91C0020BAA8C60100280032C791C82900350076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 5-9 수영모 제작2(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "재단지침서 5-10 꽃무늬수영모 제작2(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A38B86850E8D100590AE8458D00590A1AAF43FFEA82DBE901C218B2ACBB34C81C0020BAA8C64C00280032C7910029003500760000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("재단지침서 5-10 꽃무늬수영모 제작2(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 1-1 기초 세공(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AAE30FFEA82DBE9F5C1380020CD080076004C0028AC0000000029003100000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 1-1 기초 세공(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 1-2 링 수리(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2CB86850E8D100590AE8458D00590A1AB9C1FFEA82DBE928B9ACC218002000310076004C00000000000000290000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 1-2 링 수리(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 1-3 네클리스 수리(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB124FFEA82DBE920C2A4B9ACD0740028B9ACC218002900310076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 1-3 네클리스 수리(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 2-1 브리디온 가공(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1ABE0CFFEA82DBE920C628B514B9AC0028ACF5AC00002900320076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 2-1 브리디온 가공(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 2-2 다니온 가공(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AB2E4FFEA82DBE9000020C628B2C8004C0028ACF5AC00002900320076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 2-2 다니온 가공(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 2-3 마하디온 가공(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB9C8FFEA82DBE920C628B514D5580028ACF5AC00002900320076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 2-3 마하디온 가공(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 2-4 브라키디온 가공(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABE0CFFEA82DBE928B514D0A4B77CACF5AC000020C6320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 2-4 브라키디온 가공(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 2-5 브라키디온 가공(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABE0CFFEA82DBE928B514D0A4B77CACF5AC000020C6320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 2-5 브라키디온 가공(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 2-6 테사랏티온 가공(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AD14CFFEA82DBE928D2F0B78FC0ACACF5AC000020C6320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 2-6 테사랏티온 가공(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 3-1 알티브리디온 가공(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1AC54CFFEA82DBE914B9ACBE0CD2F0AC000020C628B576004C0028ACF5000000290033000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 3-1 알티브리디온 가공(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 3-2 알티다니온 가공(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC54CFFEA82DBE928B2C8B2E4D2F0ACF5AC000020C6330076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 3-2 알티다니온 가공(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 3-3 알티마하디온 가공(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1AC54CFFEA82DBE914D558B9C8D2F0AC000020C628B576004C0028ACF5000000290033000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 3-3 알티마하디온 가공(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 3-4 알티브라키디온 가공(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A38B86850E8D100590AE8458D00590A1AC54CFFEA82DBE9A4B77CBE0CD2F00020C628B514D04C0028ACF5AC000029003300760000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 3-4 알티브라키디온 가공(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 3-5 볼바디온 가공(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1ABCFCFFEA82DBE920C628B514BC140028ACF5AC00002900330076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 3-5 볼바디온 가공(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 3-6 테사리온 가공(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AD14CFFEA82DBE920C628B9ACC0AC0028ACF5AC00002900330076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 3-6 테사리온 가공(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 4-1 브리시온(원석) 가공(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3AB86850E8D100590AE8458D00590A1ABE0CFFEA82DBE928C628C2DCB9AC0029C11DC6D00028ACF5AC00002000340076004C00000000000000290000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 4-1 브리시온(원석) 가공(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 4-2 다니시온(원석) 가공(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3AB86850E8D100590AE8458D00590A1AB2E4FFEA82DBE928C628C2DCB2C80029C11DC6D00028ACF5AC00002000340076004C00000000000000290000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 4-2 다니시온(원석) 가공(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 4-3 마흐시온(원석) 가공(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3AB86850E8D100590AE8458D00590A1AB9C8FFEA82DBE928C628C2DCD7500029C11DC6D00028ACF5AC00002000340076004C00000000000000290000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 4-3 마흐시온(원석) 가공(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 4-4 브라키시온(원석) 가공(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3CB86850E8D100590AE8458D00590A1ABE0CFFEA82DBE928C2DCD0A4B77CC11DC6D00028C6F5AC00002000290076004C0028AC0000000002900340000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 4-4 브라키시온(원석) 가공(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 4-5 엘리시온(원석) 가공(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3AB86850E8D100590AE8458D00590A1AC5D8FFEA82DBE928C628C2DCB9AC0029C11DC6D00028ACF5AC00002000340076004C00000000000000290000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 4-5 엘리시온(원석) 가공(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 4-6 테스시온(원석) 가공(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3AB86850E8D100590AE8458D00590A1AD14CFFEA82DBE928C628C2DCC2A40029C11DC6D00028ACF5AC00002000340076004C00000000000000290000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 4-6 테스시온(원석) 가공(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 5-1 브리시온 가공(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1ABE0CFFEA82DBE920C628C2DCB9AC0028ACF5AC00002900350076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 5-1 브리시온 가공(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 5-2 다니시온 가공(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB2E4FFEA82DBE920C628C2DCB2C80028ACF5AC00002900350076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 5-2 다니시온 가공(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 5-3 마흐시온 가공(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB9C8FFEA82DBE920C628C2DCD7500028ACF5AC00002900350076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 5-3 마흐시온 가공(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 5-4 브라키시온 가공(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABE0CFFEA82DBE928C2DCD0A4B77CACF5AC000020C6350076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 5-4 브라키시온 가공(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 5-5 엘리시온 가공(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC5D8FFEA82DBE920C628C2DCB9AC0028ACF5AC00002900350076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 5-5 엘리시온 가공(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 5-6 테스시온 가공(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AD14CFFEA82DBE920C628C2DCC2A40028ACF5AC00002900350076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 5-6 테스시온 가공(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 6-1 아이언링 제작1(Lv6)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC544FFEA82DBE920B9C1C5B8C7740031C791C81C00360076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 6-1 아이언링 제작1(Lv6) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 6-2 실버링 제작1(Lv6)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC2E4FFEA82DBE91C0020B9C1BC8400280031C791C82900360076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 6-2 실버링 제작1(Lv6) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 6-3 골드링 제작1(Lv6)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AACE8FFEA82DBE91C0020B9C1B4DC00280031C791C82900360076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 6-3 골드링 제작1(Lv6) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 6-4 에메랄드링 제작1(Lv6)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1AC5D0FFEA82DBE9C1B4DCB784BA54C791C81C0020B976004C00280031000000290036000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 6-4 에메랄드링 제작1(Lv6) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 6-5 사파이어링 제작1(Lv6)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1AC0ACFFEA82DBE9C1C5B4C774D30CC791C81C0020B976004C00280031000000290036000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 6-5 사파이어링 제작1(Lv6) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 6-6 투어마린링 제작1(Lv6)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1AD22CFFEA82DBE9C1B9B0B9C8C5B4C791C81C0020B976004C00280031000000290036000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 6-6 투어마린링 제작1(Lv6) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 6-7 브리디온링 제작1(Lv6)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1ABE0CFFEA82DBE9C1C628B514B9ACC791C81C0020B976004C00280031000000290036000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 6-7 브리디온링 제작1(Lv6) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 6-8 다니온링 제작1(Lv6)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AB2E4FFEA82DBE920B9C1C628B2C80031C791C81C00360076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 6-8 다니온링 제작1(Lv6) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 6-9 마하디온링 제작1(Lv6)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1AB9C8FFEA82DBE9C1C628B514D558C791C81C0020B976004C00280031000000290036000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 6-9 마하디온링 제작1(Lv6) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 6-10 브라키디온링 제작1(Lv6)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A38B86850E8D100590AE8458D00590A1ABE0CFFEA82DBE928B514D0A4B77CC81C0020B9C1C64C00280031C7910029003600760000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 6-10 브라키디온링 제작1(Lv6) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 6-11 엘사리온링 제작1(Lv6)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1AC5D8FFEA82DBE9C1C628B9ACC0ACC791C81C0020B976004C00280031000000290036000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 6-11 엘사리온링 제작1(Lv6) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 6-12 테사리온링 제작1(Lv6)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1AD14CFFEA82DBE9C1C628B9ACC0ACC791C81C0020B976004C00280031000000290036000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 6-12 테사리온링 제작1(Lv6) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 7-1 아이언네클리스 제작1(Lv7)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3AB86850E8D100590AE8458D00590A1AC544FFEA82DBE974B124C5B8C7740020C2A4B9ACD0280031C791C81C00370076004C00000000000000290000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 7-1 아이언네클리스 제작1(Lv7) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 7-2 실버네클리스 제작1(Lv7)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A38B86850E8D100590AE8458D00590A1AC2E4FFEA82DBE9ACD074B124BC84C81C0020C2A4B94C00280031C7910029003700760000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 7-2 실버네클리스 제작1(Lv7) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 7-3 골드네클리스 제작1(Lv7)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A38B86850E8D100590AE8458D00590A1AACE8FFEA82DBE9ACD074B124B4DCC81C0020C2A4B94C00280031C7910029003700760000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 7-3 골드네클리스 제작1(Lv7) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 7-4 루비네클리스 제작1(Lv7)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A38B86850E8D100590AE8458D00590A1AB8E8FFEA82DBE9ACD074B124BE44C81C0020C2A4B94C00280031C7910029003700760000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 7-4 루비네클리스 제작1(Lv7) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 7-5 상아네클리스 제작1(Lv7)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A38B86850E8D100590AE8458D00590A1AC0C1FFEA82DBE9ACD074B124C544C81C0020C2A4B94C00280031C7910029003700760000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 7-5 상아네클리스 제작1(Lv7) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 7-6 사파이어네클리스 제작1(Lv7)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3CB86850E8D100590AE8458D00590A1AC0ACFFEA82DBE924C5B4C774D30CC2A4B9ACD074B131C791C81C00200076004C0028000000000029003700000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 7-6 사파이어네클리스 제작1(Lv7) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 7-7 펄네클리스 제작1(Lv7)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1AD384FFEA82DBE9A4B9ACD074B124C791C81C0020C276004C00280031000000290037000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 7-7 펄네클리스 제작1(Lv7) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 7-8 블랙펄네클리스 제작1(Lv7)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3AB86850E8D100590AE8458D00590A1ABE14FFEA82DBE974B124D384B7990020C2A4B9ACD0280031C791C81C00370076004C00000000000000290000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 7-8 블랙펄네클리스 제작1(Lv7) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 7-9 오레온 제작(Lv7)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AC624FFEA82DBE91C0020C628B808004C0028C791C800002900370076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 7-9 오레온 제작(Lv7) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 7-10 세레온 제작(Lv7)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AC138FFEA82DBE91C0020C628B808004C0028C791C800002900370076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 7-10 세레온 제작(Lv7) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 8-1 기초 가공1(Lv8)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AAE30FFEA82DBE9F5AC000020CD08004C00280031AC00002900380076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 8-1 기초 가공1(Lv8) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 8-2 기초 가공2(Lv8)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AAE30FFEA82DBE9F5AC000020CD08004C00280032AC00002900380076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 8-2 기초 가공2(Lv8) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 8-3 케이온 제작(Lv8)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1ACF00FFEA82DBE91C0020C628C774004C0028C791C800002900380076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 8-3 케이온 제작(Lv8) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 9-1 초급 가공1(Lv9)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1ACD08FFEA82DBE9F5AC000020AE09004C00280031AC00002900390076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 9-1 초급 가공1(Lv9) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 10-1 중급 가공1(Lv10)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC911FFEA82DBE9F5AC000020AE09004C00280031AC290030003100760000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 10-1 중급 가공1(Lv10) 쓰기", 1)
+			}
+			else if (코드 = "세공지침서 11-1 고급 가공1(Lv11)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AACE0FFEA82DBE9F5AC000020AE09004C00280031AC290031003100760000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("세공지침서 11-1 고급 가공1(Lv11) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 1-1 기초 염색(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AAE30FFEA82DBE9C9C5FC0020CD080076004C0028C00000000029003100000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 1-1 기초 염색(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-1 삭발스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC0ADFFEA82DBE97CD0C0C2A4BC1CD615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-1 삭발스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-2 기본스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AAE30FFEA82DBE97CD0C0C2A4BCF8D615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-2 기본스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-3 펑크스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AD391FFEA82DBE97CD0C0C2A4D06CD615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-3 펑크스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-4 레게스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AB808FFEA82DBE97CD0C0C2A4AC8CD615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-4 레게스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-5 변형스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABCC0FFEA82DBE97CD0C0C2A4D615D615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-5 변형스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-6 더벅스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AB354FFEA82DBE97CD0C0C2A4BC85D615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-6 더벅스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-7 바람스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABC14FFEA82DBE97CD0C0C2A4B78CD615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-7 바람스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-8 복고스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABCF5FFEA82DBE97CD0C0C2A4ACE0D615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-8 복고스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-9 자연스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC790FFEA82DBE97CD0C0C2A4C5F0D615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-9 자연스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-10 웨이브스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1AC6E8FFEA82DBE9C0C2A4BE0CC774BCC00020C77CD076004C0028D615000000290032000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-10 웨이브스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-11 세팅스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC138FFEA82DBE97CD0C0C2A4D305D615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-11 세팅스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-12 폭탄스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AD3EDFFEA82DBE97CD0C0C2A4D0C4D615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-12 폭탄스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-13 야자수스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1AC57CFFEA82DBE9C0C2A4C218C790BCC00020C77CD076004C0028D615000000290032000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-13 야자수스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-14 발랄한스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1ABC1CFFEA82DBE9C0C2A4D55CB784BCC00020C77CD076004C0028D615000000290032000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-14 발랄한스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-15 변형레게스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A38B86850E8D100590AE8458D00590A1ABCC0FFEA82DBE9A4AC8CB808D6150020C77CD0C0C24C0028D615BCC00029003200760000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-15 변형레게스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-16 올림스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC62CFFEA82DBE97CD0C0C2A4B9BCD615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-16 올림스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-17 곱슬스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AACF1FFEA82DBE97CD0C0C2A4C2ACD615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-17 곱슬스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-18 미남스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABBF8FFEA82DBE97CD0C0C2A4B0A8D615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-18 미남스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-19 바가지스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1ABC14FFEA82DBE9C0C2A4C9C0AC00BCC00020C77CD076004C0028D615000000290032000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-19 바가지스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-20 선녀스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC120FFEA82DBE97CD0C0C2A4B140D615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-20 선녀스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-21 밤톨스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1ABC24FFEA82DBE97CD0C0C2A4D1A8D615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-21 밤톨스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-22 귀족스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AADC0FFEA82DBE97CD0C0C2A4C871D615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-22 귀족스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-23 드라마스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A36B86850E8D100590AE8458D00590A1AB4DCFFEA82DBE9C0C2A4B9C8B77CBCC00020C77CD076004C0028D615000000290032000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-23 드라마스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-24 앙증스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC559FFEA82DBE97CD0C0C2A4C99DD615BCC00020C7320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-24 앙증스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 2-25 트윈테일스타일 변형(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A38B86850E8D100590AE8458D00590A1AD2B8FFEA82DBE9A4C77CD14CC7080020C77CD0C0C24C0028D615BCC00029003200760000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 2-25 트윈테일스타일 변형(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 3-1 까만눈 성형(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AAE4CFFEA82DBE9310020B208B9CC004C0028D615C100002900330076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 3-1 까만눈 성형(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 3-2 파란눈 성형(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AD30CFFEA82DBE9310020B208B780004C0028D615C100002900330076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 3-2 파란눈 성형(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "미용지침서 3-3 찢어진눈 성형(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1ACC22FFEA82DBE920B208C9C4C5B40028D615C131002900330076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("미용지침서 3-3 찢어진눈 성형(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "목공지침서 1-1 소나무 가공(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AC18CFFEA82DBE9000020BB34B098004C0028ACF5AC00002900310076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("목공지침서 1-1 소나무 가공(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "목공지침서 1-2 단풍나무 가공(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB2E8FFEA82DBE920BB34B098D48D0028ACF5AC00002900310076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("목공지침서 1-2 단풍나무 가공(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "목공지침서 1-3 참나무 가공(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1ACC38FFEA82DBE9000020BB34B098004C0028ACF5AC00002900310076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("목공지침서 1-3 참나무 가공(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "목공지침서 1-4 대나무 가공(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A30B86850E8D100590AE8458D00590A1AB300FFEA82DBE9000020BB34B098004C0028ACF5AC00002900310076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("목공지침서 1-4 대나무 가공(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "목공지침서 2-1 토끼조각상 조각(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AD1A0FFEA82DBE9C1AC01C870B07CAC01C8700020C0320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("목공지침서 2-1 토끼조각상 조각(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "목공지침서 2-2 암탉조각상 조각(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC554FFEA82DBE9C1AC01C870D0C9AC01C8700020C0320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("목공지침서 2-2 암탉조각상 조각(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "목공지침서 2-3 수탉조각상 조각(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC218FFEA82DBE9C1AC01C870D0C9AC01C8700020C0320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("목공지침서 2-3 수탉조각상 조각(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "목공지침서 2-4 푸푸조각상 조각(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AD478FFEA82DBE9C1AC01C870D478AC01C8700020C0320076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("목공지침서 2-4 푸푸조각상 조각(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "목공지침서 3-1 토끼상자 조각(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AD1A0FFEA82DBE920C790C0C1B07C0028AC01C870002900330076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("목공지침서 3-1 토끼상자 조각(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "목공지침서 3-2 푸푸상자 조각(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AD478FFEA82DBE920C790C0C1D4780028AC01C870002900330076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("목공지침서 3-2 푸푸상자 조각(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "목공지침서 3-3 오크상자 조각(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AC624FFEA82DBE920C790C0C1D06C0028AC01C870002900330076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("목공지침서 3-3 오크상자 조각(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "목공지침서 3-4 고블린상자 조각(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AACE0FFEA82DBE990C0C1B9B0BE14AC01C8700020C7330076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("목공지침서 3-4 고블린상자 조각(Lv3) 쓰기", 1)
+			}
+			else if (코드 = "목공지침서 4-1 뗏목 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AB5CFFFEA82DBE991C81C0020BAA90076004C0028C70000000029003400000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("목공지침서 4-1 뗏목 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "목공지침서 4-2 나무보트 제작(Lv4)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB098FFEA82DBE920D2B8BCF4BB340028C791C81C002900340076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("목공지침서 4-2 나무보트 제작(Lv4) 쓰기", 1)
+			}
+			else if (코드 = "목공지침서 5-1 스노우보드 제작(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A34B86850E8D100590AE8458D00590A1AC2A4FFEA82DBE9DCBCF4C6B0B178C791C81C0020B4350076004C002800000000002900000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("목공지침서 5-1 스노우보드 제작(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "목공지침서 5-2 썰매 제작(Lv5)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AC370FFEA82DBE991C81C0020B9E40076004C0028C70000000029003500000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("목공지침서 5-2 썰매 제작(Lv5) 쓰기", 1)
+			}
+			else if (코드 = "연금술지침서 1-1 힐링포션 제작(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AD790FFEA82DBE920C158D3ECB9C10028C791C81C002900310076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("연금술지침서 1-1 힐링포션 제작(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "연금술지침서 1-2 마나포션 제작(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB9C8FFEA82DBE920C158D3ECB0980028C791C81C002900310076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("연금술지침서 1-2 마나포션 제작(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "연금술지침서 1-3 단검용독 제작(Lv1)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A32B86850E8D100590AE8458D00590A1AB2E8FFEA82DBE920B3C5C6A9AC800028C791C81C002900310076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("연금술지침서 1-3 단검용독 제작(Lv1) 쓰기", 1)
+			}
+			else if (코드 = "연금술지침서 2-1 스피드포션(1ml) 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3EB86850E8D100590AE8458D00590A1AC2A4FFEA82DBE958D3ECB4DCD53C006D00310028C11C00200029006C004C0028C791C800002900320076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("연금술지침서 2-1 스피드포션(1ml) 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "연금술지침서 2-2 스피드포션(2ml) 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3EB86850E8D100590AE8458D00590A1AC2A4FFEA82DBE958D3ECB4DCD53C006D00320028C11C00200029006C004C0028C791C800002900320076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("연금술지침서 2-2 스피드포션(2ml) 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "연금술지침서 2-3 스피드포션(3ml) 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3EB86850E8D100590AE8458D00590A1AC2A4FFEA82DBE958D3ECB4DCD53C006D00330028C11C00200029006C004C0028C791C800002900320076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("연금술지침서 2-3 스피드포션(3ml) 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "연금술지침서 2-4 스피드포션(4ml) 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3EB86850E8D100590AE8458D00590A1AC2A4FFEA82DBE958D3ECB4DCD53C006D00340028C11C00200029006C004C0028C791C800002900320076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("연금술지침서 2-4 스피드포션(4ml) 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "연금술지침서 2-5 스피드포션(5ml) 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3EB86850E8D100590AE8458D00590A1AC2A4FFEA82DBE958D3ECB4DCD53C006D00350028C11C00200029006C004C0028C791C800002900320076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("연금술지침서 2-5 스피드포션(5ml) 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "연금술지침서 2-6 스피드포션(6ml) 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A3EB86850E8D100590AE8458D00590A1AC2A4FFEA82DBE958D3ECB4DCD53C006D00360028C11C00200029006C004C0028C791C800002900320076000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("연금술지침서 2-6 스피드포션(6ml) 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "연금술지침서 2-7 체력향상포션(1ml) 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A40B86850E8D100590AE8458D00590A1ACCB4FFEA82DBE9ECC0C1D5A5B82500310028C158D3200029006C006D0028C791C81C002900320076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("연금술지침서 2-7 체력향상포션(1ml) 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "연금술지침서 2-8 체력향상포션(2ml) 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A40B86850E8D100590AE8458D00590A1ACCB4FFEA82DBE9ECC0C1D5A5B82500320028C158D3200029006C006D0028C791C81C002900320076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("연금술지침서 2-8 체력향상포션(2ml) 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "연금술지침서 2-9 체력향상포션(3ml) 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A40B86850E8D100590AE8458D00590A1ACCB4FFEA82DBE9ECC0C1D5A5B82500330028C158D3200029006C006D0028C791C81C002900320076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("연금술지침서 2-9 체력향상포션(3ml) 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "연금술지침서 2-10 체력향상포션(4ml) 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A40B86850E8D100590AE8458D00590A1ACCB4FFEA82DBE9ECC0C1D5A5B82500340028C158D3200029006C006D0028C791C81C002900320076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("연금술지침서 2-10 체력향상포션(4ml) 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "연금술지침서 2-11 체력향상포션(5ml) 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A40B86850E8D100590AE8458D00590A1ACCB4FFEA82DBE9ECC0C1D5A5B82500350028C158D3200029006C006D0028C791C81C002900320076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("연금술지침서 2-11 체력향상포션(5ml) 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "연금술지침서 2-12 체력향상포션(6ml) 제작(Lv2)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A40B86850E8D100590AE8458D00590A1ACCB4FFEA82DBE9ECC0C1D5A5B82500360028C158D3200029006C006D0028C791C81C002900320076004C0000000000000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("연금술지침서 2-12 체력향상포션(6ml) 제작(Lv2) 쓰기", 1)
+			}
+			else if (코드 = "연금술지침서 3-1 주괴 제작(Lv3)") {
+				Addrs := 0x00590A00
+				RegionSize := 0x2048
+				target = 1A2D00590A2EB86850E8D100590AE8458D00590A1AC8FCFFEA82DBE991C81C0020AD340076004C0028C70000000029003300000000
+				executable := mem.executable(Addrs, RegionSize)
+				SB_SetText("연금술지침서 3-1 주괴 제작(Lv3) 쓰기", 1)
+			}
 			;Process finished with exit code 0
 			ContentLength := StrLen(target)
 			LoopCount := ContentLength // 14
@@ -8787,6 +8845,7 @@ else if (맵번호 = 4005)
 		{
 			sleep,1000
 			NPCMsg := mem.readString(NPC_MSG_ADR, 52, "UTF-16", aOffsets*)
+			IsFormExist := mem.read(0x0058EB5C, "UInt", aOffsets*)
 			FormNumber := mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
 			if(instr(NPCMSG,"어떻게")||instr(NPCMSG,"아직"))
 			{
@@ -8814,7 +8873,8 @@ else if (맵번호 = 4005)
 		}
 		sleep,1000
 		FormNumber := mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
-		if (FormNumber !=0)
+		IsFormExist := mem.read(0x0058EB5C, "UInt", aOffsets*)
+		if (FormNumber != 0 || IsFormExist != 0)
 		{
 			KeyClick("K6")
 		}
@@ -9183,6 +9243,7 @@ return
 그레이드필요 := False
 그레이드종류 := "" ; "어빌" || "마법"
 그레이드할어빌 := ""
+그레이드할어빌의그레이드 := ""
 gosub, 어빌리티읽어오기
 gosub, 마법읽어오기
 gui, submit, nohide
@@ -9272,12 +9333,13 @@ loop,
 	sleep, 500
 	NPCMsg := mem.readString(NPC_MSG_ADR, 100, "UTF-16", aOffsets*)
 	FormNumber := mem.read(0x0058DAD0, "UInt", 0xC, 0x10, 0x8, 0xA0)
+	tt := 그레이드할어빌의그레이드 + 1
 	IfInString,NPCMsg,올랐습니다
 	{
 		SB_SetText("그레이드중완료",2)
 		if (그레이드알림설정)
 		{
-			TMessage := TargetTitle . "의 " . 그레이드할어빌 . " 그레이드진행완료"
+			TMessage := TargetTitle . "의 " . 그레이드할어빌 . " 그레이드진행완료(" . 그레이드할어빌의그레이드 . "글 -> " . tt . "글)"
 			텔레그램메시지보내기(TMessage)
 		}
 		mem.writeString(NPC_MSG_ADR, "", "UTF-16", aOffsets*)
@@ -10692,19 +10754,24 @@ return
 		마법%A_index%_이름 := mem.readString(0x0058DAD4, 50, "UTF-16", 0x178, 0xc2, 0x8, A, 0x8, 0xC)
 		마법%A_index% := mem.read(0x0058DAD4, "UInt", 0x178, 0xc2, 0x8, A, 0x8, 0x42C)
 		마법이름 := "마법" . A_index . "_이름"
+		그레이드 := "마법" . A_index . "_그레이드"
+		%그레이드% :=  mem.read(0x0058DAD4, "UInt", 0x178, 0xc2, 0x8, A, 0x8, 0x430)
 		마법레벨 := "마법" . A_index
 		Ability_name := %마법이름%
 		Ability := %마법레벨%
+		Ability_Grade := %그레이드%
+		GuiControl,,%그레이드%, %Ability_Grade%
 		GuiControl,,%마법이름%, %Ability_name%
 		GuiControl,,%마법레벨%, %Ability%
 		if (Ability = 100)
 		{
 			GuiControlGet,그레이드여부,,%마법이름%
-			if (그레이드여부 = 1)
+			if (그레이드여부 = 1 && Ability_Grade >= 0 && Ability_Grade < 30)
 			{
 				그레이드필요 := True
 				그레이드종류 := "마법" ; "어빌" || "마법"
 				그레이드할어빌 := Ability_name
+				그레이드할어빌의그레이드 := Ability_Grade
 				SB_SetText(그레이드할어빌 "그레이드필요",5)
 			}
 		}
@@ -10723,7 +10790,7 @@ return
 			GuiControl,, %임시이름%, %임시번호%
 		}
 		if(마법이름 != Fail && 마법이름 != "")
-			LV_Add("", "마법", A_index, Ability_name, 0, Ability)
+			LV_Add("", "마법", A_index, Ability_name, %그레이드%, Ability)
 		else
 			break
 	}
@@ -10756,11 +10823,12 @@ return
 		if (Ability = 10000)
 		{
 			GuiControlGet,그레이드여부,,%어빌리티이름%
-			if (그레이드여부 = 1)
+			if (그레이드여부 = 1 && Ability_Grade >= 0 && Ability_Grade < 30)
 			{
 				그레이드필요 := True
 				그레이드종류 := "어빌" ; "어빌" || "마법"
 				그레이드할어빌 := Ability_name
+				그레이드할어빌의그레이드 := Ability_Grade
 				SB_SetText(그레이드할어빌 "그레이드필요",2)
 			}
 		}
@@ -10984,7 +11052,7 @@ return
 	guicontrol, ,자동이동여부, 0
 	guicontrol, ,아템먹기여부, 0
 	guicontrol, ,무기사용여부, 0
-
+	guicontrol,,주먹,1
 	gui, submit, nohide
 	if !(위치고정 = 1)
 	{
@@ -11184,6 +11252,7 @@ return
 	guicontrol, ,자동이동여부, 0
 	guicontrol, ,아템먹기여부, 0
 	guicontrol, ,무기사용여부, 0
+	guicontrol,,주먹,1
 
 	gui, submit, nohide
 	if !(위치고정 = 1)
@@ -11192,6 +11261,8 @@ return
 	}
 	gosub, 아이템읽어오기
 	InitialInven := 아이템갯수
+	guicontrolget,넣을아이템
+	시작아이템갯수 := 아이템갯수[넣을아이템]
 	처음시작 := 0
 	RepairCount := 1
 	상승어빌 := mem.readString(상승어빌주소 + 0x64, 20, "UTF-16", aOffsets*)
@@ -11528,26 +11599,25 @@ return
 		}
 		RepairCount -= 1
 		sleep, %cookdelay%
-
+		gosub, 아이템읽어오기
+		if (시작아이템갯수 > 아이템갯수[넣을아이템])
+			RunMemory("은행빼기")
 	}
 	return
 ;}
 
 리스무기구매:
 ;{
-
 return
 ;}
 
 행깃구매:
 ;{
-
 return
 ;}
 
 행깃교환:
 ;{
-
 return
 ;}
 
@@ -13208,8 +13278,8 @@ Gui, Add, Text, x345 y102 w60 h18 ,GALRID
 Gui, Add, Text, +Right x410 y102 w60 h18 vGALRID,
 Gui, Add, Text, x345 y120 w60 h18 ,VOTE
 Gui, Add, Text, +Right x410 y120 w60 h18 vVOTE,
-Gui, Add, Text, x345 y138 w60 h18 ,FRAME
-Gui, Add, Text, +Right x410 y138 w60 h18 vFRAME,
+Gui, Add, Text, x345 y138 w60 h18 ,FAME
+Gui, Add, Text, +Right x410 y138 w60 h18 vFAME,
 
 Gui, Add, Text, x345 y156 w130 h18 v좌표,
 Gui, Add, Text, x345 y174 w130 h30 v맵,
@@ -13217,7 +13287,7 @@ Gui, Add, Text, x345 y174 w130 h30 v맵,
 Gui, Add, CheckBox, x15 y220 h20 v아템먹기여부 g아템먹기키고끄기, 먹자(+채광)
 Gui, Add, CheckBox, x105 y220 h20 v자동사냥여부, 자동사냥
 Gui, Add, CheckBox, x195 y220 h20 v자동이동여부, 자동이동
-Gui, Add, DropDownList, x280 y215 w80 vCurrentMode,대기모드||자동감응|일반자사|포남자사|포북자사|광물캐기|배달하기|마법잠수
+Gui, Add, DropDownList, x280 y215 w80 vCurrentMode,대기모드||자동감응|일반자사|포남자사|포북자사|광물캐기|배달하기|마법잠수|낚시먹자
 Gui, Add, Button, x375 y213 w100 g실행 v실행, 실행
 Gui, Add, Button, x375 y213 w100 Hidden g중지 v중지, 중지
 
@@ -13597,6 +13667,9 @@ Gui, Add, button, x110 y230 w85 h20 g원하지않는몬스터삭제, 삭제
 Gui, Add, ListView, x15 y255 h90 w240 v원하지않는몬스터리스트 +altsubmit, 사냥안할몬스터
 LV_ModifyCol(1,200)
 
+Gui, Add, text, x15 y370 w180 h15 v플레이어수,
+Gui, Add, text, x15 y390 w180 h15 v몬스터수,
+Gui, Add, text, x15 y410 w180 h15 v아이템수,
 /*
 Gui, Add, Text, x15 y280 h15 w80, 블랙 리스트
 Gui, Add, ListView, x15 y295 h120 w240 v블랙리스트 g블랙리스트실행 +altsubmit, 분류|차원|맵이름|번호|이름|OID|X|Y|Z|삭제카운트
@@ -13820,7 +13893,7 @@ loop, 72
 	temp_name := "어빌리티" . A_index . "_그레이드"
 	gui, add, text, x%x_coord_% y%y_coord% w20 h15  v%temp_name%,
 	temp_name := "어빌리티" . A_index
-	gui, add, text, x%x_coord__% y%y_coord% w50 h15  v%temp_name%,
+	gui, add, text, x%x_coord__% y%y_coord% w40 h15  v%temp_name%,
 	y_coord += 20
 	if (A_index = 18 || A_index = 36 || A_index = 54)
 	{
@@ -13833,10 +13906,13 @@ x_coord += 200
 loop, 18
 {
 	x_coord_ := x_coord + 100
+	x_coord__ := x_coord_ + 20
 	temp_name := "마법" . A_index . "_이름"
 	gui, add, CheckBox, x%x_coord% y%y_coord% w100 h15 v%temp_name%,
+	temp_name := "마법" . A_index . "_그레이드"
+	gui, add, text, x%x_coord_% y%y_coord% w20 h15  v%temp_name%,
 	temp_name := "마법" . A_index
-	gui, add, text, x%x_coord_% y%y_coord% w50 h15  v%temp_name%,
+	gui, add, text, x%x_coord__% y%y_coord% w40 h15  v%temp_name%,
 	y_coord += 20
 	if (A_index = 18 || A_index = 36 || A_index = 54)
 	{
@@ -14154,10 +14230,50 @@ Return
 							}
 						}
 					}
+					else if (CurrentMode = "낚시먹자")
+					{
+						loop,
+						{
+							if (CurrentMode = "낚시먹자") && (서버상태) && (Coin)
+							{
+								IsMoving := mem.read(0x0058EB1C, "UInt", 0x174)
+								if (IsMoving != 0)
+								{
+									continue
+								}
+								else
+								{
+									if (골드바판매여부 && GALRID < 1000000 && 아이템갯수["골드바"] > 0)
+									{
+										gosub, 골드바팔기
+										continue
+									}
+									else if (골드바구매여부 && GALRID > 9600000 )
+									{
+										gosub, 골드바사기
+										continue
+									}
+									gosub, 신선낚시물고기줍줍판매_길탐색
+								}
+								SB_SetText("대기모드",1)
+								sleep,1000
+							}
+							else
+							{
+								sleep,1000
+								break
+							}
+						}
+					}
 					else if (CurrentMode = "마법잠수")
 					{
 						Start_Inven := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
 						gui, submit, nohide
+						if 자동그레이드
+						{
+							gosub, 어빌리티읽어오기
+							gosub, 마법읽어오기
+						}
 						if (수리 = 1)  && (서버상태)
 						{
 							SetTimer,스킬사용하기,off
@@ -14212,6 +14328,7 @@ Return
 									guicontrolget,수리소야아이템순서
 									guicontrolget,링단축키
 									guicontrolget,수리소야아이템갯수
+
 									loop, 3
 									{
 										시작갯수 := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
@@ -14572,6 +14689,17 @@ Return
 							if (CurrentMode = "광물캐기") && (서버상태) && (Coin)
 							{
 								gui,submit,nohide
+								gosub, 아이템읽어오기
+								if (골드바판매여부 && GALRID < 1000000 && 아이템갯수["골드바"] > 0)
+								{
+									gosub, 골드바팔기
+									continue
+								}
+								else if (골드바구매여부 && GALRID > 9600000 )
+								{
+									gosub, 골드바사기
+									continue
+								}
 								sleep, 1000
 								좌표X := mem.read(0x0058DAD4, "UInt", 0x10)
 								좌표Y := mem.read(0x0058DAD4, "UInt", 0x14)
@@ -14855,7 +14983,18 @@ Return
 						{
 							if (CurrentMode = "배달하기") && (서버상태) && (Coin)
 							{
+								gui, submit, nohide
 								gosub, 아이템읽어오기
+								if (골드바판매여부 && GALRID < 1000000 && 아이템갯수["골드바"] > 0)
+								{
+									gosub, 골드바팔기
+									continue
+								}
+								else if (골드바구매여부 && GALRID > 9600000 )
+								{
+									gosub, 골드바사기
+									continue
+								}
 								if (아이템갯수["라스의깃"] < 2 || 아이템갯수["오란의깃"] < 2)
 								{
 									SB_SetText("라깃구매필요",2)
@@ -15026,7 +15165,7 @@ Return
 									sleep,500
 									KeyClick("Ctrl1") ; 배달수주
 									sleep, 100
-									if (NPC_MSG_ADR = "없음") || (NPC_MSG_ADR < 1)
+									if ((NPC_MSG_ADR = "없음") || (NPC_MSG_ADR < 1))
 									{
 										sleep, 1000
 										SetFormat, Integer, H
@@ -15038,7 +15177,7 @@ Return
 										GuiControl,, NPC_MSG_ADR, %NPC_MSG_ADR%
 										sleep, 100
 									}
-									if (NPC_MSG_ADR = "없음") || (NPC_MSG_ADR < 1)
+									if ((NPC_MSG_ADR = "없음") || (NPC_MSG_ADR < 1))
 									{
 										sleep, 1000
 										SetFormat, Integer, H
@@ -15099,7 +15238,7 @@ Return
 											KeyClick("K6")
 											break
 										}
-										else if InStr(NPCMsg,"갈리드를 얻다") || InStr(NPCMsg,"숙련도 경험치")
+										else if (InStr(NPCMsg,"갈리드를 얻다") || InStr(NPCMsg,"숙련도 경험치"))
 										{
 											mem.writeString(NPC_MSG_ADR, "", "UTF-16", aOffsets*)
 											sleep, 1
@@ -15222,6 +15361,11 @@ Return
 								좌표Y := mem.read(0x0058DAD4, "UInt", 0x14)
 								좌표Z := mem.read(0x0058DAD4, "UInt", 0x18)
 								gosub, 아이템읽어오기
+								if 자동그레이드
+								{
+									gosub, 어빌리티읽어오기
+									gosub, 마법읽어오기
+								}
 								if (아이템갯수["라스의깃"] < 2 || 아이템갯수["오란의깃"] < 2)
 								{
 									SB_SetText("라깃구매필요",2)
@@ -15898,6 +16042,11 @@ Return
 								좌표Y := mem.read(0x0058DAD4, "UInt", 0x14)
 								좌표Z := mem.read(0x0058DAD4, "UInt", 0x18)
 								gosub, 아이템읽어오기
+								if 자동그레이드
+								{
+									gosub, 어빌리티읽어오기
+									gosub, 마법읽어오기
+								}
 								오깃갯수 := 아이템갯수["오란의깃"]
 								인벤토리 := mem.read(0x0058DAD4, "UInt", 0x178, 0xBE, 0x14)
 								if (인벤토리 = 50 && !보고완료 && 인벤꽉참알림설정)
@@ -16888,7 +17037,7 @@ if ((기존맵번호 != 맵번호 || 기존차원 != 차원) && (맵번호 != ""
 }
 gosub, 아이템읽어오기
 RM_Delay := A_TickCount - Read_Memory_Count
-if (RM_Delay > 5000) || (자동사냥여부 = 1)
+if ((RM_Delay > 5000) || (자동사냥여부 = 1) || (CurrentMode = "낚시먹자"))
 {
 	Read_Memory_Count := A_TickCount
 	gosub, 메모리검색_몬스터
@@ -16900,13 +17049,16 @@ if (RM_Delay > 5000) || (자동사냥여부 = 1)
 	gosub, 메모리검색_플레이어
 }
 sleep, 1
-if (아템먹기여부 = 1)
+if (아템먹기여부 = 1 || (CurrentMode = "낚시먹자"))
 {
 	if (CurrentMode = "광물캐기")
 		gosub, 메모리검색_아이템_광산
 	else
 		gosub, 메모리검색_아이템
-	gosub, 아이템_선택
+	if (CurrentMode = "낚시먹자")
+		gosub, 신선낚시물고기_아이템_선택
+	else
+		gosub, 아이템_선택
 	sleep, 1
 }
 gosub, 소각하기
@@ -17233,7 +17385,7 @@ if (selectedRow > 0)
 {
     LV_Modify(selectedRow, "Select") ; 해당 행을 선택합니다
 }
-
+guicontrol,,몬스터수,몬스터: %LVCount% 마리
 return
 ;}
 
@@ -17351,6 +17503,8 @@ loop % LV_GetCount()
 	LV_Modify(i,"Col12",거리)
 	i++
 }
+temp_c := LV_GetCount()
+guicontrol,,플레이어수,플레이어: %temp_c% 명
 return
 ;}
 
@@ -17452,7 +17606,8 @@ loop % LV_GetCount()
 	LV_Modify(i,"Col12",거리)
 	i++
 }
-
+temp_c := LV_GetCount()
+guicontrol,,아이템수,아이템: %temp_c% 개
 
 return
 ;}
@@ -17514,6 +17669,57 @@ if (selectedRow > 0)
 
 return
 ;}
+
+신선낚시물고기_아이템_선택:
+;{
+gui, listview, 아이템리스트
+LVCount := LV_GetCount()
+LVSelect := LV_GetNext(0)
+
+HighLevelFishes := ["전구어","사각어","더듬이","해파리","황금붕어","골치","래비쉬"]
+HLF_Itemlength := HighLevelFishes.MaxIndex()
+if ((LVSelect != 0) || (LVCount = 0))
+{
+	if (!IsDataInList_Multi(col5Value, HighLevelFishes) && HLF_Itemlength >= 1)
+	{
+		gui, listview, 아이템리스트
+		LV_Modify(0,"-Select")
+	}
+}
+lowestCol12Value := 999999 ; 초기 높은 값으로 설정
+selectedRow := 0 ; 선택할 행 초기화
+
+HLF_Itemlength := 0 ; 기본값을 0으로 설정
+if HighLevelFishes.MaxIndex() ; 배열이 비어있지 않은 경우
+    HLF_Itemlength := HighLevelFishes.MaxIndex()
+
+Loop, %LVCount%
+{
+    thisRow := A_Index
+    LV_GetText(col12Value, thisRow, 12) ; 현재 행의 Col12 값을 가져옵니다
+	LV_GetText(col11Value, thisRow, 11) ; 현재 행의 Col12 값을 가져옵니다
+    LV_GetText(col5Value, thisRow, 5) ; 현재 행의 Col5 값을 가져옵니다
+    LV_GetText(col6Value, thisRow, 6) ; 현재 행의 Col6 값을 가져옵니다
+	;SB_SetText("비교중" A_Index " " WantedMonsterlength, 5)
+
+    ; Col12 값이 현재 가장 낮은 값보다 낮고, Col5 값이 WantedList에 포함되고, Col6 값이 BlackList에 없는 경우
+    if (col11Value < 3 && col12Value < lowestCol12Value && !IsDataInList_Multi(col6Value, BlackList)) && (IsDataInList_Multi(col5Value, HighLevelFishes) || HLF_Itemlength < 1)
+    {
+        lowestCol12Value := col12Value
+        selectedRow := thisRow
+    }
+}
+
+; 가장 낮은 Col12 값을 가지고 WantedList에 포함되며 BlackList에 없는 행을 선택합니다
+if (selectedRow > 0)
+{
+	LV_Modify(0,"-Select")
+    LV_Modify(selectedRow, "Select") ; 해당 행을 선택합니다
+}
+
+return
+;}
+
 
 메모리검색_아이템_광산:
 ;{
@@ -18399,6 +18605,7 @@ GetOSVersion() {
 	RegRead, ProductName, %Path%, ProductName
 	return ProductName
 }
+
 원터치정눈모으기세팅:
 guicontrol,,아템먹기여부,1
 guicontrol,,자동사냥여부,1
@@ -18433,3 +18640,29 @@ for Index, option in %Temp_list%
 gosub, 사용자선택
 
 return
+
+신선낚시물고기줍줍판매_길탐색:
+;물고기를 줍는다.
+;인벤이 꽉찾는지 확인한다.
+;무게가 꽉찾는지 확인한다.
+;전구어가 5개 이상이면 교환한다.
+;인벤이 꽉찾으면 판매하러간다.
+;다시 복귀한다.
+return
+
+보물지도자동교환:
+;감옥섬에 간다
+;열쇠를 얻는다
+;독방에 입장한다
+;대화한다
+;대화성공시
+;세르니카간다
+;편집국간다
+;감옥섬에 간다
+;열쇠를 얻는다
+;독방에 입장한다
+;대화한다
+;보물지도 얻은다음
+;특정캐릭터에 전달 후 다음 캐릭터 실행
+return
+
