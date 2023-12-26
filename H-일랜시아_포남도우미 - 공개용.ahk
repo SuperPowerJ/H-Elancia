@@ -5566,9 +5566,9 @@ return this.SizeOfStructure
 						i++
 						newDataRow .= item
 					}
-					URL:="https://script.google.com/macros/s/AKfycby1xjtGctTjzYk_u2hJO67iGbyM-qUnpnL-OgJ383wod5MeqX7jRtGmnkPX5o9ihZjejw/exec"
-					URL := URL . "?Kind=" . itemname[1] . "&Dimension=" . itemname[2] . "&MapName=" . itemname[3] . "&MapNumber=" . itemname[4] . "&Name=" . itemname[5] . "&OID=" . itemname[6] . "&X=" . itemname[7] . "&Y=" . itemname[8] . "&Z=" . itemname[9] . "&IMG=" . itemname[12] . "&Reporter=" . TargetTitle
-					uJoin(URL)
+					;URL:="https://script.google.com/macros/s/AKfycby1xjtGctTjzYk_u2hJO67iGbyM-qUnpnL-OgJ383wod5MeqX7jRtGmnkPX5o9ihZjejw/exec"
+					;URL := URL . "?Kind=" . itemname[1] . "&Dimension=" . itemname[2] . "&MapName=" . itemname[3] . "&MapNumber=" . itemname[4] . "&Name=" . itemname[5] . "&OID=" . itemname[6] . "&X=" . itemname[7] . "&Y=" . itemname[8] . "&Z=" . itemname[9] . "&IMG=" . itemname[12] . "&Reporter=" . TargetTitle
+					;uJoin(URL)
 					IniWrite, %newDataRow%, %FileName%, %저장할맵번호%, %Last%
 				}
 				else if (type = "고용상인리스트")
@@ -16993,6 +16993,7 @@ gosub, 기본정보읽기
 sleep,1
 if ((기존맵번호 != 맵번호 || 기존차원 != 차원) && (맵번호 != "" && 맵번호 != 0))
 {
+	gosub, 사용자선택
 	;SB_SETtext("기존맵번호" 기존맵번호 "현재맵번호" 맵번호 ,2)
 	기존맵번호 := 맵번호
 	기존차원 := 차원
